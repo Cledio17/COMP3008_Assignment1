@@ -11,6 +11,7 @@ namespace ChatServer
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World Kung Soon");
+            Console.WriteLine("Hello Kung Soon GitHub");
         }
     }
 }
