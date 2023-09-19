@@ -12,6 +12,7 @@ namespace ChatServer
         {
             Console.WriteLine("Hello World Kung Soon");
             Console.WriteLine("Hello Kung Soon GitHub");
+            Console.WriteLine("Hellooooooo");
         }
     }
 }
