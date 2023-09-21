@@ -9,5 +9,6 @@ namespace ChatServer
     public class UserManager
     {
         private List<String> connectedUsers = new List<String>();
+
     }
 }
