@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ChatMainMenu;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -20,14 +22,17 @@ namespace ChatClient
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static MainWindow instance;
         public MainWindow()
         {
             InitializeComponent();
+            instance = this;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
+            MainMenuWindow main = new MainMenuWindow();
+            main.Show();
         }
     }
 }
