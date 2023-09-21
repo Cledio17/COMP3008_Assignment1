@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatClient", "ChatClient\Ch
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatServer", "ChatServer\ChatServer.csproj", "{699D1A39-2608-4B40-B5B2-792D268A0C7D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatMainMenu", "ChatMainMenu\ChatMainMenu.csproj", "{F9643E18-E550-4154-BBEB-087CBB0C35B7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{699D1A39-2608-4B40-B5B2-792D268A0C7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{699D1A39-2608-4B40-B5B2-792D268A0C7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{699D1A39-2608-4B40-B5B2-792D268A0C7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9643E18-E550-4154-BBEB-087CBB0C35B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9643E18-E550-4154-BBEB-087CBB0C35B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9643E18-E550-4154-BBEB-087CBB0C35B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9643E18-E550-4154-BBEB-087CBB0C35B7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

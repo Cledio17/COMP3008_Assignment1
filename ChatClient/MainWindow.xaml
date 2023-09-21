@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ChatClient"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Fake Discord" Height="450" Width="800">
     <Grid>
-        <Label Content="Discock" HorizontalAlignment="Center" Margin="0,112,0,0" VerticalAlignment="Top" FontSize="22"/>
-        <TextBox x:Name="usernamebox" HorizontalAlignment="Center" Margin="0,173,0,0" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top" Width="120" TextChanged="usernamebox_TextChanged"/>
-        <Button Content="Login" HorizontalAlignment="Center" Margin="0,217,0,0" VerticalAlignment="Top" Height="35" Width="106" FontSize="22"/>
+        <Label Content="Fake Discord" HorizontalAlignment="Center" Margin="0,112,0,0" VerticalAlignment="Top" FontSize="22"/>
+        <TextBox x:Name="usernamebox" HorizontalAlignment="Center" Margin="0,173,0,0" TextWrapping="Wrap" Text="Username" VerticalAlignment="Top" Width="120"/>
+        <Button Content="Login" HorizontalAlignment="Center" Margin="0,217,0,0" VerticalAlignment="Top" Height="35" Width="106" FontSize="22" Click="Button_Click"/>
     </Grid>
 </Window>
