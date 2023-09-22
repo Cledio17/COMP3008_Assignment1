@@ -8,18 +8,21 @@ using System.Threading.Tasks;
 namespace ChatServer
 {
     [ServiceContract]
-    public class ChatServerInterface
+    public interface ChatServerInterface
     {
         [OperationContract]
-        Boolean hasJoinedChat(UserManager user);
+        void hasJoinedChat(User user);
 
         [OperationContract]
-        Boolean hasLeftChat(UserManager user);
+        void hasLeftChat(User user);
 
         [OperationContract]
-        void sendMessage(UserManager sender, UserManager recipient, string message);
+        void sendMessage(User sender, string message);
 
         [OperationContract]
-        void sendPrivateMessage
+        void sendPrivateMessage(User sender, User recipient, string message);
+
+        [OperationContract]
+        void sendFiles(User sender, string files);
     }
 }
