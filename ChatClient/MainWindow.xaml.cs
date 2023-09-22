@@ -1,5 +1,4 @@
-﻿using ChatMainMenu;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,17 +21,24 @@ namespace ChatClient
     /// </summary>
     public partial class MainWindow : Window
     {
-        public static MainWindow instance;
         public MainWindow()
         {
             InitializeComponent();
-            instance = this;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            MainMenuWindow main = new MainMenuWindow();
-            main.Show();
+
+        }
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            
+        }
+
+        private void btnExit_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
         }
     }
 }

@@ -23,7 +23,7 @@
         <Button Content="Send" HorizontalAlignment="Left" Margin="535,389,0,0" VerticalAlignment="Top" Height="40" Width="81"/>
         <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="670,164,18,100"/>
         <Label Content="Participants" HorizontalAlignment="Left" Margin="670,138,0,0" VerticalAlignment="Top"/>
-        <Button Content="Upload File" HorizontalAlignment="Left" Margin="535,364,0,0" VerticalAlignment="Top" Height="20" Width="81"/>
+        <Button Content="Upload File" HorizontalAlignment="Left" Margin="535,356,0,0" VerticalAlignment="Top" Height="28" Width="81"/>
 
     </Grid>
 </Window>
