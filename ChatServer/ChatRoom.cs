@@ -9,11 +9,11 @@ using System.Windows.Forms;
 namespace ChatServer
 {
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
-    internal class ChatServer : ChatServerInterface
+    internal class ChatRoom : ChatRoomInterface
     {
         private List<User> _users;
         private List<String> messages;
-        public ChatServer() { _users = new List<User>(); messages = new List<String>(); }
+        public ChatRoom() { _users = new List<User>(); messages = new List<String>(); }
 
         public void addUser(User user)
         {
@@ -67,7 +67,7 @@ namespace ChatServer
             recipient.addPrivateMessage(sender, message);
         }
 
-        void ChatServerInterface.sendFiles(User sender, string files)
+        public void sendFiles(User sender, string files)
         {
             throw new NotImplementedException();
         }

@@ -50,9 +50,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChatServer.cs" />
-    <Compile Include="ChatServerInterface.cs" />
+    <Compile Include="ChatRoom.cs" />
+    <Compile Include="ChatRoomInterface.cs" />
     <Compile Include="ChatServerManager.cs" />
+    <Compile Include="DatabaseClass.cs" />
     <Compile Include="PrivateMessage.cs" />
     <Compile Include="User.cs" />
     <Compile Include="Program.cs" />

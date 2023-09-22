@@ -10,14 +10,14 @@ namespace ChatServer
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
     internal class ChatServerManager
     {
-        private HashSet<ChatServer> availableServers = new HashSet<ChatServer>();
+        private HashSet<ChatRoom> availableServers = new HashSet<ChatRoom>();
 
-        public void addServer(ChatServer server)
+        public void addServer(ChatRoom server)
         {
             availableServers.Add(server);
         }
 
-        public void removeServer(ChatServer server)
+        public void removeServer(ChatRoom server)
         {
             availableServers.Remove(server);
         }

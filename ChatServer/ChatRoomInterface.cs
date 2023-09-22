@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace ChatServer
 {
     [ServiceContract]
-    public interface ChatServerInterface
+    public interface ChatRoomInterface
     {
         [OperationContract]
         void hasJoinedChat(User user);
