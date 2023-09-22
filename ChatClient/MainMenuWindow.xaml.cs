@@ -19,9 +19,32 @@ namespace ChatClient
     /// </summary>
     public partial class MainMenuWindow : Window
     {
-        public MainMenuWindow()
+        string username = string.Empty;
+        public MainMenuWindow(string username)
         {
             InitializeComponent();
+            this.username = username;
+            usernamelabel.Content = username;
+        }
+
+        private void logoutbutton_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+
+        private void chatroombox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

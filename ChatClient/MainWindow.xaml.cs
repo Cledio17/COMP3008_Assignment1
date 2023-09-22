@@ -28,7 +28,9 @@ namespace ChatClient
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-
+            MainMenuWindow mainMenuWindow = new MainMenuWindow(txtusername.Text);
+            mainMenuWindow.Show();
+            this.Close();
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -43,6 +45,11 @@ namespace ChatClient
         private void btnExit_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
+        }
+
+        private void txtusername_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

@@ -26,7 +26,7 @@
                     <TextBlock Text="FAKE DISCORD" Margin="20" Foreground="White" TextAlignment="Center" FontSize="30" FontFamily="Cooper Black"></TextBlock>
                     <StackPanel Orientation="Horizontal" Margin="10">
                         <materialDesign:PackIcon Kind="User" Width="25" Height="25" Foreground="White"/>
-                        <TextBox x:Name="txtusername" Margin="10 0" materialDesign:HintAssist.Hint="Enter Username" Foreground="White" Width="250" BorderBrush="White" CaretBrush="Purple" SelectionBrush="MediumPurple"></TextBox>
+                        <TextBox x:Name="txtusername" Margin="10 0" materialDesign:HintAssist.Hint="Enter Username" Foreground="White" Width="250" BorderBrush="White" CaretBrush="Purple" SelectionBrush="MediumPurple" TextChanged="txtusername_TextChanged"></TextBox>
                     </StackPanel>
                     <StackPanel Margin="10" HorizontalAlignment="Center">
                         <Button Width="100" Height="40" Style="{StaticResource MaterialDesignRaisedButton}"
