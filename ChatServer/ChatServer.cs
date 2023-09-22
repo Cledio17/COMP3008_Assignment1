@@ -64,7 +64,7 @@ namespace ChatServer
 
         public void sendPrivateMessage(User sender, User recipient, string message)
         {
-            
+            recipient.addPrivateMessage(sender, message);
         }
 
         void ChatServerInterface.sendFiles(User sender, string files)
