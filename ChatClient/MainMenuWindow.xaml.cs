@@ -20,6 +20,7 @@ namespace ChatClient
     public partial class MainMenuWindow : Window
     {
         string username = string.Empty;
+        string roomName = string.Empty;
         public MainMenuWindow(string username)
         {
             InitializeComponent();
@@ -37,14 +38,16 @@ namespace ChatClient
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void createButton_Click(object sender, RoutedEventArgs e)
         {
-
+            roomName = chatroombox.Text;
+            roomList.Items.Add(roomName);
+            
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void roomList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            chatroombox.Text = roomList.SelectedItem.ToString();
         }
     }
 }
