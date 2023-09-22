@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace ChatServer
 {
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
-    internal class ChatRoom : ChatRoomInterface
+    public class ChatRoom : ChatRoomInterface
     {
         private List<User> _users;
         private List<String> messages;

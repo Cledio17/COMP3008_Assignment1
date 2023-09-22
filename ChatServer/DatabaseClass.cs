@@ -8,6 +8,5 @@ namespace ChatServer
 {
     public class DatabaseClass
     {
-        private List<>
     }
 }
