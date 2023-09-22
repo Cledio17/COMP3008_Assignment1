@@ -116,16 +116,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="fakediscord.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="fakediscord_thumbnail.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="fakediscordcool.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="fakediscordtrans.png" />
+    <ProjectReference Include="..\ChatServer\ChatServer.csproj">
+      <Project>{699d1a39-2608-4b40-b5b2-792d268a0c7d}</Project>
+      <Name>ChatServer</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" />

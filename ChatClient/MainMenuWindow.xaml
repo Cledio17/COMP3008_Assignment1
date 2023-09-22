@@ -22,7 +22,7 @@
         <Button x:Name="logoutbutton" Content="Log Out" HorizontalAlignment="Left" Margin="701,389,0,0" VerticalAlignment="Top" Height="40" Width="89" Click="logoutbutton_Click"/>
         <TextBox HorizontalAlignment="Left" Margin="165,389,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="365" Height="40"/>
         <Button Content="Send" HorizontalAlignment="Left" Margin="535,389,0,0" VerticalAlignment="Top" Height="40" Width="81"/>
-        <ListBox d:ItemsSource="{d:SampleData ItemCount=5}" Margin="670,164,18,100"/>
+        <ListBox x:Name="participantlist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="670,164,18,100"/>
         <Label Content="Participants" HorizontalAlignment="Left" Margin="666,135,0,0" VerticalAlignment="Top"/>
         <Button Content="Upload File" HorizontalAlignment="Left" Margin="535,356,0,0" VerticalAlignment="Top" Height="28" Width="81" />
 

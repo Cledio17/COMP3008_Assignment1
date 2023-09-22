@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace ChatServer
 {
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
-    internal class ChatServerManager
+    public class ChatServerManager
     {
         private HashSet<ChatRoom> availableServers = new HashSet<ChatRoom>();
 
