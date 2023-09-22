@@ -33,7 +33,11 @@ namespace ChatClient
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            DragMove();
+            try
+            {
+                DragMove();
+            }
+            catch(Exception ex) { }
         }
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
