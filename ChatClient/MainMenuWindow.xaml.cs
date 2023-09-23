@@ -1,6 +1,7 @@
 ﻿using ChatServer;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -14,6 +15,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ChatClient
@@ -104,6 +106,45 @@ namespace ChatClient
                 msgdisplaybox.AppendText(Environment.NewLine);
                 msgtxtbox.Clear();
             }
+        }
+
+        private void uploadfilebtn_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            bool? response = openFileDialog.ShowDialog();
+            if (response == true)
+            {
+                string filepath = openFileDialog.FileName;
+                string filename = System.IO.Path.GetFileName(filepath); // Get only the file name
+
+                // Create a new Hyperlink
+                Hyperlink hyperlink = new Hyperlink(new Run(filename));
+                hyperlink.NavigateUri = new Uri(filepath); // Set the URI to the file path
+
+                // Handle the click event to open the file when the hyperlink is clicked
+                hyperlink.RequestNavigate += Hyperlink_RequestNavigate;
+
+                // Create a Paragraph and add the Hyperlink to it
+                Paragraph paragraph = new Paragraph(hyperlink);
+
+                // Add the Paragraph to the RichTextBox
+                msgdisplaybox.Document.Blocks.Add(paragraph);
+            }
+        }
+
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            try
+            {
+                if(sender is Hyperlink hyperlink)
+                {
+                    Process process = new Process();
+                    process.StartInfo.UseShellExecute = true;
+                    process.StartInfo.FileName = hyperlink.NavigateUri.ToString();
+                    process.Start();
+                }
+            }
+            catch (Exception ex) { throw; }
         }
     }
 }
