@@ -15,7 +15,8 @@
             </LinearGradientBrush>
         </Grid.Background>
         <Border Height="390" VerticalAlignment="Top" CornerRadius="0 0 180 0" Background="Black" MouseDown="Border_MouseDown">
-            
+            <Button x:Name="addClient" Content="addCLient" Margin="622,310,68,53" Click="addClient_Click" />
+
         </Border>
         <StackPanel Orientation="Horizontal">
             <StackPanel Width="350">

@@ -46,5 +46,11 @@ namespace ChatClient
         {
             System.Windows.Application.Current.Shutdown();
         }
+
+        private void addClient_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+        }
     }
 }
