@@ -11,11 +11,12 @@ namespace ChatServer
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
     public class ChatRoom : ChatRoomInterface
     {
-        private String chatroomId;
+        private String chatRoomName;
+        private int id;
         private List<User> _users;
         private List<String> messageby;
         private List<String> messages;
-        public ChatRoom(string chatroomId) { this.chatroomId = chatroomId; _users = new List<User>(); messageby = new List<string>(); messages = new List<String>(); }
+        public ChatRoom(string chatRoomName, int id) { this.chatRoomName = chatRoomName; this.id = id; _users = new List<User>(); messageby = new List<string>(); messages = new List<String>(); }
 
         public void addUser(User user)
         {
@@ -35,11 +36,13 @@ namespace ChatServer
 
         }
 
-        public String getChatRoomId()
+        public String getChatRoomName()
         {
-            return chatroomId;
+            return chatRoomName;
 
         }
+
+        public int getId() { return id; }
 
         public List<String> getMessagesBy()
         {

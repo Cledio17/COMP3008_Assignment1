@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -28,6 +29,7 @@ namespace ChatClient
         ChatServerManager cs;
         User us;
         string uss;
+        int serverIndex = 0;
         public MainMenuWindow(string username)
         {
             InitializeComponent();
@@ -35,7 +37,7 @@ namespace ChatClient
             usernamelabel.Content = username;
             us = new User(username, "123");
             cs = new ChatServerManager();
-            cr = new ChatRoom(null);
+            cr = new ChatRoom(null, serverIndex);
         }
 
         private void logoutbutton_Click(object sender, RoutedEventArgs e)
@@ -45,53 +47,66 @@ namespace ChatClient
 
         private void chatroombox_TextChanged(object sender, TextChangedEventArgs e)
         {
-
+            
         }
 
         private void createButton_Click(object sender, RoutedEventArgs e)
         {
-            roomList.Items.Clear();
             roomName = chatroombox.Text;
-            cr = new ChatRoom(roomName);
+            cr = new ChatRoom(roomName, serverIndex);
+            HashSet<ChatRoom> availbleServers = cs.getAllServer();
+            cr.addUser(us);
             cs.addServer(cr);
-            HashSet<ChatRoom> avaserver = cs.getAllServer();
-            foreach (ChatRoom room in avaserver)
-            {
-                roomList.Items.Add(room.getChatRoomId());
-            }
+            roomList.Items.Add(cr.getChatRoomName());
+            serverIndex++;
+            chatroombox.Clear(); //clear the chat room box after creating the chat room
         }
 
         private void roomList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             msgdisplaybox.Document.Blocks.Clear();
-            int index = 0;
+            int index = 0, selectedRoom = 0;
             participantlist.Items.Clear();
             roomName = roomList.SelectedItem.ToString();
-            cr = new ChatRoom(roomName);
+            selectedRoom = roomList.SelectedIndex;
+            HashSet<ChatRoom> availbleRoom = cs.getAllServer();
+            foreach (ChatRoom room in availbleRoom)
+            {
+                if (room.getChatRoomName().Equals(roomName, StringComparison.OrdinalIgnoreCase) && room.getId() == selectedRoom)
+                {
+                    cr = room;
+                }
+            }
             List<String> messages = cr.getMessages();
             List<String> messagesby = cr.getMessagesBy();
-            cr.addUser(us);
             List<User> _users = cr.getUser();
             foreach (User user in _users)
             {
                 uss = user.getUserName();
                 participantlist.Items.Add(uss);
             }
+
             foreach (string messageBy in messagesby)
             {
                 string message = messages[index];
                 string combinedMessage = $"{messageBy}: {message}";
                 Console.WriteLine(combinedMessage); 
                 msgdisplaybox.AppendText(combinedMessage);
+                msgdisplaybox.AppendText(Environment.NewLine);
                 index++;
             }
         }
 
         private void sendmsgbtn_Click(object sender, RoutedEventArgs e)
         {
-            cr.addMessages(username, msgtxtbox.Text);
-            string msg = "\n" + username + ": " + msgtxtbox.Text;
-            msgdisplaybox.AppendText(msg);
+            if(roomList.SelectedItem != null)
+            {
+                cr.addMessages(username, msgtxtbox.Text);
+                string msg = username + ": " + msgtxtbox.Text;
+                msgdisplaybox.AppendText(msg);
+                msgdisplaybox.AppendText(Environment.NewLine);
+                msgtxtbox.Clear();
+            }
         }
     }
 }
