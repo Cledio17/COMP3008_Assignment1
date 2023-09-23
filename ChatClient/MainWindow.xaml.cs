@@ -46,10 +46,5 @@ namespace ChatClient
         {
             System.Windows.Application.Current.Shutdown();
         }
-
-        private void txtusername_TextChanged(object sender, TextChangedEventArgs e)
-        {
-
-        }
     }
 }

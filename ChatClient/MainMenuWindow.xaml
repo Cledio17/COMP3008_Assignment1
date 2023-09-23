@@ -13,7 +13,7 @@
 
         <TextBox x:Name="chatroombox" HorizontalAlignment="Left" Margin="666,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" materialDesign:HintAssist.Hint="Chat Room Name" Foreground="Black"/>
         <Button Content="Create" HorizontalAlignment="Left" Margin="689,89,0,0" VerticalAlignment="Top" Height="32" Width="75" Click="createButton_Click"/>
-        <RichTextBox x:Name="msgdisplaybox" Width="475" Margin="165,20,160,112">
+        <RichTextBox x:Name="msgdisplaybox" Height="290" Width="475" Margin="165,20,160,112">
             <FlowDocument>
                 <Paragraph>
                     <Run Text=""/>
