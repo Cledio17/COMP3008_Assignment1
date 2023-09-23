@@ -13,8 +13,9 @@ namespace ChatServer
     {
         private String chatroomId;
         private List<User> _users;
+        private List<String> messageby;
         private List<String> messages;
-        public ChatRoom(string chatroomId) { this.chatroomId = chatroomId; _users = new List<User>(); messages = new List<String>(); }
+        public ChatRoom(string chatroomId) { this.chatroomId = chatroomId; _users = new List<User>(); messageby = new List<string>(); messages = new List<String>(); }
 
         public void addUser(User user)
         {
@@ -40,6 +41,16 @@ namespace ChatServer
 
         }
 
+        public List<String> getMessagesBy()
+        {
+            return messageby;
+        }
+
+        public List<String> getMessages()
+        {
+            return messages;
+        }
+
         public void removeUser(User user)
         {
             if(_users.Contains(user))
@@ -52,27 +63,28 @@ namespace ChatServer
             }
         }
 
-        public void addMessages(String message)
+        public void addMessages(String messagebys, String message)
         {
+            messageby.Add(messagebys);
             messages.Add(message);
-            Console.WriteLine(message); //displaying message in the server, might change the way of display in the future
+            Console.WriteLine(messagebys + ": "+ message); //displaying message in the server, might change the way of display in the future
         }
 
         public void hasJoinedChat(User user)
         {
             _users.Add(user);
-            addMessages(user.getUserName() + " has joined the chat."); 
+            // addMessages(user.getUserName() + " has joined the chat."); 
         }
 
         public void hasLeftChat(User user)
         {
             _users.Remove(user);
-            addMessages(user.getUserName() + " has left the chat.");
+            // addMessages(user.getUserName() + " has left the chat.");
         }
 
         public void sendMessage(User sender, string message)
         {
-            addMessages(sender.getUserName() + ": \n" +  message);
+            // addMessages(sender.getUserName() + ": \n" +  message);
         }
 
         public void sendPrivateMessage(User sender, User recipient, string message)
