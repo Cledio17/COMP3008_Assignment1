@@ -5,7 +5,7 @@ VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatClient", "ChatClient\ChatClient.csproj", "{7C7B81D4-1AF1-4D6B-AB52-300040F1AE5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatServer", "ChatServer\ChatServer.csproj", "{699D1A39-2608-4B40-B5B2-792D268A0C7D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatDataServer", "ChatServer\ChatDataServer.csproj", "{699D1A39-2608-4B40-B5B2-792D268A0C7D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatClient2", "ChatClient2\ChatClient2.csproj", "{869F72EF-F2B2-4A51-AA95-7C3AB7163613}"
 EndProject

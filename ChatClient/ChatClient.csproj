@@ -119,9 +119,9 @@
     <Resource Include="fakediscordcool.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ChatServer\ChatServer.csproj">
+    <ProjectReference Include="..\ChatServer\ChatDataServer.csproj">
       <Project>{699d1a39-2608-4b40-b5b2-792d268a0c7d}</Project>
-      <Name>ChatServer</Name>
+      <Name>ChatDataServer</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
