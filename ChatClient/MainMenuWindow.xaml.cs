@@ -42,12 +42,9 @@ namespace ChatClient
 
         private void logoutbutton_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Application.Current.Shutdown();
-        }
-
-        private void chatroombox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
         }
 
         private void createButton_Click(object sender, RoutedEventArgs e)
