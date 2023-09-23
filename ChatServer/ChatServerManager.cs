@@ -21,5 +21,10 @@ namespace ChatServer
         {
             availableServers.Remove(server);
         }
+
+        public HashSet<ChatRoom> getAllServer()
+        {
+            return availableServers;
+        }
     }
 }

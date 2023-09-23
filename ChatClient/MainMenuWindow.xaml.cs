@@ -49,15 +49,20 @@ namespace ChatClient
 
         private void createButton_Click(object sender, RoutedEventArgs e)
         {
+            roomList.Items.Clear();
             roomName = chatroombox.Text;
-            roomList.Items.Add(roomName);
             cr = new ChatRoom(roomName);
             cs.addServer(cr);
+            HashSet<ChatRoom> avaserver = cs.getAllServer();
+            foreach (ChatRoom room in avaserver)
+            {
+                roomList.Items.Add(room.getChatRoomId());
+            }
         }
 
         private void roomList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            chatroombox.Text = roomList.SelectedItem.ToString();
+            participantlist.Items.Clear();
             roomName = chatroombox.Text;
             cr = new ChatRoom(roomName);
             cr.addUser(us);

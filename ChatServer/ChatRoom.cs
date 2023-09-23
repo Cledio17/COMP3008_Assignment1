@@ -34,6 +34,12 @@ namespace ChatServer
 
         }
 
+        public String getChatRoomId()
+        {
+            return chatroomId;
+
+        }
+
         public void removeUser(User user)
         {
             if(_users.Contains(user))
