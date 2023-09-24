@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ChatServer
 {
     public class DatabaseClass
     {
-        private static List<User> users;
+        private List<User> users;
         public DatabaseClass()
         {
             users = new List<User>();
@@ -47,14 +48,21 @@ namespace ChatServer
         public bool checkIsUserAvailable(string userName)
         {
             bool isExisted = false;
-            foreach (User user in users)
+
+            for (int i = 0; i < users.Count; i++)
             {
-                if (user.getUserName().Equals(userName))
+                if (users[i].getUserName().Equals(userName))
                 {
                     isExisted = true;
                 }
             }
             return isExisted;
+
+        }
+
+        public int getNumberOfUsers()
+        {
+            return users.Count;
         }
     }
 }

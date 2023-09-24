@@ -40,7 +40,6 @@ namespace ChatClient2
             cs = new ChatServerManager();
             cr = new ChatRoom(null, serverIndex);
             this.foob = foob;
-            foob.addUserAccountInfo(us);
         }
 
         private void logoutbutton_Click(object sender, RoutedEventArgs e)

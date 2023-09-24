@@ -39,11 +39,10 @@ namespace ChatClient
             InitializeComponent();
             this.username = userName;
             usernamelabel.Content = username;
-            us = new User(username, "123");
             cs = new ChatServerManager();
             cr = new ChatRoom(null, serverIndex);
             this.foob = foob;
-            foob.addUserAccountInfo(us);
+            us = foob.getUserAccountInfo(userName);
         }
 
         private void logoutbutton_Click(object sender, RoutedEventArgs e)

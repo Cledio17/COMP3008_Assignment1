@@ -11,7 +11,7 @@ namespace ChatServer
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
     internal class DataServer : DataServerInterface
     {
-        private static DatabaseClass usersDatabase;
+        private DatabaseClass usersDatabase;
         public DataServer()
         {
             usersDatabase = new DatabaseClass();

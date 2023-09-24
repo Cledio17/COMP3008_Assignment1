@@ -7,17 +7,13 @@ using System.Threading.Tasks;
 
 namespace ChatServer
 {
+    [Serializable]
     public class User
     {
-        private String userName;
+        private string userName;
         private string ID;
         private PrivateMessage privateMessages;
         private List<ChatRoom> chatRooms;
-
-        public User()
-        {
-            
-        }
 
         public User(string userName, string ID)
         {

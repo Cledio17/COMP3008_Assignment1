@@ -26,13 +26,12 @@ namespace ChatClient
     public partial class MainWindow : Window
     {
         private static DataServerInterface foob;
-        private static NetTcpBinding tcp;
         string username = string.Empty;
         public MainWindow()
         {
             InitializeComponent();
             ChannelFactory<DataServerInterface> foobFactory;
-            tcp = new NetTcpBinding();
+            NetTcpBinding tcp = new NetTcpBinding();
             string URL = "net.tcp://localhost:8100/DataService";
             foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
             foob = foobFactory.CreateChannel();
@@ -46,6 +45,9 @@ namespace ChatClient
                 MainMenuWindow mainMenuWindow = new MainMenuWindow(foob,txtusername.Text);
                 mainMenuWindow.Show();
                 this.Close();
+                User us = new User(username, "123");
+                us.setUserName(username);
+                foob.addUserAccountInfo(us);
             }
             else
             {
@@ -71,11 +73,6 @@ namespace ChatClient
         {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
-        }
-
-        public static NetTcpBinding getTcp()
-        {
-            return tcp;
         }
     }
 }
