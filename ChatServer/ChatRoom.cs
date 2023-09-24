@@ -16,7 +16,13 @@ namespace ChatServer
         private List<User> _users;
         private List<String> messageby;
         private List<String> messages;
-        public ChatRoom(string chatRoomName, int id) { this.chatRoomName = chatRoomName; this.id = id; _users = new List<User>(); messageby = new List<string>(); messages = new List<String>(); }
+        public ChatRoom(string chatRoomName, int id) 
+        { 
+            this.chatRoomName = chatRoomName; 
+            this.id = id; _users = new List<User>(); 
+            messageby = new List<string>(); 
+            messages = new List<String>(); 
+        }
 
         public void addUser(User user)
         {

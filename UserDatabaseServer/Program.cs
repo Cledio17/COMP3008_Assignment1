@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ChatServer
+namespace UserDatabaseServer
 {
-    public class DatabaseClass
+    internal class Program
     {
+        static void Main(string[] args)
+        {
+        }
     }
 }
