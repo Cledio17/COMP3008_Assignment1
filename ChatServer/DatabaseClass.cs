@@ -4,23 +4,33 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace ChatServer
 {
     public class DatabaseClass
     {
+        //Users
         private List<User> users;
         private int userID = 1;
+        private int serverID = 1000;
+
+        //Chat Servers
+        private HashSet<ChatRoom> availableServers;
+
         public DatabaseClass()
         {
             users = new List<User>();
+            availableServers = new HashSet<ChatRoom>();
         }
 
-        public void addUserAccountInfo(string username)
+        //Users
+        public User addUserAccountInfo(string username)
         {
             User newUser = new User(username, userID);
             users.Add(newUser);
             userID++;
+            return newUser;
         }
 
         public User getUserAccountInfo(String userName)
@@ -62,9 +72,64 @@ namespace ChatServer
             return isExisted;
         }
 
+        public void addJoinedServer(string userName, string roomName)
+        {
+            User theUser = null;
+            foreach (User user in users)
+            {
+                if (user.getUserName().Equals(userName))
+                {
+                    theUser = user;
+                }
+            }
+            ChatRoom theRoom = null;
+            foreach (ChatRoom room in availableServers)
+            {
+                if (room.getChatRoomName().Equals(roomName))
+                {
+                    theRoom = room;
+                }
+            }
+            if (theRoom.addUser(theUser))
+            {
+                theUser.addChatRooms(theRoom);
+            }
+        }
+
+        public List<ChatRoom> getChatRooms(string userName)
+        {
+            User theUser = null;
+            foreach (User user in users)
+            {
+                if (user.getUserName().Equals(userName))
+                {
+                    theUser = user;
+                }
+            }
+            return theUser.getChatRooms();
+        }
+
         public int getNumberOfUsers()
         {
             return users.Count;
         }
+
+        //Chat Servers
+        public ChatRoom addNewChatServer (string roomName)
+        {
+            ChatRoom newRoom = new ChatRoom(roomName, serverID);
+            availableServers.Add(newRoom);
+            return newRoom;
+        }
+
+        /*public void removeServer(ChatRoom server)
+        {
+            availableServers.Remove(server);
+        }
+
+        public HashSet<ChatRoom> getAllServer()
+        {
+            return availableServers;
+        }*/
     }
 }

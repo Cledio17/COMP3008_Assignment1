@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace ChatServer
 {
-    [ServiceContract]
+    //[ServiceContract]
     public interface ChatRoomInterface
     {
-        [OperationContract]
+        /*[OperationContract]
         void hasJoinedChat(User user);
 
         [OperationContract]
@@ -23,6 +23,6 @@ namespace ChatServer
         void sendPrivateMessage(User sender, User recipient, string message);
 
         [OperationContract]
-        void sendFiles(User sender, string files);
+        void sendFiles(User sender, string files);*/
     }
 }

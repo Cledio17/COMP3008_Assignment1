@@ -10,8 +10,9 @@ namespace ChatServer
     [ServiceContract]
     public interface DataServerInterface
     {
+        //Users
         [OperationContract]
-        void addUserAccountInfo(string username);
+        User addUserAccountInfo(string username);
 
         [OperationContract]
         User getUserAccountInfo(string userName);
@@ -21,5 +22,17 @@ namespace ChatServer
 
         [OperationContract]
         bool isUserNameAvailable(string userName);
+
+        [OperationContract]
+        void addJoinedServer(string userName, string roomName);
+
+        [OperationContract]
+        List<ChatRoom> getJoinedServers(string userName);
+
+        //Chat Servers
+        [OperationContract]
+        ChatRoom addServer(string roomName);
+
+
     }
 }

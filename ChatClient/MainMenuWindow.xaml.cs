@@ -28,22 +28,19 @@ namespace ChatClient
     {
         string username = string.Empty;
         string roomName = string.Empty;
-        ChatRoom cr;
-        ChatServerManager cs;
         User us;
+        ChatRoom cr;
         string uss;
-        int serverIndex = 0;
         private DataServerInterface foob;
         MainWindow loginMenu;
-        public MainMenuWindow(DataServerInterface foob, String inUserName, MainWindow inLoginMenu)
+        public MainMenuWindow (DataServerInterface foob, User theUser, MainWindow inLoginMenu)
         {
             InitializeComponent();
-            this.username = inUserName;
+            this.username = theUser.getUserName();
+            us = theUser;
             usernamelabel.Content = username;
-            cs = new ChatServerManager();
-            cr = new ChatRoom(null, serverIndex);
+            userID.Content = us;
             this.foob = foob;
-            us = foob.getUserAccountInfo(username);
             loginMenu = inLoginMenu;
         }
 
@@ -56,20 +53,25 @@ namespace ChatClient
         private void createButton_Click(object sender, RoutedEventArgs e)
         {
             roomName = chatroombox.Text;
-            cr = new ChatRoom(roomName, serverIndex);
-            HashSet<ChatRoom> availbleServers = cs.getAllServer();
-            cr.addUser(us);
-            us.addChatRooms(cr);
-            cs.addServer(cr);
-            roomList.Items.Add(cr.getChatRoomName());
-            serverIndex++;
+            cr = foob.addServer(roomName);
+            foob.addJoinedServer(username, roomName);
+            refreshJoinedServer();
             chatroombox.Clear(); //clear the chat room box after creating the chat room
-            foob.updateUserAccountInfo(us);
+        }
+
+        private void refreshJoinedServer()
+        {
+            roomList.Items.Clear();
+            List<ChatRoom> joinedServers = foob.getJoinedServers(username);
+            foreach (ChatRoom room in joinedServers)
+            {
+                roomList.Items.Add(room.getChatRoomName());
+            }
         }
 
         private void roomList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            msgdisplaybox.Document.Blocks.Clear();
+            /*msgdisplaybox.Document.Blocks.Clear();
             int index = 0;
             participantlist.Items.Clear();
             roomName = roomList.SelectedItem.ToString();
@@ -99,7 +101,7 @@ namespace ChatClient
                 msgdisplaybox.AppendText(combinedMessage);
                 msgdisplaybox.AppendText(Environment.NewLine);
                 index++;
-            }
+            }*/
         }
 
         private void sendmsgbtn_Click(object sender, RoutedEventArgs e)

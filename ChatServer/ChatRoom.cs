@@ -8,8 +8,8 @@ using System.Windows.Forms;
 
 namespace ChatServer
 {
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
-    public class ChatRoom : ChatRoomInterface
+    [Serializable]
+    public class ChatRoom
     {
         private String chatRoomName;
         private int id;
@@ -24,8 +24,9 @@ namespace ChatServer
             messages = new List<String>(); 
         }
 
-        public void addUser(User user)
+        public bool addUser(User user)
         {
+            bool added = false;
             if(_users.Contains(user))
             {
                 MessageBox.Show("The user " + user.getUserName() + "has already existed in this server.");
@@ -33,7 +34,9 @@ namespace ChatServer
             else
             {
                 _users.Add(user);
+                added = true;
             }
+            return added;
         }
 
         public List<User> getUser()

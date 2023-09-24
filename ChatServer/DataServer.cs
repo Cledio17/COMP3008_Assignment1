@@ -11,15 +11,19 @@ namespace ChatServer
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
     internal class DataServer : DataServerInterface
     {
+        //Users
         private DatabaseClass usersDatabase;
+
+        //Chat Servers
         public DataServer()
         {
             usersDatabase = new DatabaseClass();
         }
 
-        public void addUserAccountInfo(string username)
+        //Users
+        public User addUserAccountInfo(string username)
         {
-            usersDatabase.addUserAccountInfo(username);
+            return usersDatabase.addUserAccountInfo(username);
         }
 
         public User getUserAccountInfo(string userName)
@@ -35,6 +39,22 @@ namespace ChatServer
         public void updateUserAccountInfo(User user)
         {
             usersDatabase.updateUserAccountInfo(user);
+        }
+
+        public void addJoinedServer (string userName, string roomName)
+        {
+            usersDatabase.addJoinedServer(userName, roomName);
+        }
+
+        public List<ChatRoom> getJoinedServers(string userName)
+        {
+            return usersDatabase.getChatRooms(userName);
+        }
+
+        //Chat Servers
+        public ChatRoom addServer(string roomName)
+        {
+            return usersDatabase.addNewChatServer(roomName);
         }
     }
 }

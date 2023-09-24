@@ -42,8 +42,8 @@ namespace ChatClient
             username = txtusername.Text;
             if (!foob.isUserNameAvailable(username))
             {
-                foob.addUserAccountInfo(username);
-                MainMenuWindow mainMenuWindow = new MainMenuWindow(foob,txtusername.Text, this);
+                User theUser = foob.addUserAccountInfo(username);
+                MainMenuWindow mainMenuWindow = new MainMenuWindow(foob, theUser, this);
                 mainMenuWindow.Show();
                 this.Hide();
             }
