@@ -48,7 +48,7 @@ namespace ChatServer
 
         public void updateUserAccountInfo(User currentUser)
         {
-            foreach (User user in users)
+            foreach (User user in users.ToList())
             {
                 if (user.getUserName().Equals(currentUser.getUserName()))
                 {
@@ -94,6 +94,7 @@ namespace ChatServer
             {
                 theUser.addChatRooms(theRoom);
             }
+            updateUserAccountInfo(theUser);
         }
 
         public List<ChatRoom> getChatRooms(string userName)
@@ -116,10 +117,15 @@ namespace ChatServer
         }
 
         //Chat Servers
-        public ChatRoom addNewChatServer (string roomName)
+        public ChatRoom addNewChatServer (User user, string roomName)
         {
             ChatRoom newRoom = new ChatRoom(roomName, serverID);
+            User temp = getUserAccountInfo(user.getUserName());
+            newRoom.addUser(user);
             availableServers.Add(newRoom);
+            temp.addChatRooms(newRoom);
+            updateUserAccountInfo(temp);
+            serverID++;
             return newRoom;
         }
 

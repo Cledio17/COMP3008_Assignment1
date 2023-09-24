@@ -52,9 +52,9 @@ namespace ChatServer
         }
 
         //Chat Servers
-        public ChatRoom addServer(string roomName)
+        public ChatRoom addServer(User user, string roomName)
         {
-            return usersDatabase.addNewChatServer(roomName);
+            return usersDatabase.addNewChatServer(user, roomName);
         }
 
         public HashSet<ChatRoom> getAllServers ()

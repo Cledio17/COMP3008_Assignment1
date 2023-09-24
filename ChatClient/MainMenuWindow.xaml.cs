@@ -54,7 +54,7 @@ namespace ChatClient
         private void createButton_Click(object sender, RoutedEventArgs e)
         {
             roomName = chatroombox.Text;
-            cr = foob.addServer(roomName);
+            cr = foob.addServer(us, roomName);
             foob.addJoinedServer(username, roomName);
             roomList.Items.Add(roomName);
             //refreshJoinedServer();
@@ -78,7 +78,6 @@ namespace ChatClient
             participantlist.Items.Clear();
             roomName = roomList.SelectedItem.ToString();
             List<ChatRoom> availbleRoom = us.getChatRooms();
-            MessageBox.Show("count: " + availbleRoom.Count);
             foreach (ChatRoom room in availbleRoom)
             {
                 if (room.getChatRoomName().Equals(roomName, StringComparison.OrdinalIgnoreCase))
