@@ -12,12 +12,19 @@ namespace ChatServer
         private String userName;
         private String ID;
         private PrivateMessage privateMessages;
+        private List<ChatRoom> chatRooms;
+
+        public User()
+        {
+            
+        }
 
         public User(string userName, string ID)
         {
             this.userName = userName;
             this.ID = ID;
             privateMessages = new PrivateMessage();
+            chatRooms = new List<ChatRoom>();
         }
 
         public void setUserName(String userName)
@@ -34,6 +41,13 @@ namespace ChatServer
         public void addPrivateMessage(User sender, String message) 
         {
             privateMessages.addMessage(sender, message);
+        }
+
+        public List<ChatRoom> getChatRooms() {  return chatRooms; }
+
+        public void addChatRooms(ChatRoom chatRoom)
+        {
+            chatRooms.Add(chatRoom);
         }
     }
 }

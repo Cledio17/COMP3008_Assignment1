@@ -1,6 +1,8 @@
-﻿using System;
+﻿using ChatServer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,14 +22,30 @@ namespace ChatClient2
     /// </summary>
     public partial class MainWindow : Window
     {
+        private DataServerInterface foob;
         public MainWindow()
         {
             InitializeComponent();
+            ChannelFactory<DataServerInterface> foobFactory;
+            NetTcpBinding tcp = new NetTcpBinding();
+            string URL = "net.tcp://localhost:8100/DataService";
+            foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
+            foob = foobFactory.CreateChannel();
         }
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-
+            User temp = new User();
+            if(!foob.isUserNameAvailable(txtusername.Text))
+            {
+                MainMenuWindow mainMenuWindow = new MainMenuWindow(txtusername.Text);
+                mainMenuWindow.Show();
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("The username is already being used. Please re-enter another username again.");
+            }
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)

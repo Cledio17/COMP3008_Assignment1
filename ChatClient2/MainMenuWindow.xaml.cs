@@ -10,14 +10,13 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace ChatClient
+namespace ChatClient2
 {
     /// <summary>
     /// Interaction logic for MainMenuWindow.xaml
@@ -45,7 +44,7 @@ namespace ChatClient
             string URL = "net.tcp://localhost:8100/DataService";
             foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
             foob = foobFactory.CreateChannel();
-            foob.addUserAccountInfo(us);    
+            foob.addUserAccountInfo(us);
         }
 
         private void logoutbutton_Click(object sender, RoutedEventArgs e)
