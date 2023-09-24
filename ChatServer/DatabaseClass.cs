@@ -10,14 +10,17 @@ namespace ChatServer
     public class DatabaseClass
     {
         private List<User> users;
+        private int userID = 1;
         public DatabaseClass()
         {
             users = new List<User>();
         }
 
-        public void addUserAccountInfo(User currentUser)
+        public void addUserAccountInfo(string username)
         {
-            users.Add(currentUser);
+            User newUser = new User(username, userID);
+            users.Add(newUser);
+            userID++;
         }
 
         public User getUserAccountInfo(String userName)
@@ -49,15 +52,14 @@ namespace ChatServer
         {
             bool isExisted = false;
 
-            for (int i = 0; i < users.Count; i++)
+            foreach (User user in users)
             {
-                if (users[i].getUserName().Equals(userName))
+                if (user.getUserName().Equals(userName))
                 {
                     isExisted = true;
                 }
             }
             return isExisted;
-
         }
 
         public int getNumberOfUsers()

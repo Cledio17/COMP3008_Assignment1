@@ -34,21 +34,22 @@ namespace ChatClient
         string uss;
         int serverIndex = 0;
         private DataServerInterface foob;
-        public MainMenuWindow(DataServerInterface foob, String userName)
+        MainWindow loginMenu;
+        public MainMenuWindow(DataServerInterface foob, String inUserName, MainWindow inLoginMenu)
         {
             InitializeComponent();
-            this.username = userName;
+            this.username = inUserName;
             usernamelabel.Content = username;
             cs = new ChatServerManager();
             cr = new ChatRoom(null, serverIndex);
             this.foob = foob;
-            us = foob.getUserAccountInfo(userName);
+            us = foob.getUserAccountInfo(username);
+            loginMenu = inLoginMenu;
         }
 
         private void logoutbutton_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
+            loginMenu.Show();   
             this.Close();
         }
 

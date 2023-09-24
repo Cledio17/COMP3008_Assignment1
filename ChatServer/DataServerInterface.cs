@@ -11,7 +11,7 @@ namespace ChatServer
     public interface DataServerInterface
     {
         [OperationContract]
-        void addUserAccountInfo(User user);
+        void addUserAccountInfo(string username);
 
         [OperationContract]
         User getUserAccountInfo(string userName);

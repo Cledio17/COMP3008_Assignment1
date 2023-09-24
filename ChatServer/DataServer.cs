@@ -17,9 +17,9 @@ namespace ChatServer
             usersDatabase = new DatabaseClass();
         }
 
-        public void addUserAccountInfo(User user)
+        public void addUserAccountInfo(string username)
         {
-            usersDatabase.addUserAccountInfo(user);
+            usersDatabase.addUserAccountInfo(username);
         }
 
         public User getUserAccountInfo(string userName)

@@ -40,14 +40,12 @@ namespace ChatClient
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             username = txtusername.Text;
-            if (!foob.isUserNameAvailable(txtusername.Text))
+            if (!foob.isUserNameAvailable(username))
             {
-                MainMenuWindow mainMenuWindow = new MainMenuWindow(foob,txtusername.Text);
+                foob.addUserAccountInfo(username);
+                MainMenuWindow mainMenuWindow = new MainMenuWindow(foob,txtusername.Text, this);
                 mainMenuWindow.Show();
-                this.Close();
-                User us = new User(username, "123");
-                us.setUserName(username);
-                foob.addUserAccountInfo(us);
+                this.Hide();
             }
             else
             {
