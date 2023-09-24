@@ -4,6 +4,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ChatServer
 {
@@ -48,14 +49,13 @@ namespace ChatServer
             privateMessages.addMessage(sender, message);
         }
 
-        public List<ChatRoom> getChatRooms() 
-        {  
-            return chatRooms; 
-        }
-
         public void addChatRooms(ChatRoom chatRoom)
         {
             chatRooms.Add(chatRoom);
+        }
+        public List<ChatRoom> getChatRooms()
+        {
+            return chatRooms;
         }
     }
 }

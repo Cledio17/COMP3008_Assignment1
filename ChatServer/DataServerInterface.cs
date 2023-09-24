@@ -33,6 +33,7 @@ namespace ChatServer
         [OperationContract]
         ChatRoom addServer(string roomName);
 
-
+        [OperationContract]
+        HashSet<ChatRoom> getAllServers();
     }
 }

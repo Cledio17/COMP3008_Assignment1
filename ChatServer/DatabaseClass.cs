@@ -98,6 +98,7 @@ namespace ChatServer
 
         public List<ChatRoom> getChatRooms(string userName)
         {
+            MessageBox.Show("Number: " + availableServers.Count);
             User theUser = null;
             foreach (User user in users)
             {
@@ -125,11 +126,11 @@ namespace ChatServer
         /*public void removeServer(ChatRoom server)
         {
             availableServers.Remove(server);
-        }
+        }*/
 
         public HashSet<ChatRoom> getAllServer()
         {
             return availableServers;
-        }*/
+        }
     }
 }

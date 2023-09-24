@@ -56,5 +56,10 @@ namespace ChatServer
         {
             return usersDatabase.addNewChatServer(roomName);
         }
+
+        public HashSet<ChatRoom> getAllServers ()
+        {
+            return usersDatabase.getAllServer();
+        }
     }
 }

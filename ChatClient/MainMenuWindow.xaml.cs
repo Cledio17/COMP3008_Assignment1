@@ -18,6 +18,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace ChatClient 
 {
@@ -33,14 +34,14 @@ namespace ChatClient
         string uss;
         private DataServerInterface foob;
         MainWindow loginMenu;
-        public MainMenuWindow (DataServerInterface foob, User theUser, MainWindow inLoginMenu)
+        public MainMenuWindow (DataServerInterface inFoob, User theUser, MainWindow inLoginMenu)
         {
             InitializeComponent();
             this.username = theUser.getUserName();
             us = theUser;
             usernamelabel.Content = username;
             userID.Content = us;
-            this.foob = foob;
+            this.foob = inFoob;
             loginMenu = inLoginMenu;
         }
 
@@ -55,14 +56,15 @@ namespace ChatClient
             roomName = chatroombox.Text;
             cr = foob.addServer(roomName);
             foob.addJoinedServer(username, roomName);
-            refreshJoinedServer();
+            roomList.Items.Add(roomName);
+            //refreshJoinedServer();
             chatroombox.Clear(); //clear the chat room box after creating the chat room
         }
 
         private void refreshJoinedServer()
         {
             roomList.Items.Clear();
-            List<ChatRoom> joinedServers = foob.getJoinedServers(username);
+            HashSet<ChatRoom> joinedServers = foob.getAllServers();
             foreach (ChatRoom room in joinedServers)
             {
                 roomList.Items.Add(room.getChatRoomName());
@@ -71,11 +73,12 @@ namespace ChatClient
 
         private void roomList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            /*msgdisplaybox.Document.Blocks.Clear();
+            msgdisplaybox.Document.Blocks.Clear();
             int index = 0;
             participantlist.Items.Clear();
             roomName = roomList.SelectedItem.ToString();
-            HashSet<ChatRoom> availbleRoom = cs.getAllServer();
+            List<ChatRoom> availbleRoom = us.getChatRooms();
+            MessageBox.Show("count: " + availbleRoom.Count);
             foreach (ChatRoom room in availbleRoom)
             {
                 if (room.getChatRoomName().Equals(roomName, StringComparison.OrdinalIgnoreCase))
@@ -101,7 +104,7 @@ namespace ChatClient
                 msgdisplaybox.AppendText(combinedMessage);
                 msgdisplaybox.AppendText(Environment.NewLine);
                 index++;
-            }*/
+            }
         }
 
         private void sendmsgbtn_Click(object sender, RoutedEventArgs e)
