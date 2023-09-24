@@ -12,9 +12,14 @@ namespace ChatServer
     {
         private static HashSet<ChatRoom> availableServers = new HashSet<ChatRoom>();
 
-        public static void addServer(ChatRoom server)
+        private static int serverNo = 1000;
+
+        public static ChatRoom addServer(string roomName)
         {
-            availableServers.Add(server);
+            ChatRoom newRoom = new ChatRoom(roomName, serverNo);
+            availableServers.Add(newRoom);
+            serverNo++;
+            return newRoom;
         }
 
         public static void removeServer(ChatRoom server)

@@ -1,6 +1,8 @@
-﻿using System;
+﻿using ChatServer;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UserDatabaseServer;
 
 namespace ChatClient
 {
@@ -21,6 +24,8 @@ namespace ChatClient
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        string username = string.Empty;
         public MainWindow()
         {
             InitializeComponent();
@@ -28,7 +33,8 @@ namespace ChatClient
 
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
-            MainMenuWindow mainMenuWindow = new MainMenuWindow(txtusername.Text);
+            username = txtusername.Text;
+            MainMenuWindow mainMenuWindow = new MainMenuWindow(UserBusiness.login(username));
             mainMenuWindow.Show();
             this.Close();
         }

@@ -8,11 +8,11 @@
         mc:Ignorable="d"
         Title="MainMenuWindow" Height="450" Width="800">
     <Grid>
-        <Label x:Name="usernamelabel" Content="Username" HorizontalAlignment="Left" Margin="678,10,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <Label x:Name="usernamelabel" Content="Username" HorizontalAlignment="Left" Margin="666,28,0,0" VerticalAlignment="Top" FontSize="20"/>
         <ListBox Name ="roomList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,10,661,110" SelectionChanged="roomList_SelectionChanged"/>
 
-        <TextBox x:Name="chatroombox" HorizontalAlignment="Left" Margin="666,50,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" materialDesign:HintAssist.Hint="Chat Room Name" Foreground="Black"/>
-        <Button Content="Create" HorizontalAlignment="Left" Margin="689,89,0,0" VerticalAlignment="Top" Height="32" Width="75" Click="createButton_Click"/>
+        <TextBox x:Name="chatroombox" HorizontalAlignment="Left" Margin="666,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" materialDesign:HintAssist.Hint="Chat Room Name" Foreground="Black"/>
+        <Button Content="Create" HorizontalAlignment="Left" Margin="688,98,0,0" VerticalAlignment="Top" Height="32" Width="76" Click="createButton_Click"/>
         <RichTextBox x:Name="msgdisplaybox" Width="475" Margin="165,40,160,118" >
             <FlowDocument/>
         </RichTextBox>
@@ -25,6 +25,7 @@
         <TextBox x:Name="findChatRoom" HorizontalAlignment="Left" Margin="19,341,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" materialDesign:HintAssist.Hint="Chat Room ID" Foreground="Black"/>
         <Button Content="Find" HorizontalAlignment="Left" Margin="28,377,0,0" VerticalAlignment="Top" Height="32" Width="75" Click="findButton_Click"/>
         <Label x:Name="currRoom" Content="Room" HorizontalAlignment="Left" Margin="154,11,0,0" VerticalAlignment="Top" Width="124"/>
+        <Label x:Name="userID" Content="UserID" HorizontalAlignment="Left" Margin="754,14,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

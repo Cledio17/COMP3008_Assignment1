@@ -31,14 +31,14 @@ namespace ChatClient
         ChatRoom cr;
         User us;
         string uss;
-        int serverIndex = 1000;
         int serverID = 0;
-        public MainMenuWindow(string username)
+        public MainMenuWindow(User theUser)
         {
             InitializeComponent();
-            this.username = username;
+            us = theUser;
+            this.username = us.getUserName();
             usernamelabel.Content = username;
-            us = new User(username, "123");
+            userID.Content = us.getID();
         }
 
         private void logoutbutton_Click(object sender, RoutedEventArgs e)
@@ -51,13 +51,11 @@ namespace ChatClient
         private void createButton_Click(object sender, RoutedEventArgs e)
         {
             roomName = chatroombox.Text;
-            cr = new ChatRoom(roomName, serverIndex);
             HashSet<ChatRoom> availbleServers = ChatServerManager.getAllServer();
+            cr = ChatServerManager.addServer(roomName);
             cr.addUser(us);
-            ChatServerManager.addServer(cr);
             roomList.Items.Add(cr.getChatRoomName());
             currRoom.Content = cr.getId();
-            serverIndex++;
             chatroombox.Clear(); //clear the chat room box after creating the chat room
         }
 
