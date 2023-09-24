@@ -29,16 +29,21 @@ namespace ChatClient
         string username = string.Empty;
         string roomName = string.Empty;
         ChatRoom cr;
+        ChatServerManager cs;
         User us;
         string uss;
-        int serverID = 0;
-        public MainMenuWindow(User theUser)
+        int serverIndex = 0;
+        private DataServerInterface foob;
+        public MainMenuWindow(DataServerInterface foob, String userName)
         {
             InitializeComponent();
-            us = theUser;
-            this.username = us.getUserName();
+            this.username = userName;
             usernamelabel.Content = username;
-            userID.Content = us.getID();
+            us = new User(username, "123");
+            cs = new ChatServerManager();
+            cr = new ChatRoom(null, serverIndex);
+            this.foob = foob;
+            foob.addUserAccountInfo(us);
         }
 
         private void logoutbutton_Click(object sender, RoutedEventArgs e)
@@ -51,12 +56,15 @@ namespace ChatClient
         private void createButton_Click(object sender, RoutedEventArgs e)
         {
             roomName = chatroombox.Text;
-            HashSet<ChatRoom> availbleServers = ChatServerManager.getAllServer();
-            cr = ChatServerManager.addServer(roomName);
+            cr = new ChatRoom(roomName, serverIndex);
+            HashSet<ChatRoom> availbleServers = cs.getAllServer();
             cr.addUser(us);
+            us.addChatRooms(cr);
+            cs.addServer(cr);
             roomList.Items.Add(cr.getChatRoomName());
-            currRoom.Content = cr.getId();
+            serverIndex++;
             chatroombox.Clear(); //clear the chat room box after creating the chat room
+            foob.updateUserAccountInfo(us);
         }
 
         private void roomList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -65,7 +73,7 @@ namespace ChatClient
             int index = 0;
             participantlist.Items.Clear();
             roomName = roomList.SelectedItem.ToString();
-            HashSet<ChatRoom> availbleRoom = ChatServerManager.getAllServer();
+            HashSet<ChatRoom> availbleRoom = cs.getAllServer();
             foreach (ChatRoom room in availbleRoom)
             {
                 if (room.getChatRoomName().Equals(roomName, StringComparison.OrdinalIgnoreCase))
@@ -170,19 +178,19 @@ namespace ChatClient
 
         private void findButton_Click(object sender, RoutedEventArgs e)
         {
-            serverID = int.Parse(findChatRoom.Text);
-            HashSet<ChatRoom> availbleRoom = ChatServerManager.getAllServer();
-            foreach (ChatRoom room in availbleRoom)
-            {
-                if (room.getId() == serverID)
-                {
-                    cr = room;
-                    cr.addUser(us);
-                    roomList.Items.Add(cr.getChatRoomName());
-                    currRoom.Content = cr.getId();
-                }
-            }
-            findChatRoom.Clear();
+            //serverID = int.Parse(findChatRoom.Text);
+            //HashSet<ChatRoom> availbleRoom = ChatServerManager.getAllServer();
+            //foreach (ChatRoom room in availbleRoom)
+            //{
+            //    if (room.getId() == serverID)
+            //    {
+            //        cr = room;
+            //        cr.addUser(us);
+            //        roomList.Items.Add(cr.getChatRoomName());
+            //        currRoom.Content = cr.getId();
+            //    }
+            //}
+            //findChatRoom.Clear();
         }
     }
 }

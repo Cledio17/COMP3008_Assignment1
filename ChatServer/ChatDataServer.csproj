@@ -68,6 +68,7 @@
     <Compile Include="ChatRoom.cs" />
     <Compile Include="ChatRoomInterface.cs" />
     <Compile Include="ChatServerManager.cs" />
+    <Compile Include="DatabaseClass.cs" />
     <Compile Include="DataServer.cs" />
     <Compile Include="DataServerInterface.cs" />
     <Compile Include="PrivateMessage.cs" />

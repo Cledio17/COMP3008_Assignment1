@@ -127,6 +127,10 @@
     <Resource Include="fakediscordtrans.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ChatClient\ChatClient.csproj">
+      <Project>{7c7b81d4-1af1-4d6b-ab52-300040f1ae5d}</Project>
+      <Name>ChatClient</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChatServer\ChatDataServer.csproj">
       <Project>{699D1A39-2608-4B40-B5B2-792D268A0C7D}</Project>
       <Name>ChatDataServer</Name>

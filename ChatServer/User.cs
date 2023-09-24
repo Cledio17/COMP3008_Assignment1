@@ -10,7 +10,7 @@ namespace ChatServer
     public class User
     {
         private String userName;
-        private int ID;
+        private string ID;
         private PrivateMessage privateMessages;
         private List<ChatRoom> chatRooms;
 
@@ -19,7 +19,7 @@ namespace ChatServer
             
         }
 
-        public User(string userName, int ID)
+        public User(string userName, string ID)
         {
             this.userName = userName;
             this.ID = ID;
@@ -32,11 +32,11 @@ namespace ChatServer
             this.userName = userName;
         }
         
-        public void setID(int ID) { this.ID = ID;}
+        public void setID(string ID) { this.ID = ID;}
 
         public String getUserName() { return this.userName;}
 
-        public int getID() { return this.ID;}
+        public string getID() { return this.ID;}
 
         public void addPrivateMessage(User sender, String message) 
         {

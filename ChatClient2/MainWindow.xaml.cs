@@ -22,30 +22,34 @@ namespace ChatClient2
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DataServerInterface foob;
+        private DataServerInterface foob = null;
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void btnLogin_Click(object sender, RoutedEventArgs e)
+        {
             ChannelFactory<DataServerInterface> foobFactory;
             NetTcpBinding tcp = new NetTcpBinding();
             string URL = "net.tcp://localhost:8100/DataService";
             foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
             foob = foobFactory.CreateChannel();
-        }
-
-        private void btnLogin_Click(object sender, RoutedEventArgs e)
-        {
             User temp = new User();
-            if(!foob.isUserNameAvailable(txtusername.Text))
+            if(foob != null)
             {
-                MainMenuWindow mainMenuWindow = new MainMenuWindow(txtusername.Text);
-                mainMenuWindow.Show();
-                this.Close();
+                if (!foob.isUserNameAvailable(txtusername.Text))
+                {
+                    MainMenuWindow mainMenuWindow = new MainMenuWindow(foob, txtusername.Text);
+                    mainMenuWindow.Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("The username is already being used. Please re-enter another username again.");
+                }
             }
-            else
-            {
-                MessageBox.Show("The username is already being used. Please re-enter another username again.");
-            }
+            
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)

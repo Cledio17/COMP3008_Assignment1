@@ -31,7 +31,7 @@ namespace ChatClient2
         string uss;
         int serverIndex = 0;
         private DataServerInterface foob;
-        public MainMenuWindow(string username)
+        public MainMenuWindow(DataServerInterface foob, string username)
         {
             InitializeComponent();
             this.username = username;
@@ -39,11 +39,7 @@ namespace ChatClient2
             us = new User(username, "123");
             cs = new ChatServerManager();
             cr = new ChatRoom(null, serverIndex);
-            ChannelFactory<DataServerInterface> foobFactory;
-            NetTcpBinding tcp = new NetTcpBinding();
-            string URL = "net.tcp://localhost:8100/DataService";
-            foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
-            foob = foobFactory.CreateChannel();
+            this.foob = foob;
             foob.addUserAccountInfo(us);
         }
 

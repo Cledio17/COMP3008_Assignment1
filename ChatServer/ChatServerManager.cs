@@ -8,26 +8,21 @@ using System.Threading.Tasks;
 namespace ChatServer
 {
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
-    public static class ChatServerManager
+    public class ChatServerManager
     {
-        private static HashSet<ChatRoom> availableServers = new HashSet<ChatRoom>();
+        private HashSet<ChatRoom> availableServers = new HashSet<ChatRoom>();
 
-        private static int serverNo = 1000;
-
-        public static ChatRoom addServer(string roomName)
+        public void addServer(ChatRoom newChatRoom)
         {
-            ChatRoom newRoom = new ChatRoom(roomName, serverNo);
-            availableServers.Add(newRoom);
-            serverNo++;
-            return newRoom;
+            availableServers.Add(newChatRoom);
         }
 
-        public static void removeServer(ChatRoom server)
+        public void removeServer(ChatRoom server)
         {
             availableServers.Remove(server);
         }
 
-        public static HashSet<ChatRoom> getAllServer()
+        public HashSet<ChatRoom> getAllServer()
         {
             return availableServers;
         }
