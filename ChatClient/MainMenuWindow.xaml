@@ -35,6 +35,7 @@
         <TextBox x:Name="privatemsgtxtbox" HorizontalAlignment="Left" Margin="165,356,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Enter your message here" VerticalAlignment="Top" Width="365" Height="58"/>
         <Button x:Name="privatesendmsgbtn" Content="Send" HorizontalAlignment="Left" Margin="544,386,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="sendmsgbtn_Click"/>
         <Button x:Name="privateuploadfilebtn" Content="Upload File" HorizontalAlignment="Left" Margin="544,353,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="uploadfilebtn_Click" />
+        <Button x:Name="leavebtn" Content="Leave" HorizontalAlignment="Left" Margin="544,11,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="leavebtn_Click" />
 
     </Grid>
 </Window>

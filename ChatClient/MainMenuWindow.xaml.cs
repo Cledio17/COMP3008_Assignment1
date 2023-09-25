@@ -40,7 +40,7 @@ namespace ChatClient
             this.username = theUser.getUserName();
             us = theUser;
             usernamelabel.Content = username;
-            userID.Content = us;
+            userID.Content = "ID: " + us.getID();
             this.foob = inFoob;
             loginMenu = inLoginMenu;
         }
@@ -57,18 +57,18 @@ namespace ChatClient
             cr = foob.addServer(us, roomName);
             //foob.addJoinedServer(username, roomName);
             roomList.Items.Add(roomName);
-            //refreshJoinedServer();
+            refreshAvailableServer();
             chatroombox.Clear(); //clear the chat room box after creating the chat room
             us = foob.getUserAccountInfo(us.getUserName());
         }
 
-        private void refreshJoinedServer()
+        private void refreshAvailableServer()
         {
-            roomList.Items.Clear();
-            List<ChatRoom> joinedServers = foob.getJoinedServers(us.getUserName());
-            foreach (ChatRoom room in joinedServers)
+            allserverlist.Items.Clear();
+            HashSet<ChatRoom> allServers = foob.getAllServers();
+            foreach (ChatRoom room in allServers)
             {
-                roomList.Items.Add(room.getChatRoomName());
+                allserverlist.Items.Add(room.getChatRoomName());
             }
         }
 
