@@ -180,21 +180,9 @@ namespace ChatClient
             catch (Exception ex) { throw; }
         }
 
-        private void findButton_Click(object sender, RoutedEventArgs e)
+        private void browsebtn_Click(object sender, RoutedEventArgs e)
         {
-            //serverID = int.Parse(findChatRoom.Text);
-            //HashSet<ChatRoom> availbleRoom = ChatServerManager.getAllServer();
-            //foreach (ChatRoom room in availbleRoom)
-            //{
-            //    if (room.getId() == serverID)
-            //    {
-            //        cr = room;
-            //        cr.addUser(us);
-            //        roomList.Items.Add(cr.getChatRoomName());
-            //        currRoom.Content = cr.getId();
-            //    }
-            //}
-            //findChatRoom.Clear();
+            
         }
     }
 }
