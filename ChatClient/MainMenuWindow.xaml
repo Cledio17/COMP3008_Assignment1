@@ -11,16 +11,16 @@
         <Label x:Name="usernamelabel" Content="Username" HorizontalAlignment="Left" Margin="670,23,0,0" VerticalAlignment="Top" FontSize="20"/>
         <ListBox Name ="roomList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,40,661,256" SelectionChanged="roomList_SelectionChanged"/>
 
-        <TextBox x:Name="chatroombox" HorizontalAlignment="Left" Margin="670,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" materialDesign:HintAssist.Hint="Chat Room Name" Foreground="Black"/>
-        <Button Content="Create" HorizontalAlignment="Left" Margin="688,98,0,0" VerticalAlignment="Top" Height="32" Width="76" Click="createButton_Click"/>
+        <TextBox x:Name="chatroombox" HorizontalAlignment="Left" Margin="674,259,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" materialDesign:HintAssist.Hint="Chat Room Name" Foreground="Black"/>
+        <Button Content="Create" HorizontalAlignment="Left" Margin="692,299,0,0" VerticalAlignment="Top" Height="32" Width="76" Click="createButton_Click"/>
         <RichTextBox x:Name="msgdisplaybox" Margin="165,40,175,287" >
             <FlowDocument/>
         </RichTextBox>
         <Button x:Name="logoutbutton" Content="Log Out" HorizontalAlignment="Left" Margin="701,376,0,0" VerticalAlignment="Top" Height="40" Width="89" Click="logoutbutton_Click"/>
         <TextBox x:Name="msgtxtbox" HorizontalAlignment="Left" Margin="165,153,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Enter your message here" VerticalAlignment="Top" Width="365" Height="58"/>
         <Button x:Name="sendmsgbtn" Content="Send" HorizontalAlignment="Left" Margin="544,183,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="sendmsgbtn_Click"/>
-        <ListBox x:Name="participantlist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="670,164,18,100"/>
-        <Label Content="Participants" HorizontalAlignment="Left" Margin="666,135,0,0" VerticalAlignment="Top"/>
+        <ListBox x:Name="participantlist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="674,87,14,177"/>
+        <Label Content="Participants" HorizontalAlignment="Left" Margin="670,58,0,0" VerticalAlignment="Top"/>
         <Button x:Name="uploadfilebtn" Content="Upload File" HorizontalAlignment="Left" Margin="544,150,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="uploadfilebtn_Click" />
         <Label x:Name="currRoom" Content="Room" HorizontalAlignment="Left" Margin="165,11,0,0" VerticalAlignment="Top" Width="54"/>
         <Label x:Name="userID" Content="UserID" HorizontalAlignment="Left" Margin="670,-1,0,0" VerticalAlignment="Top"/>
