@@ -53,6 +53,20 @@ namespace ChatServer
         {
             chatRooms.Add(chatRoom);
         }
+
+        public void removeChatRooms(ChatRoom chatRoom)
+        {
+            List<ChatRoom> roomList = this.chatRooms;
+            for (int i = 0; i < chatRooms.Count; i++)
+            {
+                if (roomList[i].getChatRoomName().Equals(chatRoom.getChatRoomName()))
+                {
+                    roomList.RemoveAt(i);
+                }
+            }
+            this.chatRooms.Clear();
+            this.chatRooms = roomList;
+        }
         public List<ChatRoom> getChatRooms()
         {
             return chatRooms;
