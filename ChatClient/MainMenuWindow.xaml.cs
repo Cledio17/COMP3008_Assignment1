@@ -55,10 +55,11 @@ namespace ChatClient
         {
             roomName = chatroombox.Text;
             cr = foob.addServer(us, roomName);
-            foob.addJoinedServer(username, roomName);
+            //foob.addJoinedServer(username, roomName);
             roomList.Items.Add(roomName);
             //refreshJoinedServer();
             chatroombox.Clear(); //clear the chat room box after creating the chat room
+            us = foob.getUserAccountInfo(us.getUserName());
         }
 
         private void refreshJoinedServer()
