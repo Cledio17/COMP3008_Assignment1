@@ -40,7 +40,7 @@ namespace ChatClient
             this.username = theUser.getUserName();
             us = theUser;
             usernamelabel.Content = username;
-            userID.Content = us;
+            userID.Content = us.getID();
             this.foob = inFoob;
             loginMenu = inLoginMenu;
         }
