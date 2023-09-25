@@ -203,10 +203,5 @@ namespace ChatClient
             }
             catch (Exception ex) { throw; }
         }
-
-        private void browsebtn_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
     }
 }
