@@ -192,5 +192,10 @@ namespace ChatClient
         {
             
         }
+
+        private void leavebtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

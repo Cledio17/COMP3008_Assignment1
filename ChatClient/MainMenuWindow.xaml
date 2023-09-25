@@ -6,36 +6,37 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:ChatClient"
         mc:Ignorable="d"
-        Title="MainMenuWindow" Height="450" Width="800">
+        Title="Fake Discord" Height="550" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
-        <Label x:Name="usernamelabel" Content="Username" HorizontalAlignment="Left" Margin="670,23,0,0" VerticalAlignment="Top" FontSize="20"/>
-        <ListBox Name ="roomList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,40,661,256" SelectionChanged="roomList_SelectionChanged"/>
-
-        <TextBox x:Name="chatroombox" HorizontalAlignment="Left" Margin="670,58,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" materialDesign:HintAssist.Hint="Chat Room Name" Foreground="Black"/>
-        <Button Content="Create" HorizontalAlignment="Left" Margin="688,98,0,0" VerticalAlignment="Top" Height="32" Width="76" Click="createButton_Click"/>
-        <RichTextBox x:Name="msgdisplaybox" Margin="165,40,175,287" >
+        <Label x:Name="usernamelabel" Content="Username" HorizontalAlignment="Left" Margin="10,435,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <ListBox Name ="roomList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="7,25,664,336" SelectionChanged="roomList_SelectionChanged"/>
+        <TextBox x:Name="chatroombox" HorizontalAlignment="Left" Margin="230,479,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" materialDesign:HintAssist.Hint="Chat Room Name" Foreground="Black"/>
+        <Button Content="Create" HorizontalAlignment="Center" Margin="0,475,0,0" VerticalAlignment="Top" Height="32" Width="76" Click="createButton_Click"/>
+        <RichTextBox x:Name="msgdisplaybox" Margin="147,32,193,321" >
             <FlowDocument/>
         </RichTextBox>
-        <Button x:Name="logoutbutton" Content="Log Out" HorizontalAlignment="Left" Margin="701,376,0,0" VerticalAlignment="Top" Height="40" Width="89" Click="logoutbutton_Click"/>
-        <TextBox x:Name="msgtxtbox" HorizontalAlignment="Left" Margin="165,153,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Enter your message here" VerticalAlignment="Top" Width="365" Height="58"/>
-        <Button x:Name="sendmsgbtn" Content="Send" HorizontalAlignment="Left" Margin="544,183,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="sendmsgbtn_Click"/>
-        <ListBox x:Name="participantlist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="670,164,18,100"/>
-        <Label Content="Participants" HorizontalAlignment="Left" Margin="666,135,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="uploadfilebtn" Content="Upload File" HorizontalAlignment="Left" Margin="544,150,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="uploadfilebtn_Click" />
-        <Label x:Name="currRoom" Content="Room" HorizontalAlignment="Left" Margin="165,11,0,0" VerticalAlignment="Top" Width="54"/>
-        <Label x:Name="userID" Content="UserID" HorizontalAlignment="Left" Margin="670,-1,0,0" VerticalAlignment="Top"/>
-        <Label Content="Joined Server" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top"/>
-        <Label Content="Available Server" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
-        <ListBox x:Name ="allserverlist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="9,230,661,66" SelectionChanged="roomList_SelectionChanged"/>
-        <Button x:Name="joinbutton" Content="Join" HorizontalAlignment="Left" Margin="44,373,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="privatemsglbl" Content="Private Messaging" HorizontalAlignment="Left" Margin="165,217,0,0" VerticalAlignment="Top" Width="109"/>
-        <RichTextBox x:Name="privatemsgdisplaybox" Margin="165,243,175,84" >
+        <Button x:Name="logoutbutton" Content="Log Out" HorizontalAlignment="Left" Margin="10,478,0,0" VerticalAlignment="Top" Height="32" Width="92" Click="logoutbutton_Click"/>
+        <TextBox x:Name="msgtxtbox" HorizontalAlignment="Left" Margin="147,218,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Enter your message here" VerticalAlignment="Top" Width="365" Height="58"/>
+        <Button x:Name="sendmsgbtn" Content="Send" HorizontalAlignment="Left" Margin="517,248,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="sendmsgbtn_Click"/>
+        <ListBox x:Name="participantlist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="638,20,50,336"/>
+        <Label Content="Participants" HorizontalAlignment="Left" Margin="638,-4,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="uploadfilebtn" Content="Upload File" HorizontalAlignment="Left" Margin="517,213,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="uploadfilebtn_Click" />
+        <Label x:Name="currRoom" Content="Room" HorizontalAlignment="Left" Margin="141,1,0,0" VerticalAlignment="Top" Width="54"/>
+        <Label x:Name="userID" Content="UserID" HorizontalAlignment="Left" Margin="10,413,0,0" VerticalAlignment="Top"/>
+        <Label Content="Joined Server" HorizontalAlignment="Left" Margin="7,1,0,0" VerticalAlignment="Top"/>
+        <Label Content="Available Server" HorizontalAlignment="Left" Margin="147,286,0,0" VerticalAlignment="Top"/>
+        <ListBox x:Name ="allserverlist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="147,310,335,61" SelectionChanged="roomList_SelectionChanged"/>
+        <Button x:Name="joinbutton" Content="Join" HorizontalAlignment="Left" Margin="147,478,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="sendtolabel" Content="Send To:" HorizontalAlignment="Left" Margin="634,283,0,0" VerticalAlignment="Top" Width="110"/>
+        <RichTextBox x:Name="privatemsgdisplaybox" Margin="512,312,16,105" >
             <FlowDocument/>
         </RichTextBox>
-        <TextBox x:Name="privatemsgtxtbox" HorizontalAlignment="Left" Margin="165,356,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Enter your message here" VerticalAlignment="Top" Width="365" Height="58"/>
-        <Button x:Name="privatesendmsgbtn" Content="Send" HorizontalAlignment="Left" Margin="544,386,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="sendmsgbtn_Click"/>
-        <Button x:Name="privateuploadfilebtn" Content="Upload File" HorizontalAlignment="Left" Margin="544,353,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="uploadfilebtn_Click" />
-        <Button x:Name="leavebtn" Content="Leave" HorizontalAlignment="Left" Margin="544,11,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="leavebtn_Click" />
+        <TextBox x:Name="privatemsgtxtbox" HorizontalAlignment="Left" Margin="512,436,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Enter your message here" VerticalAlignment="Top" Width="272" Height="28"/>
+        <Button x:Name="privatesendmsgbtn" Content="Send" HorizontalAlignment="Left" Margin="608,472,0,0" VerticalAlignment="Top" Height="28" Width="80" Click="sendmsgbtn_Click"/>
+        <Button x:Name="privateuploadfilebtn" Content="Upload File" HorizontalAlignment="Left" Margin="512,472,0,0" VerticalAlignment="Top" Height="28" Width="80" Click="uploadfilebtn_Click" />
+        <Button x:Name="leavebtn" Content="Leave" HorizontalAlignment="Left" Margin="195,1,0,0" VerticalAlignment="Top" Height="28" Width="70" Click="leavebtn_Click" />
+        <Button x:Name="refreshbtn" Content="Refresh" HorizontalAlignment="Left" Margin="10,376,0,0" VerticalAlignment="Top" Height="32" Width="92" Click="logoutbutton_Click"/>
+        <Label x:Name="privatemsglbl" Content="Private Messaging" HorizontalAlignment="Left" Margin="512,283,0,0" VerticalAlignment="Top" Width="110"/>
 
     </Grid>
 </Window>
