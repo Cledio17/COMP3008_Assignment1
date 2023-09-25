@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Remoting.Messaging;
+using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -27,40 +29,50 @@ namespace ChatClient
     /// </summary>
     public partial class MainMenuWindow : Window
     {
-        string username = string.Empty;
-        string roomName = string.Empty;
-        User us;
-        ChatRoom cr;
-        string uss;
-        private DataServerInterface foob;
+        string username = ""; //loggin in user username
+        User us; //logged in user
+        ChatRoom cr; //current selected room
         MainWindow loginMenu;
-        string currRoomName;
+        private DataServerInterface foob;
         public MainMenuWindow (DataServerInterface inFoob, User theUser, MainWindow inLoginMenu)
         {
             InitializeComponent();
-            this.username = theUser.getUserName();
-            us = theUser;
+            this.foob = inFoob;
+            this.us = theUser;
+            this.username = us.getUserName();
+            this.loginMenu = inLoginMenu;
             usernamelabel.Content = username;
             userID.Content = "ID: " + us.getID();
-            this.foob = inFoob;
-            loginMenu = inLoginMenu;
-        }
-
-        private void logoutbutton_Click(object sender, RoutedEventArgs e)
-        {
-            loginMenu.Show();   
-            this.Close();
+            List<ChatRoom> joinedRooms = foob.getJoinedServers(username);
+            foreach (ChatRoom room in joinedRooms)
+            {
+                roomList.Items.Add(room.getChatRoomName());
+            }
+            refreshAvailableServer();
         }
 
         private void createButton_Click(object sender, RoutedEventArgs e)
         {
-            roomName = chatroombox.Text;
-            cr = foob.addServer(us, roomName);
-            //foob.addJoinedServer(username, roomName);
-            roomList.Items.Add(roomName);
-            refreshAvailableServer();
+            string roomName = chatroombox.Text;
             chatroombox.Clear(); //clear the chat room box after creating the chat room
-            us = foob.getUserAccountInfo(us.getUserName());
+            if (!roomName.Equals("") && roomName != null)
+            {
+                if (!foob.checkIsRoomNameExist(roomName))
+                {
+                    foob.addServer(us, roomName);
+                    roomList.Items.Add(roomName);
+                    refreshAvailableServer();
+                    us = foob.getUserAccountInfo(us.getUserName());
+                }
+                else
+                {
+                    MessageBox.Show("Room name used. Try again!");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter a room name");
+            }
         }
 
         private void refreshAvailableServer()
@@ -76,13 +88,12 @@ namespace ChatClient
         private void roomList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             msgdisplaybox.Document.Blocks.Clear();
-            int index = 0;
             participantlist.Items.Clear();
             if (roomList.SelectedItem != null)
             {
-                roomName = roomList.SelectedItem.ToString();
-                List<ChatRoom> availbleRoom = us.getChatRooms();
-                foreach (ChatRoom room in availbleRoom)
+                string roomName = roomList.SelectedItem.ToString();
+                List<ChatRoom> joinedRooms = foob.getJoinedServers(username);
+                foreach (ChatRoom room in joinedRooms)
                 {
                     if (room.getChatRoomName().Equals(roomName, StringComparison.OrdinalIgnoreCase))
                     {
@@ -90,10 +101,13 @@ namespace ChatClient
                     }
                 }
                 currRoom.Content = cr.getId();
-                currRoomName = roomName;
+
+                int index = 0;
+                string uss;
                 List<String> messages = cr.getMessages();
                 List<String> messagesby = cr.getMessagesBy();
                 List<User> _users = cr.getUser();
+                cr = foob.getServerInfo(cr.getChatRoomName());
                 foreach (User user in _users)
                 {
                     uss = user.getUserName();
@@ -110,29 +124,57 @@ namespace ChatClient
                     index++;
                 }
             }
-            else
-            {
-
-            }
         }
 
-        private void sendmsgbtn_Click(object sender, RoutedEventArgs e)
+        private void joinbutton_Click(object sender, RoutedEventArgs e)
         {
-            if(roomList.SelectedItem != null)
+            if (allserverlist.SelectedItem != null)
             {
-                cr.addMessages(username, msgtxtbox.Text);
-                string msg = username + ": " + msgtxtbox.Text;
-                msgdisplaybox.AppendText(msg);
-                msgdisplaybox.AppendText(Environment.NewLine);
-                msgtxtbox.Clear();
+                /*string selectedServer = allserverlist.SelectedItem.ToString();
+                allserverlist.SelectedItem = null;
+                foob.addJoinedServer(username, selectedServer);
+                roomList.Items.Add(selectedServer);
+                us = foob.getUserAccountInfo(username); //get latest user info*/
+            }
+            else
+            {
+                MessageBox.Show("Please select a server to join.");
             }
         }
 
         private void leavebtn_Click(object sender, RoutedEventArgs e)
         {
-            foob.leaveChat(username, currRoomName);
-            roomList.Items.Remove(currRoomName);
-            msgdisplaybox.Document.Blocks.Clear();
+            if (cr != null)
+            {
+                string currRoomName = cr.getChatRoomName();
+                foob.leaveRoom(username, currRoomName);
+                roomList.Items.Remove(currRoomName);
+                msgdisplaybox.Document.Blocks.Clear();
+                participantlist.Items.Clear();
+                us = foob.getUserAccountInfo(username); //get latest user info
+                cr = null; //clear deleted selected room
+            }
+            else
+            {
+                MessageBox.Show("Please select a chat room.");
+            }
+        }
+
+        private void sendmsgbtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (cr != null)
+            {
+                foob.addMessages(username, msgtxtbox.Text, cr.getChatRoomName());
+                string msg = username + ": " + msgtxtbox.Text;
+                msgdisplaybox.AppendText(msg);
+                msgdisplaybox.AppendText(Environment.NewLine);
+                msgtxtbox.Clear();
+                cr = foob.getServerInfo(cr.getChatRoomName());
+            }
+            else
+            {
+                MessageBox.Show("Please select a chat room.");
+            }
         }
 
         private void uploadfilebtn_Click(object sender, RoutedEventArgs e)
@@ -204,9 +246,18 @@ namespace ChatClient
             catch (Exception ex) { throw; }
         }
 
+        //Log out
+        private void logoutbutton_Click(object sender, RoutedEventArgs e)
+        {
+            loginMenu.Show();
+            this.Close();
+        }
+
+        //Exit program
         private void mainbtnexit_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Application.Current.Shutdown();
         }
+
     }
 }

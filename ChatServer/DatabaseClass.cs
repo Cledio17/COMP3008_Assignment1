@@ -16,12 +16,12 @@ namespace ChatServer
         private int serverID = 1000;
 
         //Chat Servers
-        private List<ChatRoom> availableServers;
+        private List<ChatRoom> allServers;
 
         public DatabaseClass()
         {
             users = new List<User>();
-            availableServers = new List<ChatRoom>();
+            allServers = new List<ChatRoom>();
         }
 
         //Users
@@ -48,17 +48,18 @@ namespace ChatServer
 
         public void updateUserAccountInfo(User currentUser)
         {
-            foreach (User user in users.ToList())
+            List<User> temp = users;
+            for (int i = 0; i < users.Count; i++)
             {
-                if (user.getUserName().Equals(currentUser.getUserName()))
+                if (temp[i].getUserName().Equals(currentUser.getUserName()))
                 {
-                    users.Remove(user);
+                    users.RemoveAt(i);
                 }
             }
             users.Add(currentUser);
         }
 
-        public bool checkIsUserAvailable(string userName)
+        public bool checkIsUsernameExist(string userName)
         {
             bool isExisted = false;
 
@@ -70,31 +71,6 @@ namespace ChatServer
                 }
             }
             return isExisted;
-        }
-
-        public void addJoinedServer(string userName, string roomName)
-        {
-            User theUser = null;
-            foreach (User user in users)
-            {
-                if (user.getUserName().Equals(userName))
-                {
-                    theUser = user;
-                }
-            }
-            ChatRoom theRoom = null;
-            foreach (ChatRoom room in availableServers)
-            {
-                if (room.getChatRoomName().Equals(roomName))
-                {
-                    theRoom = room;
-                }
-            }
-            if (theRoom.addUser(theUser))
-            {
-                theUser.addChatRooms(theRoom);
-            }
-            updateUserAccountInfo(theUser);
         }
 
         public List<ChatRoom> getChatRooms(string userName)
@@ -110,69 +86,101 @@ namespace ChatServer
             return theUser.getChatRooms();
         }
 
-        public int getNumberOfUsers()
+        public void addJoinedServer(string userName, string roomName)
         {
-            return users.Count;
+            User theUser = getUserAccountInfo(userName);
+            ChatRoom theRoom = getRoomInfo(roomName);
+            theRoom.addUser(theUser);
+            theUser.addChatRooms(theRoom);
+            updateUserAccountInfo(theUser);
+            updataRoomInfo(theRoom);
+        }
+
+        public void leaveRoom(string username, string roomName)
+        {
+            User theUser = null;
+            foreach (User user in users)
+            {
+                if (user.getUserName().Equals(username))
+                {
+                    theUser = user;
+                }
+            }
+            ChatRoom theRoom = null;
+            foreach (ChatRoom room in allServers)
+            {
+                if (room.getChatRoomName().Equals(roomName))
+                {
+                    theRoom = room;
+                }
+            }
+            theRoom.removeUser(theUser);
+            theUser.removeChatRooms(theRoom);
+            updateUserAccountInfo(theUser);
+            updataRoomInfo(theRoom);
         }
 
         //Chat Servers
-        public ChatRoom addNewChatServer (User user, string roomName)
+        public void addNewChatServer (User roomHost, string roomName)
         {
             ChatRoom newRoom = new ChatRoom(roomName, serverID);
-            User temp = getUserAccountInfo(user.getUserName());
-            newRoom.addUser(user);
-            availableServers.Add(newRoom);
-            temp.addChatRooms(newRoom);
-            updateUserAccountInfo(temp);
+            User user = getUserAccountInfo(roomHost.getUserName());
+            newRoom.addUser(roomHost);
+            allServers.Add(newRoom);
+            user.addChatRooms(newRoom);
+            updateUserAccountInfo(user);
             serverID++;
-            return newRoom;
         }
 
         public ChatRoom getRoomInfo(String roomName)
         {
-            ChatRoom temp = null;
-            foreach (ChatRoom room in availableServers)
+            ChatRoom theRoom = null;
+            foreach (ChatRoom temp in allServers)
             {
-                if (room.getChatRoomName().Equals(roomName))
+                if (temp.getChatRoomName().Equals(roomName))
                 {
-                    temp = room;
+                    theRoom = temp;
                 }
             }
-            return temp;
+            return theRoom;
         }
 
         public void updataRoomInfo(ChatRoom currentRoom)
         {
-            List<ChatRoom> temp = availableServers;
-            for (int i = 0; i < availableServers.Count; i++)
+            List<ChatRoom> temp = allServers;
+            for (int i = 0; i < allServers.Count; i++)
             {
                 if (temp[i].getChatRoomName().Equals(currentRoom.getChatRoomName()))
                 {
-                    temp.RemoveAt(i);
+                    allServers.RemoveAt(i);
                 }
             }
-            availableServers = null;
-            availableServers = temp;
-            availableServers.Add(currentRoom);
+            allServers.Add(currentRoom);
         }
 
-        public void leaveChat(string username, string roomName)
+        public bool checkRoomNameExist(string roomName)
         {
-            User temp = getUserAccountInfo(username);
-            MessageBox.Show("Username: " + temp.getUserName());
-            ChatRoom tempRoom = getRoomInfo(roomName);
-            MessageBox.Show("Room name: " + tempRoom.getChatRoomName());
-            if (tempRoom.removeUser(temp))
+            bool isExisted = false;
+
+            foreach (ChatRoom room in allServers)
             {
-                temp.removeChatRooms(tempRoom);
+                if (room.getChatRoomName().Equals(roomName))
+                {
+                    isExisted = true;
+                }
             }
-            updateUserAccountInfo(temp);
-            updataRoomInfo(tempRoom);
+            return isExisted;
         }
 
+        public void addMessages(string messagebys, string message, string roomName)
+        {
+            ChatRoom theRoom = getRoomInfo(roomName);
+            theRoom.addMessages(messagebys, message);
+            updataRoomInfo(theRoom);
+        }
         public List<ChatRoom> getAllServer()
         {
-            return availableServers;
+            return allServers;
         }
     }
 }
