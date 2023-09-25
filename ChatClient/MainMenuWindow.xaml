@@ -6,37 +6,118 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:ChatClient"
         mc:Ignorable="d"
-        Title="Fake Discord" Height="550" Width="800" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <Grid>
-        <Label x:Name="usernamelabel" Content="Username" HorizontalAlignment="Left" Margin="10,435,0,0" VerticalAlignment="Top" FontSize="20"/>
-        <ListBox Name ="roomList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="7,25,664,336" SelectionChanged="roomList_SelectionChanged"/>
-        <TextBox x:Name="chatroombox" HorizontalAlignment="Left" Margin="230,479,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" materialDesign:HintAssist.Hint="Chat Room Name" Foreground="Black"/>
-        <Button Content="Create" HorizontalAlignment="Center" Margin="0,475,0,0" VerticalAlignment="Top" Height="32" Width="76" Click="createButton_Click"/>
-        <RichTextBox x:Name="msgdisplaybox" Margin="147,32,193,321" >
+        Title="Fake Discord" Height="550" Width="1000" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None"
+    xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf">
+    <Window.Resources>
+        <Style x:Key="MaterialDesignListBoxItem" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="SnapsToDevicePixels" Value="True"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ClipToBounds="{TemplateBinding ClipToBounds}" Margin="{TemplateBinding Margin}">
+                            <Grid>
+                                <Border x:Name="MouseOverBorder" Background="{TemplateBinding Foreground, Converter={StaticResource BrushRoundConverter}}" Opacity="0"/>
+                                <Border x:Name="SelectedBorder" Background="{TemplateBinding Foreground, Converter={StaticResource BrushRoundConverter}}" Opacity="0"/>
+                                <wpf:Ripple x:Name="Ripple" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}" Focusable="False" Feedback="{TemplateBinding Foreground, Converter={StaticResource BrushRoundConverter}}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" RecognizesAccessKey="False" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value=".56"/>
+                            </Trigger>
+                            <DataTrigger Binding="{Binding (wpf:ListBoxItemAssist.ShowSelection), RelativeSource={RelativeSource Mode=Self}}" Value="False">
+                                <Setter Property="Visibility" TargetName="MouseOverBorder" Value="Collapsed"/>
+                                <Setter Property="Feedback" TargetName="Ripple" Value="Transparent"/>
+                                <Setter Property="Visibility" TargetName="SelectedBorder" Value="Collapsed"/>
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+            <Setter Property="wpf:ListBoxItemAssist.ShowSelection" Value="{Binding (wpf:ListBoxItemAssist.ShowSelection), RelativeSource={RelativeSource AncestorType={x:Type ListBox}}}"/>
+        </Style>
+        <Style x:Key="cornerradius" TargetType="{x:Type ListBox}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="{DynamicResource MaterialDesignBody}"/>
+            <Setter Property="ItemContainerStyle" Value="{StaticResource MaterialDesignListBoxItem}"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Disabled"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <Border x:Name="Bd" CornerRadius="20" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ClipToBounds="False" SnapsToDevicePixels="true">
+                            <ScrollViewer ClipToBounds="False" Focusable="false" Padding="{TemplateBinding Padding}">
+                                <ItemsPresenter ClipToBounds="False" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </ScrollViewer>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsGrouping" Value="true"/>
+                                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="wpf:ScrollViewerAssist.IsAutoHideEnabled" Value="True"/>
+        </Style>
+    </Window.Resources>
+    <Grid RenderTransformOrigin="0.37,0.299">
+        <Grid Name="GridPanel" Background="#FF303240" Width="126" Height="350" HorizontalAlignment="Left" VerticalAlignment="Top">
+        </Grid>
+        <Grid Name="GridPanel2" Background="#FF28242C" Width="126" Height="200" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+        </Grid>
+        <Grid Name="GridPanel3" Background="#FF38343C" Width="496" Height="550" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="126,0,0,0">
+        </Grid>
+        <Grid Name="GridPanel4" Background="#FF38343C" Width="378" Height="550" HorizontalAlignment="Right" VerticalAlignment="Top">
+        </Grid>
+        <Label x:Name="usernamelabel" Content="Username" HorizontalAlignment="Left" Margin="10,442,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White"/>
+        <ListBox Style="{DynamicResource cornerradius}" Name ="roomList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="5,31,879,330" SelectionChanged="roomList_SelectionChanged" Foreground="White" Background="#FF201C24"/>
+        <TextBox x:Name="chatroombox" HorizontalAlignment="Left" Margin="230,492,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" materialDesign:HintAssist.Hint="Chat Room Name" Foreground="White"/>
+        <Button Content="Create" HorizontalAlignment="Left" Margin="367,490,0,0" VerticalAlignment="Top" Height="32" Width="76" Click="createButton_Click"/>
+        <RichTextBox x:Name="msgdisplaybox" Margin="147,35,390,318" Foreground="#FFFFFFFE" IsEnabled="False" Background="#FF303434" >
             <FlowDocument/>
         </RichTextBox>
-        <Button x:Name="logoutbutton" Content="Log Out" HorizontalAlignment="Left" Margin="10,478,0,0" VerticalAlignment="Top" Height="32" Width="92" Click="logoutbutton_Click"/>
-        <TextBox x:Name="msgtxtbox" HorizontalAlignment="Left" Margin="147,218,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Enter your message here" VerticalAlignment="Top" Width="365" Height="58"/>
-        <Button x:Name="sendmsgbtn" Content="Send" HorizontalAlignment="Left" Margin="517,248,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="sendmsgbtn_Click"/>
-        <ListBox x:Name="participantlist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="638,20,50,336"/>
-        <Label Content="Participants" HorizontalAlignment="Left" Margin="638,-4,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="uploadfilebtn" Content="Upload File" HorizontalAlignment="Left" Margin="517,213,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="uploadfilebtn_Click" />
-        <Label x:Name="currRoom" Content="Room" HorizontalAlignment="Left" Margin="141,1,0,0" VerticalAlignment="Top" Width="54"/>
-        <Label x:Name="userID" Content="UserID" HorizontalAlignment="Left" Margin="10,413,0,0" VerticalAlignment="Top"/>
-        <Label Content="Joined Server" HorizontalAlignment="Left" Margin="7,1,0,0" VerticalAlignment="Top"/>
-        <Label Content="Available Server" HorizontalAlignment="Left" Margin="147,286,0,0" VerticalAlignment="Top"/>
-        <ListBox x:Name ="allserverlist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="147,310,335,61" SelectionChanged="roomList_SelectionChanged"/>
-        <Button x:Name="joinbutton" Content="Join" HorizontalAlignment="Left" Margin="147,478,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="sendtolabel" Content="Send To:" HorizontalAlignment="Left" Margin="634,283,0,0" VerticalAlignment="Top" Width="110"/>
-        <RichTextBox x:Name="privatemsgdisplaybox" Margin="512,312,16,105" >
+        <Button x:Name="logoutbutton" Content="Log Out" HorizontalAlignment="Left" Margin="10,491,0,0" VerticalAlignment="Top" Height="32" Width="92" Click="logoutbutton_Click"/>
+        <TextBox x:Name="msgtxtbox" HorizontalAlignment="Left" Margin="147,235,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Enter your message here" VerticalAlignment="Top" Width="377" Height="62" Foreground="White" Background="#FF403C44"/>
+        <Button x:Name="sendmsgbtn" Content="Send" HorizontalAlignment="Left" Margin="529,269,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="sendmsgbtn_Click"/>
+        <ListBox Style="{DynamicResource cornerradius}" x:Name="participantlist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="638,28,61,291" Foreground="White" Background="#FF201C24"/>
+        <Label Content="Participants" HorizontalAlignment="Left" Margin="638,4,0,0" VerticalAlignment="Top" Foreground="#FFCCC5B9"/>
+        <Button x:Name="uploadfilebtn" Content="Upload File" HorizontalAlignment="Left" Margin="529,236,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="uploadfilebtn_Click" />
+        <Label x:Name="currRoom" Content="Room" HorizontalAlignment="Left" Margin="153,5,0,0" VerticalAlignment="Top" Width="54" Foreground="#FFCCC5B9"/>
+        <Label x:Name="userID" Content="UserID" HorizontalAlignment="Left" Margin="10,413,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <Label Content="Joined Server" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" Foreground="#FFCCC5B9" Background="#00000000"/>
+        <Label Content="Available Server" HorizontalAlignment="Left" Margin="147,299,0,0" VerticalAlignment="Top" Foreground="#DDCCC5B9"/>
+        <ListBox Style="{DynamicResource cornerradius}" x:Name ="allserverlist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="147,323,390,65" SelectionChanged="roomList_SelectionChanged" Foreground="#DDFFFFFF" Background="#FF201C24"/>
+        <Button x:Name="joinbutton" Content="Join" HorizontalAlignment="Left" Margin="147,491,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="sendtolabel" Content="Send To:" HorizontalAlignment="Left" Margin="638,283,0,0" VerticalAlignment="Top" Width="110" Foreground="White"/>
+        <RichTextBox x:Name="privatemsgdisplaybox" Margin="638,312,16,105" Foreground="White" IsEnabled="False" Background="#FF303434" >
             <FlowDocument/>
         </RichTextBox>
-        <TextBox x:Name="privatemsgtxtbox" HorizontalAlignment="Left" Margin="512,436,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Enter your message here" VerticalAlignment="Top" Width="272" Height="28"/>
-        <Button x:Name="privatesendmsgbtn" Content="Send" HorizontalAlignment="Left" Margin="608,472,0,0" VerticalAlignment="Top" Height="28" Width="80" Click="sendmsgbtn_Click"/>
-        <Button x:Name="privateuploadfilebtn" Content="Upload File" HorizontalAlignment="Left" Margin="512,472,0,0" VerticalAlignment="Top" Height="28" Width="80" Click="uploadfilebtn_Click" />
-        <Button x:Name="leavebtn" Content="Leave" HorizontalAlignment="Left" Margin="195,1,0,0" VerticalAlignment="Top" Height="28" Width="70" Click="leavebtn_Click" />
-        <Button x:Name="refreshbtn" Content="Refresh" HorizontalAlignment="Left" Margin="10,376,0,0" VerticalAlignment="Top" Height="32" Width="92" Click="logoutbutton_Click"/>
-        <Label x:Name="privatemsglbl" Content="Private Messaging" HorizontalAlignment="Left" Margin="512,283,0,0" VerticalAlignment="Top" Width="110"/>
+        <TextBox x:Name="privatemsgtxtbox" HorizontalAlignment="Left" Margin="635,454,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Enter your message here" VerticalAlignment="Top" Width="272" Height="28" Foreground="White" Background="#FF403C44"/>
+        <Button x:Name="privatesendmsgbtn" Content="Send" HorizontalAlignment="Left" Margin="912,454,0,0" VerticalAlignment="Top" Height="28" Width="80"/>
+        <Button x:Name="privateuploadfilebtn" Content="Upload File" HorizontalAlignment="Left" Margin="638,489,0,0" VerticalAlignment="Top" Height="28" Width="80" />
+        <Button x:Name="leavebtn" Content="Leave" HorizontalAlignment="Left" Margin="207,5,0,0" VerticalAlignment="Top" Height="28" Width="70" Click="leavebtn_Click" />
+        <Button x:Name="refreshbtn" Content="Refresh" HorizontalAlignment="Left" Margin="10,376,0,0" VerticalAlignment="Top" Height="32" Width="92"/>
+        <Label x:Name="privatemsglbl" Content="Private Messaging" HorizontalAlignment="Left" Margin="638,259,0,0" VerticalAlignment="Top" Width="110" Foreground="#DDCCC5B9"/>
+        <Button Style="{StaticResource MaterialDesignFloatingActionButton}" Background="{x:Null}"
+            ToolTip="Close" x:Name="mainbtnexit" Margin="944,-4,0,482" Click="mainbtnexit_Click">
+            <materialDesign:PackIcon Kind="Close" Foreground="Red" Width="30" Height="30" />
+        </Button>
 
     </Grid>
 </Window>

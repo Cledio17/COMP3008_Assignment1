@@ -203,5 +203,10 @@ namespace ChatClient
             }
             catch (Exception ex) { throw; }
         }
+
+        private void mainbtnexit_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
     }
 }
