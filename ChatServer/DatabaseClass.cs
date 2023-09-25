@@ -40,7 +40,6 @@ namespace ChatServer
             {
                 if (user.getUserName().Equals(userName))
                 {
-                    MessageBox.Show("User: " + user.getUserName());
                     temp = user;
                 }
             }

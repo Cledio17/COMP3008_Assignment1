@@ -65,7 +65,7 @@ namespace ChatClient
         private void refreshJoinedServer()
         {
             roomList.Items.Clear();
-            HashSet<ChatRoom> joinedServers = foob.getAllServers();
+            List<ChatRoom> joinedServers = foob.getJoinedServers(us.getUserName());
             foreach (ChatRoom room in joinedServers)
             {
                 roomList.Items.Add(room.getChatRoomName());
@@ -121,30 +121,31 @@ namespace ChatClient
 
         private void uploadfilebtn_Click(object sender, RoutedEventArgs e)
         {
-            Stream theStream;
-            Paragraph paragraph = new Paragraph();
-            paragraph.Margin = new Thickness(0);
-            OpenFileDialog openFile = new OpenFileDialog();
-            if (openFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                Hyperlink hyperlink = new Hyperlink();
-                hyperlink.IsEnabled = true;
-                hyperlink.Inlines.Add("https://www.google.com/");
-                hyperlink.NavigateUri = new Uri("https://www.google.com/");
-                //System.Diagnostics.Process.Start(openFile.FileName);
-                //msgdisplaybox.AppendText(openFile.FileName);
-                paragraph.Inlines.Add(hyperlink);
-                msgdisplaybox.Document.Blocks.Add(paragraph);
+            //Stream theStream;
+            //Paragraph paragraph = new Paragraph();
+            //paragraph.Margin = new Thickness(0);
+            //OpenFileDialog openFile = new OpenFileDialog();
+            //if (openFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            //{
+            //    Hyperlink hyperlink = new Hyperlink();
+            //    hyperlink.IsEnabled = true;
+            //    hyperlink.Inlines.Add("https://www.google.com/");
+            //    hyperlink.NavigateUri = new Uri("https://www.google.com/");
+            //    System.Diagnostics.Process.Start(openFile.FileName);
+            //    msgdisplaybox.AppendText(openFile.FileName);
+            //    paragraph.Inlines.Add(hyperlink);
+            //    msgdisplaybox.Document.Blocks.Add(paragraph);
 
 
-                /*if((theStream = openFile.OpenFile()) != null)
-                {
-                    string fileName = openFile.FileName;
-                    String fileText = File.ReadAllText(fileName);
+            //    /*if((theStream = openFile.OpenFile()) != null)
+            //    {
+            //        string fileName = openFile.FileName;
+            //        String fileText = File.ReadAllText(fileName);
 
-                }*/
-            }
-            /*Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            //    }*/
+            //}
+
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
             bool? response = openFileDialog.ShowDialog();
             if (response == true)
             {
@@ -153,6 +154,7 @@ namespace ChatClient
 
                 // Create a new Hyperlink
                 Hyperlink hyperlink = new Hyperlink(new Run(filename));
+                hyperlink.IsEnabled = true;
                 hyperlink.NavigateUri = new Uri(filepath); // Set the URI to the file path
 
                 // Handle the click event to open the file when the hyperlink is clicked
@@ -160,10 +162,15 @@ namespace ChatClient
 
                 // Create a Paragraph and add the Hyperlink to it
                 Paragraph paragraph = new Paragraph(hyperlink);
+                paragraph.IsEnabled = true;
 
                 // Add the Paragraph to the RichTextBox
                 msgdisplaybox.Document.Blocks.Add(paragraph);
-            }*/
+                msgdisplaybox.IsDocumentEnabled = true;
+                msgdisplaybox.IsEnabled = true;
+                msgdisplaybox.IsReadOnly = true;
+                msgdisplaybox.AppendText("\n");
+            }
         }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
