@@ -63,16 +63,22 @@ namespace ChatServer
             return messages;
         }
 
-        public void removeUser(User user)
+        public bool removeUser(User user)
         {
-            if(_users.Contains(user))
+            bool removed = false;
+            foreach (User temp in _users)
             {
-                _users.Remove(user);
+                if (temp.getUserName().Equals(user.getUserName()))
+                {
+                    _users.Remove(user);
+                    removed = true;
+                }
             }
-            else
+            if(!removed)
             {
                 MessageBox.Show("The user " + user.getUserName() + "does not exist in the server.");
             }
+            return removed;
         }
 
         public void addMessages(String messagebys, String message)

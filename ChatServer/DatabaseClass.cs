@@ -16,12 +16,12 @@ namespace ChatServer
         private int serverID = 1000;
 
         //Chat Servers
-        private HashSet<ChatRoom> availableServers;
+        private List<ChatRoom> availableServers;
 
         public DatabaseClass()
         {
             users = new List<User>();
-            availableServers = new HashSet<ChatRoom>();
+            availableServers = new List<ChatRoom>();
         }
 
         //Users
@@ -99,7 +99,6 @@ namespace ChatServer
 
         public List<ChatRoom> getChatRooms(string userName)
         {
-            MessageBox.Show("Number: " + availableServers.Count);
             User theUser = null;
             foreach (User user in users)
             {
@@ -129,12 +128,49 @@ namespace ChatServer
             return newRoom;
         }
 
-        /*public void removeServer(ChatRoom server)
+        public ChatRoom getRoomInfo(String roomName)
         {
-            availableServers.Remove(server);
-        }*/
+            ChatRoom temp = null;
+            foreach (ChatRoom room in availableServers)
+            {
+                if (room.getChatRoomName().Equals(roomName))
+                {
+                    temp = room;
+                }
+            }
+            return temp;
+        }
 
-        public HashSet<ChatRoom> getAllServer()
+        public void updataRoomInfo(ChatRoom currentRoom)
+        {
+            List<ChatRoom> temp = availableServers;
+            for (int i = 0; i < availableServers.Count; i++)
+            {
+                if (temp[i].getChatRoomName().Equals(currentRoom.getChatRoomName()))
+                {
+                    temp.RemoveAt(i);
+                }
+            }
+            availableServers = null;
+            availableServers = temp;
+            availableServers.Add(currentRoom);
+        }
+
+        public void leaveChat(string username, string roomName)
+        {
+            User temp = getUserAccountInfo(username);
+            MessageBox.Show("Username: " + temp.getUserName());
+            ChatRoom tempRoom = getRoomInfo(roomName);
+            MessageBox.Show("Room name: " + tempRoom.getChatRoomName());
+            if (tempRoom.removeUser(temp))
+            {
+                temp.removeChatRooms(tempRoom);
+            }
+            updateUserAccountInfo(temp);
+            updataRoomInfo(tempRoom);
+        }
+
+        public List<ChatRoom> getAllServer()
         {
             return availableServers;
         }

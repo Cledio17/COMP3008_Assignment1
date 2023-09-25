@@ -34,6 +34,9 @@ namespace ChatServer
         ChatRoom addServer(User user, string roomName);
 
         [OperationContract]
-        HashSet<ChatRoom> getAllServers();
+        List<ChatRoom> getAllServers();
+
+        [OperationContract]
+        void leaveChat(string username, string roomName);
     }
 }

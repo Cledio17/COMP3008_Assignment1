@@ -57,9 +57,14 @@ namespace ChatServer
             return usersDatabase.addNewChatServer(user, roomName);
         }
 
-        public HashSet<ChatRoom> getAllServers ()
+        public List<ChatRoom> getAllServers ()
         {
             return usersDatabase.getAllServer();
+        }
+
+        public void leaveChat(string username, string roomName)
+        {
+            usersDatabase.leaveChat(username, roomName);
         }
     }
 }

@@ -34,6 +34,7 @@ namespace ChatClient
         string uss;
         private DataServerInterface foob;
         MainWindow loginMenu;
+        string currRoomName;
         public MainMenuWindow (DataServerInterface inFoob, User theUser, MainWindow inLoginMenu)
         {
             InitializeComponent();
@@ -65,7 +66,7 @@ namespace ChatClient
         private void refreshAvailableServer()
         {
             allserverlist.Items.Clear();
-            HashSet<ChatRoom> allServers = foob.getAllServers();
+            List<ChatRoom> allServers = foob.getAllServers();
             foreach (ChatRoom room in allServers)
             {
                 allserverlist.Items.Add(room.getChatRoomName());
@@ -77,33 +78,41 @@ namespace ChatClient
             msgdisplaybox.Document.Blocks.Clear();
             int index = 0;
             participantlist.Items.Clear();
-            roomName = roomList.SelectedItem.ToString();
-            List<ChatRoom> availbleRoom = us.getChatRooms();
-            foreach (ChatRoom room in availbleRoom)
+            if (roomList.SelectedItem != null)
             {
-                if (room.getChatRoomName().Equals(roomName, StringComparison.OrdinalIgnoreCase))
+                roomName = roomList.SelectedItem.ToString();
+                List<ChatRoom> availbleRoom = us.getChatRooms();
+                foreach (ChatRoom room in availbleRoom)
                 {
-                    cr = room;
+                    if (room.getChatRoomName().Equals(roomName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        cr = room;
+                    }
+                }
+                currRoom.Content = cr.getId();
+                currRoomName = roomName;
+                List<String> messages = cr.getMessages();
+                List<String> messagesby = cr.getMessagesBy();
+                List<User> _users = cr.getUser();
+                foreach (User user in _users)
+                {
+                    uss = user.getUserName();
+                    participantlist.Items.Add(uss);
+                }
+
+                foreach (string messageBy in messagesby)
+                {
+                    string message = messages[index];
+                    string combinedMessage = $"{messageBy}: {message}";
+                    Console.WriteLine(combinedMessage);
+                    msgdisplaybox.AppendText(combinedMessage);
+                    msgdisplaybox.AppendText(Environment.NewLine);
+                    index++;
                 }
             }
-            currRoom.Content = cr.getId();
-            List<String> messages = cr.getMessages();
-            List<String> messagesby = cr.getMessagesBy();
-            List<User> _users = cr.getUser();
-            foreach (User user in _users)
+            else
             {
-                uss = user.getUserName();
-                participantlist.Items.Add(uss);
-            }
 
-            foreach (string messageBy in messagesby)
-            {
-                string message = messages[index];
-                string combinedMessage = $"{messageBy}: {message}";
-                Console.WriteLine(combinedMessage); 
-                msgdisplaybox.AppendText(combinedMessage);
-                msgdisplaybox.AppendText(Environment.NewLine);
-                index++;
             }
         }
 
@@ -117,6 +126,13 @@ namespace ChatClient
                 msgdisplaybox.AppendText(Environment.NewLine);
                 msgtxtbox.Clear();
             }
+        }
+
+        private void leavebtn_Click(object sender, RoutedEventArgs e)
+        {
+            foob.leaveChat(username, currRoomName);
+            roomList.Items.Remove(currRoomName);
+            msgdisplaybox.Document.Blocks.Clear();
         }
 
         private void uploadfilebtn_Click(object sender, RoutedEventArgs e)
@@ -186,11 +202,6 @@ namespace ChatClient
                 }
             }
             catch (Exception ex) { throw; }
-        }
-
-        private void browsebtn_Click(object sender, RoutedEventArgs e)
-        {
-            
         }
     }
 }
