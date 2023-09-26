@@ -26,8 +26,8 @@
         <Label x:Name="userID" Content="UserID" HorizontalAlignment="Left" Margin="670,-1,0,0" VerticalAlignment="Top"/>
         <Label Content="Joined Server" HorizontalAlignment="Left" Margin="10,14,0,0" VerticalAlignment="Top"/>
         <Label Content="Available Server" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Center"/>
-        <ListBox x:Name ="allserverlist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="9,230,661,66" SelectionChanged="roomList_SelectionChanged"/>
-        <Button x:Name="joinbutton" Content="Join" HorizontalAlignment="Left" Margin="44,373,0,0" VerticalAlignment="Top"/>
+        <ListBox x:Name ="allserverlist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="9,230,661,66" SelectionChanged="allserverList_selectionChanged"/>
+        <Button x:Name="joinbutton" Content="Join" HorizontalAlignment="Left" Margin="44,373,0,0" VerticalAlignment="Top" Click="joinbutton_Click"/>
         <Label x:Name="privatemsglbl" Content="Private Messaging" HorizontalAlignment="Left" Margin="165,217,0,0" VerticalAlignment="Top" Width="109"/>
         <RichTextBox x:Name="privatemsgdisplaybox" Margin="165,243,175,84" >
             <FlowDocument/>
@@ -36,6 +36,8 @@
         <Button x:Name="privatesendmsgbtn" Content="Send" HorizontalAlignment="Left" Margin="544,386,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="sendmsgbtn_Click"/>
         <Button x:Name="privateuploadfilebtn" Content="Upload File" HorizontalAlignment="Left" Margin="544,353,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="uploadfilebtn_Click" />
         <Button x:Name="leavebtn" Content="Leave" HorizontalAlignment="Left" Margin="544,11,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="leavebtn_Click" />
+        <Button x:Name="privateuploadfilebtn_Copy" Content="Upload File" HorizontalAlignment="Left" Margin="544,353,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="uploadfilebtn_Click" />
+        <Button x:Name="refreshButton" Content="Refresh" HorizontalAlignment="Left" Margin="643,328,0,0" VerticalAlignment="Top" Click="refreshButton_Click"/>
 
     </Grid>
 </Window>

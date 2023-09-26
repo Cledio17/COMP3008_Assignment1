@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace ChatServer
 {
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false, MaxItemsInObjectGraph = 10000000)]
     internal class DataServer : DataServerInterface
     {
         //Users
@@ -41,9 +41,9 @@ namespace ChatServer
             usersDatabase.updateUserAccountInfo(user);
         }
 
-        public void addJoinedServer (string userName, string roomName)
+        public User addJoinedServer (string userName, string roomName)
         {
-            usersDatabase.addJoinedServer(userName, roomName);
+            return usersDatabase.addJoinedServer(userName, roomName);
         }
 
         public List<ChatRoom> getJoinedServers(string userName)
@@ -60,6 +60,11 @@ namespace ChatServer
         public HashSet<ChatRoom> getAllServers ()
         {
             return usersDatabase.getAllServer();
+        }
+
+        public ChatRoom getChatRoom(string roomName)
+        {
+            return usersDatabase.getChatRoom(roomName);
         }
     }
 }

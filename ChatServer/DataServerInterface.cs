@@ -24,7 +24,7 @@ namespace ChatServer
         bool isUserNameAvailable(string userName);
 
         [OperationContract]
-        void addJoinedServer(string userName, string roomName);
+        User addJoinedServer(string userName, string roomName);
 
         [OperationContract]
         List<ChatRoom> getJoinedServers(string userName);
@@ -35,5 +35,8 @@ namespace ChatServer
 
         [OperationContract]
         HashSet<ChatRoom> getAllServers();
+
+        [OperationContract]
+        ChatRoom getChatRoom(string roomName);
     }
 }

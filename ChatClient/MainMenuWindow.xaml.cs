@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -81,7 +82,7 @@ namespace ChatClient
             List<ChatRoom> availbleRoom = us.getChatRooms();
             foreach (ChatRoom room in availbleRoom)
             {
-                if (room.getChatRoomName().Equals(roomName, StringComparison.OrdinalIgnoreCase))
+                if (room.getChatRoomName().Equals(roomName))
                 {
                     cr = room;
                 }
@@ -167,7 +168,6 @@ namespace ChatClient
                 // Add the Paragraph to the RichTextBox
                 msgdisplaybox.Document.Blocks.Add(paragraph);
                 msgdisplaybox.IsDocumentEnabled = true;
-                msgdisplaybox.IsEnabled = true;
                 msgdisplaybox.IsReadOnly = true;
                 msgdisplaybox.AppendText("\n");
             }
@@ -190,6 +190,37 @@ namespace ChatClient
 
         private void browsebtn_Click(object sender, RoutedEventArgs e)
         {
+            
+        }
+
+        private void leavebtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void refreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            refreshAvailableServer();
+        }
+
+        private void allserverList_selectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            roomName = allserverlist.SelectedItem.ToString();
+        }
+
+        private void joinbutton_Click(object sender, RoutedEventArgs e)
+        {
+            if(allserverlist.SelectedItem != null)
+            {
+                roomName = allserverlist.SelectedItem.ToString();
+                //ChatRoom tempRoom = foob.getChatRoom(roomName);
+                us = foob.addJoinedServer(username, roomName);
+                roomList.Items.Add(roomName);
+            }
+            else
+            {
+                MessageBox.Show("There is room picked to be joined. Please pick one server to join.");
+            }
             
         }
     }

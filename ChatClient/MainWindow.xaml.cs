@@ -2,7 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Security;
 using System.ServiceModel;
+using System.ServiceModel.Configuration;
+using System.ServiceModel.Description;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +26,7 @@ namespace ChatClient
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    [ServiceBehavior(MaxItemsInObjectGraph = 10000000)]
     public partial class MainWindow : Window
     {
         private static DataServerInterface foob;
@@ -34,6 +38,7 @@ namespace ChatClient
             NetTcpBinding tcp = new NetTcpBinding();
             string URL = "net.tcp://localhost:8100/DataService";
             foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
+            foobFactory.Endpoint.EndpointBehaviors.Add(new CustomClientEndpointBehavior(1000000));
             foob = foobFactory.CreateChannel();
         }
 

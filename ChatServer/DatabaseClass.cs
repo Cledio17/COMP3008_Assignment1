@@ -72,7 +72,7 @@ namespace ChatServer
             return isExisted;
         }
 
-        public void addJoinedServer(string userName, string roomName)
+        public User addJoinedServer(string userName, string roomName)
         {
             User theUser = null;
             foreach (User user in users)
@@ -82,6 +82,7 @@ namespace ChatServer
                     theUser = user;
                 }
             }
+
             ChatRoom theRoom = null;
             foreach (ChatRoom room in availableServers)
             {
@@ -90,11 +91,14 @@ namespace ChatServer
                     theRoom = room;
                 }
             }
+
             if (theRoom.addUser(theUser))
             {
                 theUser.addChatRooms(theRoom);
             }
             updateUserAccountInfo(theUser);
+
+            return theUser;
         }
 
         public List<ChatRoom> getChatRooms(string userName)
@@ -119,14 +123,33 @@ namespace ChatServer
         //Chat Servers
         public ChatRoom addNewChatServer (User user, string roomName)
         {
-            ChatRoom newRoom = new ChatRoom(roomName, serverID);
-            User temp = getUserAccountInfo(user.getUserName());
-            newRoom.addUser(user);
-            availableServers.Add(newRoom);
-            temp.addChatRooms(newRoom);
-            updateUserAccountInfo(temp);
+            ChatRoom cr = null;
+            foreach (ChatRoom room in availableServers)
+            {
+                if(room.getChatRoomName().Equals (roomName))
+                {
+                    cr = room;
+                }
+            }
+
+            if(cr == null) 
+            {
+                cr = new ChatRoom(roomName, serverID);
+                User temp = getUserAccountInfo(user.getUserName());
+                cr.addUser(user);
+                availableServers.Add(cr);
+                temp.addChatRooms(cr);
+                updateUserAccountInfo(temp);
+            }
+            else
+            {
+                User temp = getUserAccountInfo(user.getUserName());
+                cr.addUser(user);
+                temp.addChatRooms(cr);
+                updateUserAccountInfo(temp);
+            }       
             serverID++;
-            return newRoom;
+            return cr;
         }
 
         /*public void removeServer(ChatRoom server)
@@ -137,6 +160,19 @@ namespace ChatServer
         public HashSet<ChatRoom> getAllServer()
         {
             return availableServers;
+        }
+
+        public ChatRoom getChatRoom(String chatRoomName)
+        {
+            ChatRoom room = null;
+            foreach(ChatRoom chatRoom in availableServers)
+            {
+                if(chatRoom.getChatRoomName().Equals(chatRoomName)) 
+                {
+                    room = chatRoom;
+                }
+            }
+            return room;
         }
     }
 }
