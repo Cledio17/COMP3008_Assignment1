@@ -76,5 +76,15 @@ namespace ChatServer
         {
             usersDatabase.leaveRoom(username, roomName);
         }
+
+        public DatabaseClass getInstance()
+        {
+            return usersDatabase;
+        }
+
+        public void setInstance(DatabaseClass database)
+        {
+            usersDatabase = database;
+        }
     }
 }

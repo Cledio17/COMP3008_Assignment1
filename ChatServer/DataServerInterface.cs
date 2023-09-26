@@ -44,5 +44,11 @@ namespace ChatServer
 
         [OperationContract]
         void leaveRoom(string username, string roomName);
+
+        [OperationContract]
+        DatabaseClass getInstance();
+
+        [OperationContract]
+        void setInstance(DatabaseClass database);
     }
 }

@@ -8,6 +8,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace ChatServer
 {
+    [Serializable]
     public class DatabaseClass
     {
         //Users
@@ -195,5 +196,6 @@ namespace ChatServer
             }
             return room;
         }
+
     }
 }
