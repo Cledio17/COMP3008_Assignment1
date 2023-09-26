@@ -18,7 +18,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using UserDatabaseServer;
 using MessageBox = System.Windows.Forms.MessageBox;
 
 namespace ChatClient
@@ -29,11 +28,12 @@ namespace ChatClient
     [ServiceBehavior(MaxItemsInObjectGraph = 10000000)]
     public partial class MainWindow : Window
     {
+        string username = "";
         private static DataServerInterface foob;
-        string username = string.Empty;
         public MainWindow()
         {
             InitializeComponent();
+
             ChannelFactory<DataServerInterface> foobFactory;
             NetTcpBinding tcp = new NetTcpBinding();
             string URL = "net.tcp://localhost:8100/DataService";
@@ -45,7 +45,7 @@ namespace ChatClient
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             username = txtusername.Text;
-            if (!foob.isUserNameAvailable(username))
+            if (!foob.checkIsUsernameExist(username))
             {
                 User theUser = foob.addUserAccountInfo(username);
                 MainMenuWindow mainMenuWindow = new MainMenuWindow(foob, theUser, this);
@@ -54,8 +54,23 @@ namespace ChatClient
             }
             else
             {
-                MessageBox.Show("The username is already being used. Please re-enter another username again.");
+                //MessageBox.Show("The username is already being used. Please re-enter another username again.");
+                User theUser = foob.getUserAccountInfo(username);
+                MainMenuWindow mainMenuWindow = new MainMenuWindow(foob, theUser, this);
+                mainMenuWindow.Show();
+                this.Hide();
             }
+        }
+
+        private void addClient_Click(object sender, RoutedEventArgs e) //Add another client
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+        }
+
+        private void btnExit_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Application.Current.Shutdown();
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -64,18 +79,7 @@ namespace ChatClient
             {
                 DragMove();
             }
-            catch(Exception ex) { }
-        }
-
-        private void btnExit_Click(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Application.Current.Shutdown();
-        }
-
-        private void addClient_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
+            catch (Exception ex) { }
         }
     }
 }

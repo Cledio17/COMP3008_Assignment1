@@ -18,25 +18,31 @@ namespace ChatServer
         User getUserAccountInfo(string userName);
 
         [OperationContract]
-        void updateUserAccountInfo(User user);
+        bool checkIsUsernameExist(string userName);
 
         [OperationContract]
-        bool isUserNameAvailable(string userName);
-
-        [OperationContract]
-        User addJoinedServer(string userName, string roomName);
+        void addJoinedServer(string userName, string roomName);
 
         [OperationContract]
         List<ChatRoom> getJoinedServers(string userName);
 
         //Chat Servers
         [OperationContract]
-        ChatRoom addServer(User user, string roomName);
+        void addServer(User user, string roomName);
 
         [OperationContract]
-        HashSet<ChatRoom> getAllServers();
+        ChatRoom getServerInfo(string roomName);
 
         [OperationContract]
-        ChatRoom getChatRoom(string roomName);
+        bool checkIsRoomNameExist(string roomName);
+
+        [OperationContract]
+        void addMessages(string messagebys, string message, string roomName);
+
+        [OperationContract]
+        List<ChatRoom> getAllServers();
+
+        [OperationContract]
+        void leaveRoom(string username, string roomName);
     }
 }

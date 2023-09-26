@@ -13,49 +13,43 @@ namespace ChatServer
     {
         private string userName;
         private int ID;
-        private PrivateMessage privateMessages;
+        //private PrivateMessage privateMessages;
         private List<ChatRoom> chatRooms;
 
         public User(string userName, int ID)
         {
             this.userName = userName;
             this.ID = ID;
-            privateMessages = new PrivateMessage();
+            //privateMessages = new PrivateMessage();
             chatRooms = new List<ChatRoom>();
         }
 
-        public void setUserName(String userName)
-        {
-            this.userName = userName;
-        }
-        
-        public void setID(int ID) 
-        { 
-            this.ID = ID;
-        }
+        public String getUserName() { return this.userName; }
 
-        public String getUserName() 
-        { 
-            return this.userName;
-        }
+        public int getID() { return this.ID; }
 
-        public int getID() 
-        { 
-            return this.ID;
-        }
+        public List<ChatRoom> getChatRooms() { return this.chatRooms; }
 
-        public void addPrivateMessage(User sender, String message) 
+        /*public void addPrivateMessage(User sender, String message) 
         {
             privateMessages.addMessage(sender, message);
-        }
+        }*/
 
         public void addChatRooms(ChatRoom chatRoom)
         {
             chatRooms.Add(chatRoom);
         }
-        public List<ChatRoom> getChatRooms()
+
+        public void removeChatRooms(ChatRoom chatRoom)
         {
-            return chatRooms;
+            List<ChatRoom> roomList = this.chatRooms;
+            for (int i = 0; i < chatRooms.Count; i++)
+            {
+                if (roomList[i].getChatRoomName().Equals(chatRoom.getChatRoomName()))
+                {
+                    chatRooms.RemoveAt(i);
+                }
+            }
         }
     }
 }

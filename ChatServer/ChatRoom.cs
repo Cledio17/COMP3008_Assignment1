@@ -5,101 +5,86 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace ChatServer
 {
     [Serializable]
     public class ChatRoom
     {
-        private String chatRoomName;
+        private string chatRoomName;
         private int id;
         private List<User> _users;
-        private List<String> messageby;
-        private List<String> messages;
+        private List<string> messageby;
+        private List<string> messages;
         public ChatRoom(string chatRoomName, int id) 
         { 
             this.chatRoomName = chatRoomName; 
-            this.id = id; _users = new List<User>(); 
+            this.id = id;
+            _users = new List<User>(); 
             messageby = new List<string>(); 
-            messages = new List<String>(); 
+            messages = new List<string>(); 
         }
 
-        public bool addUser(User user)
+        public string getChatRoomName() { return this.chatRoomName; }
+
+        public int getId() { return this.id; }
+
+        public List<User> getUser() { return this._users; }
+
+        public List<string> getMessagesBy() { return this.messageby; }
+
+        public List<string> getMessages() { return this.messages; }
+
+        public void addUser(User user)
         {
-            bool added = false;
-            if(_users.Contains(user))
+            string username = user.getUserName();
+            if(checkJoined(username))
             {
                 MessageBox.Show("The user " + user.getUserName() + "has already existed in this server.");
             }
             else
             {
                 _users.Add(user);
-                added = true;
+                addMessages("System", username + " has joined the chat.");
             }
-            return added;
         }
 
-        public List<User> getUser()
+        private bool checkJoined(string username)
         {
-            return _users;
-
-        }
-
-        public String getChatRoomName()
-        {
-            return chatRoomName;
-
-        }
-
-        public int getId() { return id; }
-
-        public List<String> getMessagesBy()
-        {
-            return messageby;
-        }
-
-        public List<String> getMessages()
-        {
-            return messages;
+            bool joined = false;
+            foreach(User user in _users)
+            {
+                if (user.getUserName().Equals(username))
+                {
+                    joined = true;
+                }
+            }
+            return joined;
         }
 
         public void removeUser(User user)
         {
-            if(_users.Contains(user))
+            List<User> temp = _users;
+            string username = user.getUserName();
+            for (int i = 0; i < _users.Count; i++)
             {
-                _users.Remove(user);
-            }
-            else
-            {
-                MessageBox.Show("The user " + user.getUserName() + "does not exist in the server.");
+                if (temp[i].getUserName().Equals(username))
+                {
+                    _users.RemoveAt(i);
+                    addMessages("System", username + " has left the chat.");
+                }
             }
         }
 
-        public void addMessages(String messagebys, String message)
+        public void addMessages(string messagebys, string message)
         {
             messageby.Add(messagebys);
             messages.Add(message);
-            Console.WriteLine(messagebys + ": "+ message); //displaying message in the server, might change the way of display in the future
+            Console.WriteLine(messagebys + ": " + message); //displaying message in the server, might change the way of display in the future
         }
 
-        public void hasJoinedChat(User user)
-        {
-            _users.Add(user);
-            // addMessages(user.getUserName() + " has joined the chat."); 
-        }
-
-        public void hasLeftChat(User user)
-        {
-            _users.Remove(user);
-            // addMessages(user.getUserName() + " has left the chat.");
-        }
-
-        public void sendMessage(User sender, string message)
-        {
-            // addMessages(sender.getUserName() + ": \n" +  message);
-        }
-
-        public void sendPrivateMessage(User sender, User recipient, string message)
+        /*public void sendPrivateMessage(User sender, User recipient, string message)
         {
             recipient.addPrivateMessage(sender, message);
         }
@@ -107,6 +92,6 @@ namespace ChatServer
         public void sendFiles(User sender, string files)
         {
             throw new NotImplementedException();
-        }
+        }*/
     }
 }
