@@ -15,6 +15,9 @@ namespace ChatServer
         User addUserAccountInfo(string username);
 
         [OperationContract]
+        int getUserID(string username);
+
+        [OperationContract]
         User getUserAccountInfo(string userName);
 
         [OperationContract]
@@ -24,11 +27,14 @@ namespace ChatServer
         void addJoinedServer(string userName, string roomName);
 
         [OperationContract]
-        List<ChatRoom> getJoinedServers(string userName);
+        List<string> getJoinedServers(string userName);
 
         //Chat Servers
         [OperationContract]
-        void addServer(User user, string roomName);
+        void addServer(string username, string roomName);
+
+        [OperationContract]
+        int getServerID (string roomName);
 
         [OperationContract]
         ChatRoom getServerInfo(string roomName);
@@ -40,7 +46,7 @@ namespace ChatServer
         void addMessages(string messagebys, string message, string roomName);
 
         [OperationContract]
-        List<ChatRoom> getAllServers();
+        List<string> getAllServers();
 
         [OperationContract]
         void leaveRoom(string username, string roomName);

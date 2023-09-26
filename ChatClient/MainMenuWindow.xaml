@@ -102,7 +102,7 @@
         <Label x:Name="userID" Content="UserID" HorizontalAlignment="Left" Margin="10,413,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Label Content="Joined Server" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" Foreground="#FFCCC5B9" Background="#00000000"/>
         <Label Content="Available Server" HorizontalAlignment="Left" Margin="147,299,0,0" VerticalAlignment="Top" Foreground="#DDCCC5B9"/>
-        <ListBox Style="{DynamicResource cornerradius}" x:Name ="allserverlist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="147,323,390,65" SelectionChanged="roomList_SelectionChanged" Foreground="#DDFFFFFF" Background="#FF201C24"/>
+        <ListBox Style="{DynamicResource cornerradius}" x:Name ="allserverlist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="147,323,390,65" SelectionChanged="allserverlist_SelectionChanged" Foreground="#DDFFFFFF" Background="#FF201C24"/>
         <Button x:Name="joinbutton" Content="Join" HorizontalAlignment="Left" Margin="147,491,0,0" VerticalAlignment="Top" Click="joinbutton_Click"/>
         <Label x:Name="sendtolabel" Content="Send To:" HorizontalAlignment="Left" Margin="638,283,0,0" VerticalAlignment="Top" Width="110" Foreground="White"/>
         <RichTextBox x:Name="privatemsgdisplaybox" Margin="638,312,16,105" Foreground="White" IsEnabled="False" Background="#FF303434" >
