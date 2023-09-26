@@ -28,7 +28,7 @@ namespace ChatClient
     public partial class MainWindow : Window
     {
         string username = "";
-        private static DataServerInterface foob;
+        private DataServerInterface foob;
         public MainWindow()
         {
             InitializeComponent();

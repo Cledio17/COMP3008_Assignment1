@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Remoting.Messaging;
+using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text;
 using System.Threading;
@@ -28,7 +29,6 @@ namespace ChatClient
     /// <summary>
     /// Interaction logic for MainMenuWindow.xaml
     /// </summary>
-    public delegate List<ChatRoom> getChatRoomDelegate(string username);
     public partial class MainMenuWindow : Window
     {
         string username = ""; //loggin in user username
@@ -36,7 +36,6 @@ namespace ChatClient
         ChatRoom cr; //current selected room
         MainWindow loginMenu;
         private DataServerInterface foob;
-        getChatRoomDelegate getChatRoomDelegate;
         public MainMenuWindow (DataServerInterface inFoob, User theUser, MainWindow inLoginMenu)
         {
             InitializeComponent();
@@ -46,8 +45,7 @@ namespace ChatClient
             this.loginMenu = inLoginMenu;
             usernamelabel.Content = username;
             userID.Content = "ID: " + us.getID();
-            getChatRoomDelegate = foob.getJoinedServers;
-            List<ChatRoom> joinedRooms = getChatRoomDelegate.Invoke(username);
+            List<ChatRoom> joinedRooms = foob.getJoinedServers(username);
             foreach (ChatRoom room in joinedRooms)
             {
                 roomList.Items.Add(room.getChatRoomName());
@@ -59,7 +57,7 @@ namespace ChatClient
         {
             string roomName = chatroombox.Text;
             chatroombox.Clear(); //clear the chat room box after creating the chat room
-            if (!roomName.Equals("") && roomName != null)
+            if (!roomName.Equals("") || roomName != null)
             {
                 if (!foob.checkIsRoomNameExist(roomName))
                 {
@@ -96,7 +94,7 @@ namespace ChatClient
             if (roomList.SelectedItem != null)
             {
                 string roomName = roomList.SelectedItem.ToString();
-                List<ChatRoom> joinedRooms = getChatRoomDelegate.Invoke(username);
+                List<ChatRoom> joinedRooms = foob.getJoinedServers(us.getUserName());
                 foreach (ChatRoom room in joinedRooms)
                 {
                     if (room.getChatRoomName().Equals(roomName, StringComparison.OrdinalIgnoreCase))
@@ -132,18 +130,26 @@ namespace ChatClient
 
         private void joinbutton_Click(object sender, RoutedEventArgs e)
         {
-            if (allserverlist.SelectedItem != null)
+            try
             {
-                string selectedServer = allserverlist.SelectedItem.ToString();
-                allserverlist.SelectedItem = null;
-                foob.addJoinedServer(username, selectedServer);
-                roomList.Items.Add(selectedServer);
-                //us = foob.getUserAccountInfo(username); //get latest user info
-            }
-            else
+                if (allserverlist.SelectedItem != null)
+                {
+                    string selectedServer = allserverlist.SelectedItem.ToString();
+                    allserverlist.SelectedItem = null;
+                    foob.addJoinedServer(username, selectedServer);
+                    roomList.Items.Add(selectedServer);
+                    refreshAvailableServer();
+                    us = foob.getUserAccountInfo(username); //get latest user info
+                }
+                else
+                {
+                    MessageBox.Show("Please select a server to join.");
+                }
+            }catch(CommunicationException ce)
             {
-                MessageBox.Show("Please select a server to join.");
+                Console.WriteLine("Error occured: " + ce.Message);
             }
+            
         }
 
         private void leavebtn_Click(object sender, RoutedEventArgs e)
@@ -183,30 +189,6 @@ namespace ChatClient
 
         private void uploadfilebtn_Click(object sender, RoutedEventArgs e)
         {
-            //Stream theStream;
-            //Paragraph paragraph = new Paragraph();
-            //paragraph.Margin = new Thickness(0);
-            //OpenFileDialog openFile = new OpenFileDialog();
-            //if (openFile.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            //{
-            //    Hyperlink hyperlink = new Hyperlink();
-            //    hyperlink.IsEnabled = true;
-            //    hyperlink.Inlines.Add("https://www.google.com/");
-            //    hyperlink.NavigateUri = new Uri("https://www.google.com/");
-            //    System.Diagnostics.Process.Start(openFile.FileName);
-            //    msgdisplaybox.AppendText(openFile.FileName);
-            //    paragraph.Inlines.Add(hyperlink);
-            //    msgdisplaybox.Document.Blocks.Add(paragraph);
-
-
-            //    /*if((theStream = openFile.OpenFile()) != null)
-            //    {
-            //        string fileName = openFile.FileName;
-            //        String fileText = File.ReadAllText(fileName);
-
-            //    }*/
-            //}
-
             Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
             bool? response = openFileDialog.ShowDialog();
             if (response == true)
@@ -269,6 +251,11 @@ namespace ChatClient
                 DragMove();
             }
             catch (Exception ex) { }
+        }
+
+        private void refreshbtn_Click(object sender, RoutedEventArgs e)
+        {
+            refreshAvailableServer();
         }
     }
 }

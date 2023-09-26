@@ -89,7 +89,7 @@
         <ListBox Style="{DynamicResource cornerradius}" Name ="roomList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="5,31,879,330" SelectionChanged="roomList_SelectionChanged" Foreground="White" Background="#FF201C24"/>
         <TextBox x:Name="chatroombox" HorizontalAlignment="Left" Margin="230,492,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" materialDesign:HintAssist.Hint="Chat Room Name" Foreground="White"/>
         <Button x:Name="createbtn" Content="Create" HorizontalAlignment="Left" Margin="367,490,0,0" VerticalAlignment="Top" Height="32" Width="76" Click="createButton_Click"/>
-        <RichTextBox x:Name="msgdisplaybox" Margin="147,35,390,318" Foreground="#FFFFFFFE" IsEnabled="False" Background="#FF303434" >
+        <RichTextBox x:Name="msgdisplaybox" Margin="147,35,390,318" Foreground="#FFFFFFFE" IsEnabled="True" IsReadOnly="True" Background="#FF303434" >
             <FlowDocument/>
         </RichTextBox>
         <Button x:Name="logoutbutton" Content="Log Out" HorizontalAlignment="Left" Margin="10,491,0,0" VerticalAlignment="Top" Height="32" Width="92" Click="logoutbutton_Click"/>
@@ -112,7 +112,7 @@
         <Button x:Name="privatesendmsgbtn" Content="Send" HorizontalAlignment="Left" Margin="912,454,0,0" VerticalAlignment="Top" Height="28" Width="80"/>
         <Button x:Name="privateuploadfilebtn" Content="Upload File" HorizontalAlignment="Left" Margin="638,489,0,0" VerticalAlignment="Top" Height="28" Width="80" />
         <Button x:Name="leavebtn" Content="Leave" HorizontalAlignment="Left" Margin="207,5,0,0" VerticalAlignment="Top" Height="28" Width="70" Click="leavebtn_Click" />
-        <Button x:Name="refreshbtn" Content="Refresh" HorizontalAlignment="Left" Margin="10,376,0,0" VerticalAlignment="Top" Height="32" Width="92"/>
+        <Button x:Name="refreshbtn" Content="Refresh" HorizontalAlignment="Left" Margin="10,376,0,0" VerticalAlignment="Top" Height="32" Width="92" Click="refreshbtn_Click"/>
         <Label x:Name="privatemsglbl" Content="Private Messaging" HorizontalAlignment="Left" Margin="638,259,0,0" VerticalAlignment="Top" Width="110" Foreground="#DDCCC5B9"/>
         <Button Style="{StaticResource MaterialDesignFloatingActionButton}" Background="{x:Null}"
             ToolTip="Close" x:Name="mainbtnexit" Margin="944,-4,0,482" Click="mainbtnexit_Click">
