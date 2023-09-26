@@ -117,8 +117,9 @@ namespace ChatServer
             return theUser.JoinedRooms;
         }
 
-        public void addJoinedServer(string userName, string roomName)
+        public bool addJoinedServer(string userName, string roomName)
         {
+            bool joined = false;
             User theUser = getUserAccountInfo(userName);
             ChatRoom theRoom = getRoomInfo(roomName);
             if (checkJoined(userName, theRoom))
@@ -131,12 +132,14 @@ namespace ChatServer
                 newList.Add(userName);
                 theRoom.RoomUsers = newList;
                 addMessages("System: " + userName + " has joined the chat.", theRoom);
+                joined = true;
             }
             List<string> newroomList = theUser.JoinedRooms;
             newroomList.Add(roomName);
             theUser.JoinedRooms = newroomList;
             updateUserAccountInfo(theUser);
             updataRoomInfo(theRoom);
+            return joined;
         }
 
         private bool checkJoined(string username, ChatRoom theRoom)
@@ -279,10 +282,16 @@ namespace ChatServer
             return isExisted;
         }
 
-        public void addMessages(string message, string roomName)
+        public void addMessages(string message, string roomName, bool isFile)
         {
             ChatRoom theRoom = getRoomInfo(roomName);
             addMessages(message, theRoom);
+            if (isFile)
+            {
+                int locNo = theRoom.Messages.Count - 1;
+                List<int> temp = theRoom.FileLoc;
+                temp.Add(locNo);
+            }    
             updataRoomInfo(theRoom);
         }
 
@@ -298,6 +307,12 @@ namespace ChatServer
             return theRoom.RoomUsers;
         }
 
+        public List<int> getFileLoc(String roomName)
+        {
+            ChatRoom theRoom = getRoomInfo(roomName);
+            return theRoom.FileLoc;
+        }
+
         public ChatRoom getChatRoom(String chatRoomName)
         {
             ChatRoom room = null;
@@ -310,6 +325,5 @@ namespace ChatServer
             }
             return room;
         }
-
     }
 }

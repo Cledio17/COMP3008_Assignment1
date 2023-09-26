@@ -24,7 +24,7 @@ namespace ChatServer
         bool checkIsUsernameExist(string userName);
 
         [OperationContract]
-        void addJoinedServer(string userName, string roomName);
+        bool addJoinedServer(string userName, string roomName);
 
         [OperationContract]
         List<string> getJoinedServers(string userName);
@@ -43,7 +43,7 @@ namespace ChatServer
         bool checkIsRoomNameExist(string roomName);
 
         [OperationContract]
-        void addMessages(string message, string roomName);
+        void addMessages(string message, string roomName, bool isFile);
 
         [OperationContract]
         List<string> getMessages(string roomName);
@@ -53,6 +53,9 @@ namespace ChatServer
 
         [OperationContract]
         List<string> getAllServers();
+
+        [OperationContract]
+        List<int> getFileLoc(String roomName);
 
         [OperationContract]
         void leaveRoom(string username, string roomName);
