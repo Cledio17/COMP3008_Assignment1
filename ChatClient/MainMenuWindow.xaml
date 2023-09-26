@@ -88,7 +88,7 @@
         <Label x:Name="usernamelabel" Content="Username" HorizontalAlignment="Left" Margin="10,442,0,0" VerticalAlignment="Top" FontSize="20" Foreground="White"/>
         <ListBox Style="{DynamicResource cornerradius}" Name ="roomList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="5,31,879,330" SelectionChanged="roomList_SelectionChanged" Foreground="White" Background="#FF201C24"/>
         <TextBox x:Name="chatroombox" HorizontalAlignment="Left" Margin="230,492,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" materialDesign:HintAssist.Hint="Chat Room Name" Foreground="White"/>
-        <Button Content="Create" HorizontalAlignment="Left" Margin="367,490,0,0" VerticalAlignment="Top" Height="32" Width="76" Click="createButton_Click"/>
+        <Button x:Name="createbtn" Content="Create" HorizontalAlignment="Left" Margin="367,490,0,0" VerticalAlignment="Top" Height="32" Width="76" Click="createButton_Click"/>
         <RichTextBox x:Name="msgdisplaybox" Margin="147,35,390,318" Foreground="#FFFFFFFE" IsEnabled="False" Background="#FF303434" >
             <FlowDocument/>
         </RichTextBox>
@@ -103,7 +103,7 @@
         <Label Content="Joined Server" HorizontalAlignment="Left" Margin="10,7,0,0" VerticalAlignment="Top" Foreground="#FFCCC5B9" Background="#00000000"/>
         <Label Content="Available Server" HorizontalAlignment="Left" Margin="147,299,0,0" VerticalAlignment="Top" Foreground="#DDCCC5B9"/>
         <ListBox Style="{DynamicResource cornerradius}" x:Name ="allserverlist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="147,323,390,65" SelectionChanged="roomList_SelectionChanged" Foreground="#DDFFFFFF" Background="#FF201C24"/>
-        <Button x:Name="joinbutton" Content="Join" HorizontalAlignment="Left" Margin="147,491,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="joinbutton" Content="Join" HorizontalAlignment="Left" Margin="147,491,0,0" VerticalAlignment="Top" Click="joinbutton_Click"/>
         <Label x:Name="sendtolabel" Content="Send To:" HorizontalAlignment="Left" Margin="638,283,0,0" VerticalAlignment="Top" Width="110" Foreground="White"/>
         <RichTextBox x:Name="privatemsgdisplaybox" Margin="638,312,16,105" Foreground="White" IsEnabled="False" Background="#FF303434" >
             <FlowDocument/>

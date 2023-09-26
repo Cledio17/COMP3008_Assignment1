@@ -124,10 +124,6 @@
       <Project>{699d1a39-2608-4b40-b5b2-792d268a0c7d}</Project>
       <Name>ChatDataServer</Name>
     </ProjectReference>
-    <ProjectReference Include="..\UserDatabaseServer\UserDatabaseServer.csproj">
-      <Project>{d787f3c2-b09f-45a8-97d1-5baf14cc06e4}</Project>
-      <Name>UserDatabaseServer</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.9.0\build\MaterialDesignThemes.targets')" />

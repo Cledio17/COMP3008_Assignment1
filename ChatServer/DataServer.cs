@@ -31,14 +31,9 @@ namespace ChatServer
             return usersDatabase.getUserAccountInfo(userName);
         }
 
-        public bool isUserNameAvailable(string userName)
+        public bool checkIsUsernameExist(string userName)
         {
-            return usersDatabase.checkIsUserAvailable(userName);
-        }
-
-        public void updateUserAccountInfo(User user)
-        {
-            usersDatabase.updateUserAccountInfo(user);
+            return usersDatabase.checkIsUsernameExist(userName);
         }
 
         public void addJoinedServer (string userName, string roomName)
@@ -52,9 +47,24 @@ namespace ChatServer
         }
 
         //Chat Servers
-        public ChatRoom addServer(User user, string roomName)
+        public void addServer(User user, string roomName)
         {
-            return usersDatabase.addNewChatServer(user, roomName);
+            usersDatabase.addNewChatServer(user, roomName);
+        }
+
+        public ChatRoom getServerInfo(string roomName)
+        {
+            return usersDatabase.getRoomInfo(roomName);
+        }
+
+        public bool checkIsRoomNameExist(string roomName)
+        {
+            return usersDatabase.checkRoomNameExist(roomName);
+        }
+
+        public void addMessages(string messagebys, string message, string roomName)
+        {
+            usersDatabase.addMessages(messagebys, message, roomName);
         }
 
         public List<ChatRoom> getAllServers ()
@@ -62,9 +72,9 @@ namespace ChatServer
             return usersDatabase.getAllServer();
         }
 
-        public void leaveChat(string username, string roomName)
+        public void leaveRoom(string username, string roomName)
         {
-            usersDatabase.leaveChat(username, roomName);
+            usersDatabase.leaveRoom(username, roomName);
         }
     }
 }
