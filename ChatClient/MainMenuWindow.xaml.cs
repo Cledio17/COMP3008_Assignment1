@@ -249,5 +249,10 @@ namespace ChatClient
         {
 
         }
+
+        private void refreshbtn_Click(object sender, RoutedEventArgs e)
+        {
+            refreshAvailableServer();
+        }
     }
 }

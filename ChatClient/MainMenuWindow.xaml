@@ -105,7 +105,7 @@
         <ListBox Style="{DynamicResource cornerradius}" x:Name ="allserverlist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="147,323,390,65" SelectionChanged="allserverlist_SelectionChanged" Foreground="#DDFFFFFF" Background="#FF201C24"/>
         <Button x:Name="joinbutton" Content="Join" HorizontalAlignment="Left" Margin="147,491,0,0" VerticalAlignment="Top" Click="joinbutton_Click"/>
         <Label x:Name="sendtolabel" Content="Send To:" HorizontalAlignment="Left" Margin="638,283,0,0" VerticalAlignment="Top" Width="110" Foreground="White"/>
-        <RichTextBox x:Name="privatemsgdisplaybox" Margin="638,312,16,105" Foreground="White" IsEnabled="False" Background="#FF303434" >
+        <RichTextBox x:Name="privatemsgdisplaybox" Margin="638,312,16,105" Foreground="White" IsEnabled="True" IsReadOnly="True" Background="#FF303434" >
             <FlowDocument/>
         </RichTextBox>
         <TextBox x:Name="privatemsgtxtbox" HorizontalAlignment="Left" Margin="635,454,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Enter your message here" VerticalAlignment="Top" Width="272" Height="28" Foreground="White" Background="#FF403C44"/>
