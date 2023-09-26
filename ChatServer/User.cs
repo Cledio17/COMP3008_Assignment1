@@ -12,48 +12,30 @@ namespace ChatServer
     [DataContract]
     public class User
     {
-        [DataMember]
-        public string userName;
-        [DataMember]
-        public int ID;
+        private string userName;
+        private int ID;
         //private PrivateMessage privateMessages;
+        private List<string> chatRooms = new List<string> { };
+
         [DataMember]
-        public List<ChatRoom> chatRooms;
-
-        public User(string userName, int ID)
+        public string Username
         {
-            this.userName = userName;
-            this.ID = ID;
-            //privateMessages = new PrivateMessage();
-            chatRooms = new List<ChatRoom>();
+            get { return userName; }
+            set { userName = value; }
         }
 
-        public String getUserName() { return this.userName; }
-
-        public int getID() { return this.ID; }
-
-        public List<ChatRoom> getChatRooms() { return this.chatRooms; }
-
-        /*public void addPrivateMessage(User sender, String message) 
+        [DataMember]
+        public int UserID
         {
-            privateMessages.addMessage(sender, message);
-        }*/
-
-        public void addChatRooms(ChatRoom chatRoom)
-        {
-            chatRooms.Add(chatRoom);
+            get { return ID; }
+            set { ID = value; }
         }
 
-        public void removeChatRooms(ChatRoom chatRoom)
-        {
-            List<ChatRoom> roomList = this.chatRooms;
-            for (int i = 0; i < chatRooms.Count; i++)
-            {
-                if (roomList[i].getChatRoomName().Equals(chatRoom.getChatRoomName()))
-                {
-                    chatRooms.RemoveAt(i);
-                }
-            }
+        [DataMember]
+        public List<string> JoinedRooms
+        { 
+            get { return chatRooms; } 
+            set { chatRooms = value; }
         }
     }
 }

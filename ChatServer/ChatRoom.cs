@@ -13,81 +13,45 @@ namespace ChatServer
     [DataContract]
     public class ChatRoom
     {
+        private string chatRoomName;
+        private int id;
+        private List<User> _users = new List<User> { };
+        private List<string> messageby = new List<string> { };
+        private List<string> messages = new List<string> { };
+
         [DataMember]
-        string chatRoomName;
-        [DataMember]
-        int id;
-        [DataMember]
-        List<User> _users;
-        [DataMember]
-        List<string> messageby;
-        [DataMember]
-        List<string> messages;
-        public ChatRoom(string chatRoomName, int id) 
-        { 
-            this.chatRoomName = chatRoomName; 
-            this.id = id;
-            _users = new List<User>(); 
-            messageby = new List<string>(); 
-            messages = new List<string>(); 
+        public string RoomName
+        {
+            get { return chatRoomName; }
+            set { chatRoomName = value; }
         }
 
-        public string getChatRoomName() { return this.chatRoomName; }
-
-        public int getId() { return this.id; }
-
-        public List<User> getUser() { return this._users; }
-
-        public List<string> getMessagesBy() { return this.messageby; }
-
-        public List<string> getMessages() { return this.messages; }
-
-        public void addUser(User user)
+        [DataMember]
+        public int RoomID
         {
-            string username = user.getUserName();
-            if(checkJoined(username))
-            {
-                MessageBox.Show("The user " + user.getUserName() + "has already existed in this server.");
-            }
-            else
-            {
-                _users.Add(user);
-                addMessages("System", username + " has joined the chat.");
-            }
+            get { return id; }
+            set { id = value; }
         }
 
-        private bool checkJoined(string username)
+        [DataMember]
+        public List<User> RoomUsers
         {
-            bool joined = false;
-            foreach(User user in _users)
-            {
-                if (user.getUserName().Equals(username))
-                {
-                    joined = true;
-                }
-            }
-            return joined;
+            get { return _users; }
+            set { _users = value; }
         }
 
-        public void removeUser(User user)
+        [DataMember]
+        public List<string> MessagesBy
         {
-            List<User> temp = _users;
-            string username = user.getUserName();
-            for (int i = 0; i < _users.Count; i++)
-            {
-                if (temp[i].getUserName().Equals(username))
-                {
-                    _users.RemoveAt(i);
-                    addMessages("System", username + " has left the chat.");
-                }
-            }
+            get { return messageby; }
+            set { messageby = value; }
         }
 
-        public void addMessages(string messagebys, string message)
+        [DataMember]
+        public List<string> Messages
         {
-            messageby.Add(messagebys);
-            messages.Add(message);
-            Console.WriteLine(messagebys + ": " + message); //displaying message in the server, might change the way of display in the future
+            get { return messages; }
+            set { messages = value; }
         }
 
         /*public void sendPrivateMessage(User sender, User recipient, string message)

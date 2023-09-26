@@ -8,23 +8,22 @@ using System.Windows.Forms;
 
 namespace ChatServer
 {
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false, MaxItemsInObjectGraph = 10000000)]
+    //[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
     internal class DataServer : DataServerInterface
     {
-        //Users
-        private DatabaseClass usersDatabase;
-
-        //Chat Servers
-        public DataServer()
-        {
-            usersDatabase = new DatabaseClass();
-        }
+        private DatabaseClass usersDatabase = DatabaseClass.Instance;
 
         //Users
         public User addUserAccountInfo(string username)
         {
-            return usersDatabase.addUserAccountInfo(username);
+            return usersDatabase.addNewUser(username);
         }
+
+        public int getUserID(string username)
+        {
+            return usersDatabase.getUserID(username);
+        }
+
 
         public User getUserAccountInfo(string userName)
         {
@@ -41,15 +40,20 @@ namespace ChatServer
             usersDatabase.addJoinedServer(userName, roomName);
         }
 
-        public List<ChatRoom> getJoinedServers(string userName)
+        public List<string> getJoinedServers(string userName)
         {
             return usersDatabase.getChatRooms(userName);
         }
 
         //Chat Servers
-        public void addServer(User user, string roomName)
+        public void addServer(string username, string roomName)
         {
-            usersDatabase.addNewChatServer(user, roomName);
+            usersDatabase.addNewChatServer(username, roomName);
+        }
+
+        public int getServerID(string roomName)
+        {
+            return usersDatabase.getServerID(roomName);
         }
 
         public ChatRoom getServerInfo(string roomName)
@@ -67,9 +71,9 @@ namespace ChatServer
             usersDatabase.addMessages(messagebys, message, roomName);
         }
 
-        public List<ChatRoom> getAllServers ()
+        public List<string> getAllServers ()
         {
-            return usersDatabase.getAllServer();
+            return usersDatabase.AllServers;
         }
 
         public void leaveRoom(string username, string roomName)

@@ -28,24 +28,13 @@ namespace ChatClient
     public partial class MainWindow : Window
     {
         string username = "";
-        private static DataServerInterface foob;
+        private DataServerInterface foob;
         public MainWindow()
         {
             InitializeComponent();
 
             ChannelFactory<DataServerInterface> foobFactory;
             NetTcpBinding tcp = new NetTcpBinding();
-            tcp.Security.Mode = SecurityMode.None;
-            tcp.Security.Transport.ClientCredentialType = TcpClientCredentialType.None;
-            tcp.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.None;
-            tcp.Security.Message.ClientCredentialType = MessageCredentialType.None;
-
-            tcp.MaxReceivedMessageSize = 2147483647;
-            tcp.MaxBufferPoolSize = 2147483647;
-            tcp.MaxBufferSize = 2147483647;
-            tcp.OpenTimeout = TimeSpan.FromMinutes(15);
-            tcp.SendTimeout = TimeSpan.FromMinutes(10);
-            tcp.ReceiveTimeout = TimeSpan.FromMinutes(15);
             string URL = "net.tcp://localhost:8100/DataService";
             foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
             foob = foobFactory.CreateChannel();
@@ -54,21 +43,18 @@ namespace ChatClient
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             username = txtusername.Text;
-            if (!foob.checkIsUsernameExist(username))
+            if (!foob.checkIsUsernameExist(username)) //Register
             {
-                User theUser = foob.addUserAccountInfo(username);
-                MainMenuWindow mainMenuWindow = new MainMenuWindow(foob, theUser, this);
-                mainMenuWindow.Show();
-                this.Hide();
+                foob.addUserAccountInfo(username);
             }
             else
             {
-                //MessageBox.Show("The username is already being used. Please re-enter another username again.");
-                User theUser = foob.getUserAccountInfo(username);
-                MainMenuWindow mainMenuWindow = new MainMenuWindow(foob, theUser, this);
-                mainMenuWindow.Show();
-                this.Hide();
+                foob.getUserAccountInfo(username); //Login
+                
             }
+            MainMenuWindow mainMenuWindow = new MainMenuWindow(foob, username, this);
+            mainMenuWindow.Show();
+            this.Hide();
         }
 
         private void addClient_Click(object sender, RoutedEventArgs e) //Add another client
