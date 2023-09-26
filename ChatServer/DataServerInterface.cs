@@ -43,7 +43,13 @@ namespace ChatServer
         bool checkIsRoomNameExist(string roomName);
 
         [OperationContract]
-        void addMessages(string messagebys, string message, string roomName);
+        void addMessages(string message, string roomName);
+
+        [OperationContract]
+        List<string> getMessages(string roomName);
+
+        [OperationContract]
+        List<string> getParticipants(string roomName);
 
         [OperationContract]
         List<string> getAllServers();
