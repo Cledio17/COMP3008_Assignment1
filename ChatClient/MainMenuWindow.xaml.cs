@@ -28,6 +28,7 @@ namespace ChatClient
     /// <summary>
     /// Interaction logic for MainMenuWindow.xaml
     /// </summary>
+    public delegate List<ChatRoom> getChatRoomDelegate(string username);
     public partial class MainMenuWindow : Window
     {
         string username = ""; //loggin in user username
@@ -35,6 +36,7 @@ namespace ChatClient
         ChatRoom cr; //current selected room
         MainWindow loginMenu;
         private DataServerInterface foob;
+        getChatRoomDelegate getChatRoomDelegate;
         public MainMenuWindow (DataServerInterface inFoob, User theUser, MainWindow inLoginMenu)
         {
             InitializeComponent();
@@ -44,7 +46,8 @@ namespace ChatClient
             this.loginMenu = inLoginMenu;
             usernamelabel.Content = username;
             userID.Content = "ID: " + us.getID();
-            List<ChatRoom> joinedRooms = foob.getJoinedServers(username);
+            getChatRoomDelegate = foob.getJoinedServers;
+            List<ChatRoom> joinedRooms = getChatRoomDelegate.Invoke(username);
             foreach (ChatRoom room in joinedRooms)
             {
                 roomList.Items.Add(room.getChatRoomName());
@@ -93,7 +96,7 @@ namespace ChatClient
             if (roomList.SelectedItem != null)
             {
                 string roomName = roomList.SelectedItem.ToString();
-                List<ChatRoom> joinedRooms = foob.getJoinedServers(username);
+                List<ChatRoom> joinedRooms = getChatRoomDelegate.Invoke(username);
                 foreach (ChatRoom room in joinedRooms)
                 {
                     if (room.getChatRoomName().Equals(roomName, StringComparison.OrdinalIgnoreCase))
@@ -131,11 +134,11 @@ namespace ChatClient
         {
             if (allserverlist.SelectedItem != null)
             {
-                /*string selectedServer = allserverlist.SelectedItem.ToString();
+                string selectedServer = allserverlist.SelectedItem.ToString();
                 allserverlist.SelectedItem = null;
                 foob.addJoinedServer(username, selectedServer);
                 roomList.Items.Add(selectedServer);
-                us = foob.getUserAccountInfo(username); //get latest user info*/
+                //us = foob.getUserAccountInfo(username); //get latest user info
             }
             else
             {

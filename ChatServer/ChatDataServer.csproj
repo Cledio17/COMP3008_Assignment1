@@ -66,7 +66,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChatRoom.cs" />
-    <Compile Include="ChatRoomInterface.cs" />
     <Compile Include="DatabaseClass.cs" />
     <Compile Include="DataServer.cs" />
     <Compile Include="DataServerInterface.cs" />

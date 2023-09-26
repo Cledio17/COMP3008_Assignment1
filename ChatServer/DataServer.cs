@@ -38,7 +38,7 @@ namespace ChatServer
 
         public void addJoinedServer (string userName, string roomName)
         {
-            return usersDatabase.addJoinedServer(userName, roomName);
+            usersDatabase.addJoinedServer(userName, roomName);
         }
 
         public List<ChatRoom> getJoinedServers(string userName)

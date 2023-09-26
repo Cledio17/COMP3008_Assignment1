@@ -25,7 +25,6 @@ namespace ChatClient
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    [ServiceBehavior(MaxItemsInObjectGraph = 10000000)]
     public partial class MainWindow : Window
     {
         string username = "";
@@ -36,9 +35,19 @@ namespace ChatClient
 
             ChannelFactory<DataServerInterface> foobFactory;
             NetTcpBinding tcp = new NetTcpBinding();
+            tcp.Security.Mode = SecurityMode.None;
+            tcp.Security.Transport.ClientCredentialType = TcpClientCredentialType.None;
+            tcp.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.None;
+            tcp.Security.Message.ClientCredentialType = MessageCredentialType.None;
+
+            tcp.MaxReceivedMessageSize = 2147483647;
+            tcp.MaxBufferPoolSize = 2147483647;
+            tcp.MaxBufferSize = 2147483647;
+            tcp.OpenTimeout = TimeSpan.FromMinutes(15);
+            tcp.SendTimeout = TimeSpan.FromMinutes(10);
+            tcp.ReceiveTimeout = TimeSpan.FromMinutes(15);
             string URL = "net.tcp://localhost:8100/DataService";
             foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
-            foobFactory.Endpoint.EndpointBehaviors.Add(new CustomClientEndpointBehavior(1000000));
             foob = foobFactory.CreateChannel();
         }
 

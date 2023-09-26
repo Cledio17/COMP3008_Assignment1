@@ -121,7 +121,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ChatServer\ChatDataServer.csproj">
-      <Project>{699d1a39-2608-4b40-b5b2-792d268a0c7d}</Project>
+      <Project>{699D1A39-2608-4B40-B5B2-792D268A0C7D}</Project>
       <Name>ChatDataServer</Name>
     </ProjectReference>
   </ItemGroup>

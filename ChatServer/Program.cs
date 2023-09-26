@@ -21,21 +21,20 @@ namespace ChatServer
             /*Present the publicly accessible interface to the client. 0.0.0.0 tells .net to
             accept on any interface. :8100 means this will use port 8100. DataService is a name for the
             actual service, this can be any string.*/
-            //tcp.Security.Mode = SecurityMode.None;
-            //tcp.Security.Transport.ClientCredentialType = TcpClientCredentialType.None;
-            //tcp.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.None;
-            //tcp.Security.Message.ClientCredentialType = MessageCredentialType.None;
+            tcp.Security.Mode = SecurityMode.None;
+            tcp.Security.Transport.ClientCredentialType = TcpClientCredentialType.None;
+            tcp.Security.Transport.ProtectionLevel = System.Net.Security.ProtectionLevel.None;
+            tcp.Security.Message.ClientCredentialType = MessageCredentialType.None;
 
-            //tcp.MaxReceivedMessageSize = 2147483647;
-            //tcp.MaxBufferPoolSize = 2147483647;
-            //tcp.MaxBufferSize = 2147483647;
-            //tcp.OpenTimeout = TimeSpan.FromMinutes(15);
-            //tcp.SendTimeout = TimeSpan.FromMinutes(10);
-            //tcp.ReceiveTimeout = TimeSpan.FromMinutes(15);
-            
+            tcp.MaxReceivedMessageSize = 2147483647;
+            tcp.MaxBufferPoolSize = 2147483647;
+            tcp.MaxBufferSize = 2147483647;
+            tcp.OpenTimeout = TimeSpan.FromMinutes(10);
+            tcp.SendTimeout = TimeSpan.FromMinutes(5);
+            tcp.ReceiveTimeout = TimeSpan.FromMinutes(10);
+
 
             host.AddServiceEndpoint(typeof(DataServerInterface), tcp, "net.tcp://0.0.0.0:8100/DataService");
-            host.Description.Behaviors.Add(new CustomServiceBehavior(10000000));
             //And open the host for business!
             host.Open();
             Console.WriteLine("System Online");

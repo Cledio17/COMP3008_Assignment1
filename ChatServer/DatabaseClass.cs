@@ -186,7 +186,7 @@ namespace ChatServer
         public ChatRoom getChatRoom(String chatRoomName)
         {
             ChatRoom room = null;
-            foreach(ChatRoom chatRoom in availableServers)
+            foreach(ChatRoom chatRoom in allServers)
             {
                 if(chatRoom.getChatRoomName().Equals(chatRoomName)) 
                 {
