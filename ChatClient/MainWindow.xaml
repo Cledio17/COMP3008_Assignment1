@@ -6,7 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:ChatClient"
         mc:Ignorable="d"
-        Title="Fake Discord" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize">
+        Title="Fake Discord" Height="450" Width="800" WindowStartupLocation="CenterScreen" WindowStyle="None" ResizeMode="NoResize" Icon="/discordbig.ico">
     <Grid MouseDown="Border_MouseDown">
         <Grid.Background>
             <LinearGradientBrush StartPoint="0.1,0" EndPoint="0.9,1">
@@ -20,7 +20,7 @@
         </Border>
         <StackPanel Orientation="Horizontal">
             <StackPanel Width="350">
-                    <Image Source="/fakediscordcool.png" Width="300" Height="300" VerticalAlignment="Top" Margin="30" Stretch="Fill"/>
+                    <Image Source="/discordtransparentlogo.png" Width="300" Height="300" VerticalAlignment="Top" Margin="30" Stretch="Fill"/>
             </StackPanel>
             <StackPanel Width="350">
                 <StackPanel Margin="20 40">
