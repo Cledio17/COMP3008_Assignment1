@@ -102,7 +102,7 @@ namespace ChatClient
                 {
                     if (room.Equals(roomName, StringComparison.OrdinalIgnoreCase))
                     {
-                        currRoomName = room;
+                        currRoomName = room ;
                     }
                 }
                 currRoom.Content = foob.getServerID(currRoomName);
