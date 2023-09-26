@@ -78,7 +78,7 @@
     </Window.Resources>
     <Grid RenderTransformOrigin="0.37,0.299" MouseDown="Border_MouseDown">
         <Grid Name="GridPanel" Background="#FF303240" Width="126" Height="350" HorizontalAlignment="Left" VerticalAlignment="Top">
-            <Image HorizontalAlignment="Left" Height="25" Margin="10,10,0,0" VerticalAlignment="Top" Width="29" Source="/discordbig.ico"/>
+            <Image x:Name="menulogo" HorizontalAlignment="Left" Height="25" Margin="10,10,0,0" VerticalAlignment="Top" Width="29" Source="/discordbig.ico"/>
         </Grid>
         <Grid Name="GridPanel2" Background="#FF28242C" Width="126" Height="200" HorizontalAlignment="Left" VerticalAlignment="Bottom">
         </Grid>
