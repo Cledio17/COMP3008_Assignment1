@@ -66,9 +66,19 @@ namespace ChatServer
             return usersDatabase.checkRoomNameExist(roomName);
         }
 
-        public void addMessages(string messagebys, string message, string roomName)
+        public void addMessages(string message, string roomName)
         {
-            usersDatabase.addMessages(messagebys, message, roomName);
+            usersDatabase.addMessages(message, roomName);
+        }
+
+        public List<string> getMessages(string roomName)
+        {
+            return usersDatabase.getMessages(roomName);
+        }
+
+        public List<string> getParticipants(string roomName)
+        {
+            return usersDatabase.getParticipants(roomName);
         }
 
         public List<string> getAllServers ()

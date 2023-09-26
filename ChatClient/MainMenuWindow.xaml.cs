@@ -107,8 +107,19 @@ namespace ChatClient
                 }
                 currRoom.Content = foob.getServerID(currRoomName);
 
-                int index = 0;
-                string uss;
+                List<string> messages = foob.getMessages(currRoomName);
+                List<string> participants = foob.getParticipants(currRoomName);
+                foreach (string user in participants)
+                {
+                    participantlist.Items.Add(user);
+                }
+                foreach (string message in messages)
+                {
+                    Console.WriteLine(message);
+                    msgdisplaybox.AppendText(message);
+                    msgdisplaybox.AppendText(Environment.NewLine);
+                }
+
                 /*List<String> messages = cr.Messages;
                 List<String> messagesby = cr.MessagesBy;
                 List<User> _users = cr.RoomUsers;
@@ -164,19 +175,18 @@ namespace ChatClient
 
         private void sendmsgbtn_Click(object sender, RoutedEventArgs e)
         {
-            /*if (cr != null)
+            if (currRoomName != null)
             {
-                foob.addMessages(username, msgtxtbox.Text, cr.RoomName);
-                string msg = username + ": " + msgtxtbox.Text;
-                msgdisplaybox.AppendText(msg);
-                msgdisplaybox.AppendText(Environment.NewLine);
+                string message = username + ": " + msgtxtbox.Text;
                 msgtxtbox.Clear();
-                cr = foob.getServerInfo(cr.RoomName);
+                foob.addMessages(message, currRoomName);
+                msgdisplaybox.AppendText(message);
+                msgdisplaybox.AppendText(Environment.NewLine);
             }
             else
             {
                 MessageBox.Show("Please select a chat room.");
-            }*/
+            }
         }
 
         private void uploadfilebtn_Click(object sender, RoutedEventArgs e)

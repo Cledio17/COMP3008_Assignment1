@@ -15,8 +15,7 @@ namespace ChatServer
     {
         private string chatRoomName;
         private int id;
-        private List<User> _users = new List<User> { };
-        private List<string> messageby = new List<string> { };
+        private List<string> _users = new List<string> { };
         private List<string> messages = new List<string> { };
 
         [DataMember]
@@ -34,17 +33,10 @@ namespace ChatServer
         }
 
         [DataMember]
-        public List<User> RoomUsers
+        public List<string> RoomUsers
         {
             get { return _users; }
             set { _users = value; }
-        }
-
-        [DataMember]
-        public List<string> MessagesBy
-        {
-            get { return messageby; }
-            set { messageby = value; }
         }
 
         [DataMember]

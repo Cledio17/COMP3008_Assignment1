@@ -127,10 +127,10 @@ namespace ChatServer
             }
             else
             {
-                List<User> newList = theRoom.RoomUsers;
-                newList.Add(theUser);
+                List<string> newList = theRoom.RoomUsers;
+                newList.Add(userName);
                 theRoom.RoomUsers = newList;
-                addMessages("System", userName + " has joined the chat.", theRoom);
+                addMessages("System: " + userName + " has joined the chat.", theRoom);
             }
             List<string> newroomList = theUser.JoinedRooms;
             newroomList.Add(roomName);
@@ -142,9 +142,9 @@ namespace ChatServer
         private bool checkJoined(string username, ChatRoom theRoom)
         {
             bool joined = false;
-            foreach (User user in theRoom.RoomUsers)
+            foreach (string user in theRoom.RoomUsers)
             {
-                if (user.Username.Equals(username))
+                if (user.Equals(username))
                 {
                     joined = true;
                 }
@@ -152,15 +152,12 @@ namespace ChatServer
             return joined;
         }
 
-        private void addMessages(string messagebys, string message, ChatRoom theRoom)
+        private void addMessages(string message, ChatRoom theRoom)
         {
-            List<string> newMsgByList = theRoom.MessagesBy;
             List<string> newMsgList = theRoom.Messages;
-            newMsgByList.Add(messagebys);
             newMsgList.Add(message);
-            theRoom.MessagesBy = newMsgByList;
             theRoom.Messages = newMsgList;
-            Console.WriteLine(messagebys + ": " + message); //displaying message in the server, might change the way of display in the future
+            Console.WriteLine(message); //displaying message in the server, might change the way of display in the future
         }
 
         public void leaveRoom(string userName, string roomName)
@@ -181,13 +178,13 @@ namespace ChatServer
                     theRoom = room;
                 }
             }
-            List<User> temp = theRoom.RoomUsers;
+            List<string> temp = theRoom.RoomUsers;
             for (int i = 0; i < theRoom.RoomUsers.Count; i++)
             {
-                if (temp[i].Username.Equals(userName))
+                if (temp[i].Equals(userName))
                 {
                     temp.RemoveAt(i);
-                    addMessages("System", userName + " has left the chat.", theRoom);
+                    addMessages("System: " + userName + " has left the chat.", theRoom);
                 }
             }
             theRoom.RoomUsers = temp;
@@ -215,10 +212,10 @@ namespace ChatServer
             newRoom.RoomID = serverID;
 
             User roomHost = getUserAccountInfo(username);
-            List<User> newList = new List<User>();
-            newList.Add(roomHost);
+            List<string> newList = new List<string>();
+            newList.Add(username);
             newRoom.RoomUsers = newList;
-            addMessages("System", username + " has joined the chat.", newRoom);
+            addMessages("System: " + username + " has joined the chat.", newRoom);
             allServers.Add(newRoom);
             allServerNames.Add(roomName);
 
@@ -282,11 +279,23 @@ namespace ChatServer
             return isExisted;
         }
 
-        public void addMessages(string messagebys, string message, string roomName)
+        public void addMessages(string message, string roomName)
         {
             ChatRoom theRoom = getRoomInfo(roomName);
-            addMessages(messagebys, message, theRoom);
+            addMessages(message, theRoom);
             updataRoomInfo(theRoom);
+        }
+
+        public List<string> getMessages(string roomName)
+        {
+            ChatRoom theRoom = getRoomInfo(roomName);
+            return theRoom.Messages;
+        }
+
+        public List<string> getParticipants(string roomName)
+        {
+            ChatRoom theRoom = getRoomInfo(roomName);
+            return theRoom.RoomUsers;
         }
 
         public ChatRoom getChatRoom(String chatRoomName)
