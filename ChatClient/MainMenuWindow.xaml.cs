@@ -208,5 +208,14 @@ namespace ChatClient
         {
             System.Windows.Application.Current.Shutdown();
         }
+
+        private void Border_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                DragMove();
+            }
+            catch (Exception ex) { }
+        }
     }
 }

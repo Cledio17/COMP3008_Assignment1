@@ -76,7 +76,7 @@
             <Setter Property="wpf:ScrollViewerAssist.IsAutoHideEnabled" Value="True"/>
         </Style>
     </Window.Resources>
-    <Grid RenderTransformOrigin="0.37,0.299">
+    <Grid RenderTransformOrigin="0.37,0.299" MouseDown="Border_MouseDown">
         <Grid Name="GridPanel" Background="#FF303240" Width="126" Height="350" HorizontalAlignment="Left" VerticalAlignment="Top">
         </Grid>
         <Grid Name="GridPanel2" Background="#FF28242C" Width="126" Height="200" HorizontalAlignment="Left" VerticalAlignment="Bottom">
