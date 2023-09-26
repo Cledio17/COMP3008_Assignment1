@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,13 +9,16 @@ using System.Windows.Forms;
 
 namespace ChatServer
 {
-    [Serializable]
+    [DataContract]
     public class User
     {
-        private string userName;
-        private int ID;
+        [DataMember]
+        public string userName;
+        [DataMember]
+        public int ID;
         //private PrivateMessage privateMessages;
-        private List<ChatRoom> chatRooms;
+        [DataMember]
+        public List<ChatRoom> chatRooms;
 
         public User(string userName, int ID)
         {

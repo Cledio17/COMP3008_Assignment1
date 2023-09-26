@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,14 +10,19 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace ChatServer
 {
-    [Serializable]
+    [DataContract]
     public class ChatRoom
     {
-        private string chatRoomName;
-        private int id;
-        private List<User> _users;
-        private List<string> messageby;
-        private List<string> messages;
+        [DataMember]
+        string chatRoomName;
+        [DataMember]
+        int id;
+        [DataMember]
+        List<User> _users;
+        [DataMember]
+        List<string> messageby;
+        [DataMember]
+        List<string> messages;
         public ChatRoom(string chatRoomName, int id) 
         { 
             this.chatRoomName = chatRoomName; 
