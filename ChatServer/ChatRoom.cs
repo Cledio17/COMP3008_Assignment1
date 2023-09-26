@@ -17,6 +17,7 @@ namespace ChatServer
         private int id;
         private List<string> _users = new List<string> { };
         private List<string> messages = new List<string> { };
+        private List<int> fileLoc = new List<int>();
 
         [DataMember]
         public string RoomName
@@ -44,6 +45,13 @@ namespace ChatServer
         {
             get { return messages; }
             set { messages = value; }
+        }
+
+        [DataMember]
+        public List<int> FileLoc
+        {
+            get { return fileLoc; }
+            set { fileLoc = value; }
         }
 
         /*public void sendPrivateMessage(User sender, User recipient, string message)

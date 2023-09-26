@@ -35,9 +35,9 @@ namespace ChatServer
             return usersDatabase.checkIsUsernameExist(userName);
         }
 
-        public void addJoinedServer (string userName, string roomName)
+        public bool addJoinedServer (string userName, string roomName)
         {
-            usersDatabase.addJoinedServer(userName, roomName);
+            return usersDatabase.addJoinedServer(userName, roomName);
         }
 
         public List<string> getJoinedServers(string userName)
@@ -66,9 +66,9 @@ namespace ChatServer
             return usersDatabase.checkRoomNameExist(roomName);
         }
 
-        public void addMessages(string message, string roomName)
+        public void addMessages(string message, string roomName, bool isFile)
         {
-            usersDatabase.addMessages(message, roomName);
+            usersDatabase.addMessages(message, roomName, isFile);
         }
 
         public List<string> getMessages(string roomName)
@@ -84,6 +84,11 @@ namespace ChatServer
         public List<string> getAllServers ()
         {
             return usersDatabase.AllServers;
+        }
+
+        public List<int> getFileLoc(String roomName)
+        {
+            return usersDatabase.getFileLoc(roomName);
         }
 
         public void leaveRoom(string username, string roomName)

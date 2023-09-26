@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Remoting.Messaging;
 using System.ServiceModel;
@@ -113,32 +114,31 @@ namespace ChatClient
                 {
                     participantlist.Items.Add(user);
                 }
+                int i = 0;
+                bool isFile = false;
+                List <int> fileLoc = foob.getFileLoc(currRoomName);
                 foreach (string message in messages)
                 {
                     Console.WriteLine(message);
-                    msgdisplaybox.AppendText(message);
-                    msgdisplaybox.AppendText(Environment.NewLine);
+                    foreach (int loc  in fileLoc)
+                    {
+                        if (loc == i)
+                        {
+                            isFile = true;
+                        }
+                    }
+                    if (isFile)
+                    {
+                        loadFile(message);
+                    }
+                    else
+                    {
+                        msgdisplaybox.AppendText(message);
+                        msgdisplaybox.AppendText(Environment.NewLine);
+                    }
+                    i++;
+                    isFile = false;
                 }
-
-                /*List<String> messages = cr.Messages;
-                List<String> messagesby = cr.MessagesBy;
-                List<User> _users = cr.RoomUsers;
-                cr = foob.getServerInfo(cr.RoomName);
-                foreach (User user in _users)
-                {
-                    uss = user.Username;
-                    participantlist.Items.Add(uss);
-                }
-
-                foreach (string messageBy in messagesby)
-                {
-                    string message = messages[index];
-                    string combinedMessage = $"{messageBy}: {message}";
-                    Console.WriteLine(combinedMessage);
-                    msgdisplaybox.AppendText(combinedMessage);
-                    msgdisplaybox.AppendText(Environment.NewLine);
-                    index++;
-                }*/
             }
         }
 
@@ -148,8 +148,10 @@ namespace ChatClient
             {
                 string selectedServer = allserverlist.SelectedItem.ToString();
                 allserverlist.SelectedItem = null;
-                foob.addJoinedServer(username, selectedServer);
-                roomList.Items.Add(selectedServer);
+                if (foob.addJoinedServer(username, selectedServer))
+                {
+                    roomList.Items.Add(selectedServer);
+                }
             }
             else
             {
@@ -179,7 +181,7 @@ namespace ChatClient
             {
                 string message = username + ": " + msgtxtbox.Text;
                 msgtxtbox.Clear();
-                foob.addMessages(message, currRoomName);
+                foob.addMessages(message, currRoomName, false);
                 msgdisplaybox.AppendText(message);
                 msgdisplaybox.AppendText(Environment.NewLine);
             }
@@ -191,14 +193,35 @@ namespace ChatClient
 
         private void uploadfilebtn_Click(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
-            bool? response = openFileDialog.ShowDialog();
-            if (response == true)
+            if (currRoomName != null)
             {
-                string filepath = openFileDialog.FileName;
-                string filename = System.IO.Path.GetFileName(filepath); // Get only the file name
+                Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+                bool? response = openFileDialog.ShowDialog();
+                string filepath = "";
+                if (response == true)
+                {
+                    filepath = openFileDialog.FileName;
+                    msgtxtbox.Clear();
+                    foob.addMessages(filepath, currRoomName, true);
+                    loadFile(filepath);
+                }
+                else
+                {
+                    MessageBox.Show("No file selected.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a chat room.");
+            }
+        }
 
-                // Create a new Hyperlink
+        private void loadFile (string filepath)
+        {
+            //try
+            //{
+                string filename = System.IO.Path.GetFileName(filepath); // Get only the file name
+                                                                        // Create a new Hyperlink
                 Hyperlink hyperlink = new Hyperlink(new Run(filename));
                 hyperlink.IsEnabled = true;
                 hyperlink.NavigateUri = new Uri(filepath); // Set the URI to the file path
@@ -211,11 +234,16 @@ namespace ChatClient
                 paragraph.IsEnabled = true;
 
                 // Add the Paragraph to the RichTextBox
+                msgdisplaybox.AppendText(username + ": ");
                 msgdisplaybox.Document.Blocks.Add(paragraph);
                 msgdisplaybox.IsDocumentEnabled = true;
                 msgdisplaybox.IsReadOnly = true;
                 msgdisplaybox.AppendText("\n");
-            }
+            //}
+            //catch (UriFormatException ex)
+            //{
+            //    MessageBox.Show("No file selected.");
+            //}
         }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
