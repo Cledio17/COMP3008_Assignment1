@@ -403,6 +403,50 @@ namespace ChatClient
         private void refreshbtn_Click(object sender, RoutedEventArgs e)
         {
             refreshAvailableServer();
+            refreshPMBox();
+
+            //refresh room list and messages
+            if (roomList.SelectedItem != null)
+            {
+                msgdisplaybox.Document.Blocks.Clear();
+                List<string> messages = foob.getMessages(currRoomName);
+                int i = 0;
+                bool isFile = false;
+                List<int> fileLoc = foob.getFileLoc(currRoomName);
+                foreach (string message in messages)
+                {
+                    Console.WriteLine(message);
+                    foreach (int loc in fileLoc)
+                    {
+                        if (loc == i)
+                        {
+                            isFile = true;
+                        }
+                    }
+                    if (isFile)
+                    {
+                        loadFileServer(message);
+                    }
+                    else
+                    {
+                        msgdisplaybox.AppendText(message);
+                        msgdisplaybox.AppendText(Environment.NewLine);
+                    }
+                    i++;
+                    isFile = false;
+                }
+            }
+
+            //refresh participant list
+            if (roomList.SelectedItem != null)
+            {
+                participantlist.Items.Clear();
+                List<string> participants = foob.getParticipants(currRoomName);
+                foreach (string user in participants)
+                {
+                    participantlist.Items.Add(user);
+                }
+            }
         }
 
         private void participantlist_SelectionChanged(object sender, SelectionChangedEventArgs e)
