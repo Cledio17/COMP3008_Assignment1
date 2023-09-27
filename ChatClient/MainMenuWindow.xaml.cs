@@ -30,6 +30,9 @@ namespace ChatClient
     /// <summary>
     /// Interaction logic for MainMenuWindow.xaml
     /// </summary>
+    public delegate void UpdateChatRoomDelegate();
+    public delegate void UpdateChatMessageDelegate();
+    public delegate void UpdateRoomParticipants();
     public partial class MainMenuWindow : Window
     {
         int ID = 0;
@@ -38,6 +41,12 @@ namespace ChatClient
         string currPmName; //current private message name
         MainWindow loginMenu;
         private DataServerInterface foob;
+        private Thread serverListenerThread;
+        private UpdateChatRoomDelegate updateChatRoomDelegate;
+        private UpdateChatMessageDelegate updateChatMessageDelegate;
+        private UpdateRoomParticipants updateRoomParticipants;
+        private bool newChatMessage = true;
+        private bool newParticipant = true;
         public MainMenuWindow (DataServerInterface inFoob, string inUsername, MainWindow inLoginMenu)
         {
             InitializeComponent();
@@ -53,6 +62,92 @@ namespace ChatClient
                 roomList.Items.Add(room);
             }
             refreshAvailableServer();
+
+            updateChatRoomDelegate += UpdateChatRoom;
+            updateChatMessageDelegate += UpdateChatMessage;
+            updateRoomParticipants += UpdateRoomParticpants;
+
+            serverListenerThread = new Thread(ListenToServer);
+            serverListenerThread.Start();
+        }
+
+        private void UpdateChatRoom()
+        {
+            Dispatcher.Invoke(() => {
+                refreshAvailableServer();
+            });
+        }
+
+        private void UpdateChatMessage()
+        {
+            Dispatcher.Invoke(() => {
+                if (roomList.SelectedItem != null)
+                {
+                    msgdisplaybox.Document.Blocks.Clear();
+                    List<string> messages = foob.getMessages(currRoomName);
+                    int i = 0;
+                    bool isFile = false;
+                    List<int> fileLoc = foob.getFileLoc(currRoomName);
+                    foreach (string message in messages)
+                    {
+                        Console.WriteLine(message);
+                        foreach (int loc in fileLoc)
+                        {
+                            if (loc == i)
+                            {
+                                isFile = true;
+                            }
+                        }
+                        if (isFile)
+                        {
+                            loadFile(message);
+                        }
+                        else
+                        {
+                            msgdisplaybox.AppendText(message);
+                            msgdisplaybox.AppendText(Environment.NewLine);
+                        }
+                        i++;
+                        isFile = false;
+                    }
+                }
+            });
+        }
+
+        private void UpdateRoomParticpants()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                if(roomList.SelectedItem != null)
+                {
+                    participantlist.Items.Clear();
+                    List<string> participants = foob.getParticipants(currRoomName);
+                    foreach (string user in participants)
+                    {
+                        participantlist.Items.Add(user);
+                    }
+                }
+            });
+        }
+
+        private void ListenToServer()
+        {
+            while (true)
+            {
+                Thread.Sleep(5000);
+                updateChatRoomDelegate?.Invoke();
+
+                if (newChatMessage)
+                {
+                    updateChatMessageDelegate?.Invoke();
+
+                }
+
+                if(newParticipant)
+                {
+                    updateRoomParticipants?.Invoke();
+                }
+            }
         }
 
         private void createButton_Click(object sender, RoutedEventArgs e)
@@ -66,7 +161,6 @@ namespace ChatClient
                     foob.addServer(username, roomName);
                     roomList.Items.Add(roomName);
                     refreshAvailableServer();
-                    //us = foob.getUserAccountInfo(us.Username);
                 }
                 else
                 {
@@ -104,7 +198,7 @@ namespace ChatClient
                 {
                     if (room.Equals(roomName, StringComparison.OrdinalIgnoreCase))
                     {
-                        currRoomName = room;
+                        currRoomName = room ;
                     }
                 }
                 currRoom.Content = foob.getServerID(currRoomName);
@@ -153,6 +247,7 @@ namespace ChatClient
                 {
                     roomList.Items.Add(selectedServer);
                 }
+                newParticipant = true;
             }
             else
             {
@@ -169,6 +264,7 @@ namespace ChatClient
                 msgdisplaybox.Document.Blocks.Clear();
                 participantlist.Items.Clear();
                 currRoomName = null; //clear deleted selected room
+                newParticipant = true;
             }
             else
             {
