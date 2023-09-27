@@ -48,6 +48,7 @@ namespace ChatClient
             {
                 foob.addUserAccountInfo(username);
                 foob.setLoggedIn(username);
+                MessageBox.Show("Registration Success. Logging in as " + username + ".");
                 MainMenuWindow mainMenuWindow = new MainMenuWindow(foob, username, this);
                 mainMenuWindow.Show();
                 this.Hide();
@@ -62,6 +63,7 @@ namespace ChatClient
                 else
                 {
                     foob.setLoggedIn(username);
+                    MessageBox.Show("Logging in as " + username + ".");
                     MainMenuWindow mainMenuWindow = new MainMenuWindow(foob, username, this);
                     mainMenuWindow.Show();
                     this.Hide();

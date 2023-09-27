@@ -169,13 +169,14 @@ namespace ChatClient
         {
             string roomName = chatroombox.Text;
             chatroombox.Clear(); //clear the chat room box after creating the chat room
-            if (!roomName.Equals("") || roomName != null)
+            if (!roomName.Equals("") && roomName != null)
             {
                 if (!foob.checkIsRoomNameExist(roomName))
                 {
                     foob.addServer(username, roomName);
                     roomList.Items.Add(roomName);
                     refreshAvailableServer();
+                    MessageBox.Show("Room " + roomName + " created.");
                 }
                 else
                 {
@@ -261,6 +262,7 @@ namespace ChatClient
                 if (foob.addJoinedServer(username, selectedServer))
                 {
                     roomList.Items.Add(selectedServer);
+                    MessageBox.Show("User " + username + " joined room " + selectedServer);
                 }
                 newParticipant = true;
             }
@@ -278,6 +280,7 @@ namespace ChatClient
                 roomList.Items.Remove(currRoomName);
                 msgdisplaybox.Document.Blocks.Clear();
                 participantlist.Items.Clear();
+                MessageBox.Show("User " + username + " leaved room " + currRoomName);
                 currRoomName = null; //clear deleted selected room
                 newParticipant = true;
             }
@@ -385,6 +388,7 @@ namespace ChatClient
         //Exit program
         private void mainbtnexit_Click(object sender, RoutedEventArgs e)
         {
+            foob.setLoggedOut(username);
             this.Close();
         }
 
