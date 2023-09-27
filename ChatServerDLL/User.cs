@@ -8,6 +8,7 @@ namespace ChatServerDLL
     {
         private string userName;
         private int ID;
+        private bool loggedIn = false;
         private List<string> chatRooms = new List<string> { };
 
         [DataMember]
@@ -22,6 +23,13 @@ namespace ChatServerDLL
         {
             get { return ID; }
             set { ID = value; }
+        }
+
+        [DataMember]
+        public bool LoggedIn
+        {
+            get { return loggedIn; }
+            set { loggedIn = value; }
         }
 
         [DataMember]

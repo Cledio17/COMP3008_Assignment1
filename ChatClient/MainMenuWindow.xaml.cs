@@ -377,6 +377,7 @@ namespace ChatClient
         //Log out
         private void logoutbutton_Click(object sender, RoutedEventArgs e)
         {
+            foob.setLoggedOut(username);
             loginMenu.Show();
             this.Close();
         }

@@ -4,12 +4,26 @@ using System.Collections.Generic;
 
 namespace ChatServer
 {
-    //[ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, UseSynchronizationContext = false)]
     internal class DataServer : DataServerInterface
     {
         private DatabaseClass usersDatabase = DatabaseClass.Instance;
 
         //Users
+        public void setLoggedIn(string userName)
+        {
+            usersDatabase.setLoggedIn(userName);
+        }
+
+        public void setLoggedOut(string userName)
+        {
+            usersDatabase.setLoggedOut(userName);
+        }
+
+        public bool isLoggedIn(string userName)
+        {
+            return usersDatabase.isLoggedIn(userName);
+        }
+
         public User addUserAccountInfo(string username)
         {
             return usersDatabase.addNewUser(username);

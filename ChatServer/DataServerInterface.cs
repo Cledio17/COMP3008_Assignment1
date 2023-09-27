@@ -10,6 +10,15 @@ namespace ChatServer
     {
         //Users
         [OperationContract]
+        void setLoggedIn(string userName);
+
+        [OperationContract]
+        void setLoggedOut(string userName);
+
+        [OperationContract]
+        bool isLoggedIn(string userName);
+
+        [OperationContract]
         User addUserAccountInfo(string username);
 
         [OperationContract]

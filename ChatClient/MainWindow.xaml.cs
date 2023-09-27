@@ -47,15 +47,27 @@ namespace ChatClient
             if (!foob.checkIsUsernameExist(username)) //Register
             {
                 foob.addUserAccountInfo(username);
+                foob.setLoggedIn(username);
+                MainMenuWindow mainMenuWindow = new MainMenuWindow(foob, username, this);
+                mainMenuWindow.Show();
+                this.Hide();
             }
             else
             {
                 foob.getUserAccountInfo(username); //Login
-                
+                if (foob.isLoggedIn(username))
+                {
+                    MessageBox.Show("The user " + username + " is logged in.");
+                }
+                else
+                {
+                    foob.setLoggedIn(username);
+                    MainMenuWindow mainMenuWindow = new MainMenuWindow(foob, username, this);
+                    mainMenuWindow.Show();
+                    this.Hide();
+                }
+
             }
-            MainMenuWindow mainMenuWindow = new MainMenuWindow(foob, username, this);
-            mainMenuWindow.Show();
-            this.Hide();
         }
 
         private void addClient_Click(object sender, RoutedEventArgs e) //Add another client

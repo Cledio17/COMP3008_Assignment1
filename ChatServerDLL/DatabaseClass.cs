@@ -50,6 +50,47 @@ namespace ChatServerDLL
             return newUser;
         }
 
+        public void setLoggedIn(string userName)
+        {
+            User temp = null;
+            foreach (User user in users)
+            {
+                if (user.Username.Equals(userName))
+                {
+                    temp = user;
+                }
+            }
+            temp.LoggedIn = true;
+            updateUserAccountInfo(temp);
+        }
+
+        public void setLoggedOut(string userName)
+        {
+            User temp = null;
+            foreach (User user in users)
+            {
+                if (user.Username.Equals(userName))
+                {
+                    temp = user;
+                }
+            }
+            temp.LoggedIn = false;
+            updateUserAccountInfo(temp);
+        }
+
+        public bool isLoggedIn(string userName)
+        {
+            User temp = null;
+            foreach (User user in users)
+            {
+                if (user.Username.Equals(userName))
+                {
+                    temp = user;
+                }
+            }
+            return temp.LoggedIn;
+        }
+
         public int getUserID(string userName)
         {
             User temp = null;

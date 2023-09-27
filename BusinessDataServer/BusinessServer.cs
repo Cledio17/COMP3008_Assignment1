@@ -23,6 +23,21 @@ namespace BusinessDataServer
         }
 
         //Users
+        public void setLoggedIn(string userName)
+        {
+            foob.setLoggedIn(userName);
+        }
+
+        public void setLoggedOut(string userName)
+        {
+            foob.setLoggedOut(userName);
+        }
+
+        public bool isLoggedIn(string userName)
+        {
+            return foob.isLoggedIn(userName);
+        }
+
         public User addUserAccountInfo(string username)
         {
             return foob.addUserAccountInfo(username);
