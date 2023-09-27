@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,8 +11,22 @@ namespace BusinessDataServer
 {
     internal class Program
     {
+        [DllImport("kernel32.dll")]
+        static extern IntPtr GetConsoleWindow();
+
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
         static void Main(string[] args)
         {
+            const int SW_HIDE = 0;
+
+            // Usage:
+            var handle = GetConsoleWindow();
+
+            // Hide
+            ShowWindow(handle, SW_HIDE);
+
             Console.WriteLine("Welcome to the Business server");
             //This is the actual host service system
             ServiceHost host;
