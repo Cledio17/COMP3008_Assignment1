@@ -95,7 +95,7 @@
         <Button x:Name="logoutbutton" Content="Log Out" HorizontalAlignment="Left" Margin="10,491,0,0" VerticalAlignment="Top" Height="32" Width="92" Click="logoutbutton_Click"/>
         <TextBox x:Name="msgtxtbox" HorizontalAlignment="Left" Margin="147,235,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Enter your message here" VerticalAlignment="Top" Width="377" Height="62" Foreground="White" Background="#FF403C44"/>
         <Button x:Name="sendmsgbtn" Content="Send" HorizontalAlignment="Left" Margin="529,269,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="sendmsgbtn_Click"/>
-        <ListBox Style="{DynamicResource cornerradius}" x:Name="participantlist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="638,28,61,291" Foreground="White" Background="#FF201C24"/>
+        <ListBox Style="{DynamicResource cornerradius}" x:Name="participantlist" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="638,28,61,291" Foreground="White" Background="#FF201C24" SelectionChanged="participantlist_SelectionChanged"/>
         <Label Content="Participants" HorizontalAlignment="Left" Margin="638,4,0,0" VerticalAlignment="Top" Foreground="#FFCCC5B9"/>
         <Button x:Name="uploadfilebtn" Content="Upload File" HorizontalAlignment="Left" Margin="529,236,0,0" VerticalAlignment="Top" Height="28" Width="81" Click="uploadfilebtn_Click" />
         <Label x:Name="currRoom" Content="Room" HorizontalAlignment="Left" Margin="153,5,0,0" VerticalAlignment="Top" Width="54" Foreground="#FFCCC5B9"/>
@@ -109,8 +109,8 @@
             <FlowDocument/>
         </RichTextBox>
         <TextBox x:Name="privatemsgtxtbox" HorizontalAlignment="Left" Margin="635,454,0,0" TextWrapping="Wrap" materialDesign:HintAssist.Hint="Enter your message here" VerticalAlignment="Top" Width="272" Height="28" Foreground="White" Background="#FF403C44"/>
-        <Button x:Name="privatesendmsgbtn" Content="Send" HorizontalAlignment="Left" Margin="912,454,0,0" VerticalAlignment="Top" Height="28" Width="80"/>
-        <Button x:Name="privateuploadfilebtn" Content="Upload File" HorizontalAlignment="Left" Margin="638,489,0,0" VerticalAlignment="Top" Height="28" Width="80" />
+        <Button x:Name="privatesendmsgbtn" Content="Send" HorizontalAlignment="Left" Margin="912,454,0,0" VerticalAlignment="Top" Height="28" Width="80" Click="privatesendmsgbtn_Click"/>
+        <Button x:Name="privateuploadfilebtn" Content="Upload File" HorizontalAlignment="Left" Margin="638,489,0,0" VerticalAlignment="Top" Height="28" Width="80" Click="privateuploadfilebtn_Click" />
         <Button x:Name="leavebtn" Content="Leave" HorizontalAlignment="Left" Margin="207,5,0,0" VerticalAlignment="Top" Height="28" Width="70" Click="leavebtn_Click" />
         <Button x:Name="refreshbtn" Content="Refresh" HorizontalAlignment="Left" Margin="10,376,0,0" VerticalAlignment="Top" Height="32" Width="92" Click="refreshbtn_Click"/>
         <Label x:Name="privatemsglbl" Content="Private Messaging" HorizontalAlignment="Left" Margin="638,259,0,0" VerticalAlignment="Top" Width="110" Foreground="#DDCCC5B9"/>

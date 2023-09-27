@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Runtime.Serialization;
 using System.ServiceModel.Channels;
 using System.Text;
@@ -22,6 +23,8 @@ namespace ChatServer
         private List<ChatRoom> allServers;
         [DataMember]
         private List<User> users;
+        [DataMember]
+        private List<PrivateMessage> pmList;
         private List<string> allServerNames;
 
         public static DatabaseClass Instance { get; } = new DatabaseClass();
@@ -32,6 +35,7 @@ namespace ChatServer
             users = new List<User>();
             allServers = new List<ChatRoom>();
             allServerNames = new List<string>();
+            pmList = new List<PrivateMessage>();
         }
 
         [DataMember]
@@ -324,6 +328,196 @@ namespace ChatServer
                 }
             }
             return room;
+        }
+
+        private void updatePMList (PrivateMessage updated)
+        {
+            List<PrivateMessage> newList = pmList;
+            for (int i = 0; i < pmList.Count; i++)
+            {
+                if (pmList[i].Sender.Equals(updated.Sender))
+                {
+                    if (pmList[i].Recipient.Equals(updated.Recipient))
+                    {
+                        newList.RemoveAt(i);
+                    }
+                }
+                else if (pmList[i].Sender.Equals(updated.Recipient))
+                {
+                    if (pmList[i].Recipient.Equals(updated.Sender))
+                    {
+                        newList.RemoveAt(i);
+                    }
+                }
+                else if (pmList[i].Recipient.Equals(updated.Sender))
+                {
+                    if (pmList[i].Sender.Equals(updated.Recipient))
+                    {
+                        newList.RemoveAt(i);
+                    }
+                }
+                else if (pmList[i].Recipient.Equals(updated.Recipient))
+                {
+                    if (pmList[i].Sender.Equals(updated.Sender))
+                    {
+                        newList.RemoveAt(i);
+                    }
+                }
+            }
+            pmList = newList;
+            pmList.Add(updated);
+        }
+
+        public void addPrivateMessage (string username, string contactName, string message, bool isFile)
+        {
+            PrivateMessage conversation = null; //the conversation
+            List<string> messageList;
+            foreach(PrivateMessage pm in pmList)
+            {
+                if (pm.Sender.Equals(username))
+                {
+                    if (pm.Recipient.Equals(contactName))
+                    {
+                        conversation = pm;
+                    }
+                }
+                else if (pm.Sender.Equals(contactName))
+                {
+                    if (pm.Recipient.Equals(username))
+                    {
+                        conversation = pm;
+                    }
+                }
+                else if (pm.Recipient.Equals(contactName))
+                {
+                    if (pm.Sender.Equals(username))
+                    {
+                        conversation = pm;
+                    }
+                }
+                else if (pm.Recipient.Equals(username))
+                {
+                    if (pm.Sender.Equals(contactName))
+                    {
+                        conversation = pm;
+                    }
+                }
+            }
+            if (conversation == null) //the conversation havent exist before
+            {
+                conversation = new PrivateMessage();
+                conversation.Sender = username;
+                conversation.Recipient = contactName;
+                messageList = new List<string>();
+                messageList.Add(message);
+                pmList.Add(conversation);
+            }
+            else //conversation between two parties already exist
+            {
+                messageList = conversation.Messages;
+                messageList.Add(message);
+                updatePMList(conversation);
+            }
+            if (isFile)
+            {
+                int locNo = conversation.Messages.Count - 1;
+                List<int> temp = conversation.FileLoc;
+                temp.Add(locNo);
+                conversation.FileLoc = temp;
+            }
+            conversation.Messages = messageList;
+        }
+
+        public List<string> getPrivateMessages (string username, string contactName)
+        {
+            List<string> messageList;
+            PrivateMessage conversation = null;
+            foreach (PrivateMessage pm in pmList)
+            {
+                if (pm.Sender.Equals(username))
+                {
+                    if (pm.Recipient.Equals(contactName))
+                    {
+                        conversation = pm;
+                    }
+                }
+                else if (pm.Sender.Equals(contactName))
+                {
+                    if (pm.Recipient.Equals(username))
+                    {
+                        conversation = pm;
+                    }
+                }
+                else if (pm.Recipient.Equals(contactName))
+                {
+                    if (pm.Sender.Equals(username))
+                    {
+                        conversation = pm;
+                    }
+                }
+                else if (pm.Recipient.Equals(username))
+                {
+                    if (pm.Sender.Equals(contactName))
+                    {
+                        conversation = pm;
+                    }
+                }
+            }
+            if (conversation != null)
+            {
+                messageList = conversation.Messages;
+            }
+            else
+            {
+                messageList = new List<string>();
+            }
+            return messageList;
+        }
+
+        public List<int> getPMFileLoc(String username, string contactName)
+        {
+            List<int> fileLoc;
+            PrivateMessage conversation = null;
+            foreach (PrivateMessage pm in pmList)
+            {
+                if (pm.Sender.Equals(username))
+                {
+                    if (pm.Recipient.Equals(contactName))
+                    {
+                        conversation = pm;
+                    }
+                }
+                else if (pm.Sender.Equals(contactName))
+                {
+                    if (pm.Recipient.Equals(username))
+                    {
+                        conversation = pm;
+                    }
+                }
+                else if (pm.Recipient.Equals(contactName))
+                {
+                    if (pm.Sender.Equals(username))
+                    {
+                        conversation = pm;
+                    }
+                }
+                else if (pm.Recipient.Equals(username))
+                {
+                    if (pm.Sender.Equals(contactName))
+                    {
+                        conversation = pm;
+                    }
+                }
+            }
+            if (conversation == null)
+            {
+                fileLoc = new List<int>();
+            }
+            else
+            {
+                fileLoc = conversation.FileLoc;
+            }
+            return fileLoc;
         }
     }
 }

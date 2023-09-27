@@ -95,5 +95,20 @@ namespace ChatServer
         {
             usersDatabase.leaveRoom(username, roomName);
         }
+
+        public void addPrivateMessage(string username, string contactName, string message, bool isFile)
+        {
+            usersDatabase.addPrivateMessage(username, contactName, message, isFile);
+        }
+
+        public List<string> getPrivateMessages(string username, string contactName)
+        {
+            return usersDatabase.getPrivateMessages(username, contactName);
+        }
+
+        public List<int> getPMFileLoc(String username, string contactName)
+        {
+            return usersDatabase.getPMFileLoc(username, contactName);
+        }
     }
 }

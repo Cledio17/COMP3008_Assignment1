@@ -2,26 +2,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace ChatServer
 {
+    [DataContract]
     public class PrivateMessage
     {
-        private List<User> userList;
-        private List<String> messages;
+        private string sender;
+        private string recipient;
+        private List<string> messages = new List<string> ();
+        private List<int> fileLoc = new List<int>();
 
-        public PrivateMessage() 
+        [DataMember]
+        public string Sender
         {
-            userList = new List<User>();
-            messages = new List<String>();
+            get { return sender; }
+            set { sender = value; }
         }
 
-        public void addMessage(User sender, String message)
+        [DataMember]
+        public string Recipient
         {
-            userList.Add(sender);
-            messages.Add(message);
+            get { return recipient; }
+            set { recipient = value; }
+        }
+
+        [DataMember]
+        public List<string> Messages
+        {
+            get { return messages; }
+            set { messages = value; }
+        }
+
+        [DataMember]
+        public List<int> FileLoc
+        {
+            get { return fileLoc; }
+            set { fileLoc = value; }
         }
     }
 }

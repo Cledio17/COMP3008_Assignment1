@@ -14,7 +14,6 @@ namespace ChatServer
     {
         private string userName;
         private int ID;
-        //private PrivateMessage privateMessages;
         private List<string> chatRooms = new List<string> { };
 
         [DataMember]

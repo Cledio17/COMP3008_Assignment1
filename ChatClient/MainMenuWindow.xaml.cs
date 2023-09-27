@@ -35,6 +35,7 @@ namespace ChatClient
         int ID = 0;
         string username = ""; //loggin in user username
         string currRoomName; //current selected room
+        string currPmName; //current private message name
         MainWindow loginMenu;
         private DataServerInterface foob;
         public MainMenuWindow (DataServerInterface inFoob, string inUsername, MainWindow inLoginMenu)
@@ -129,7 +130,7 @@ namespace ChatClient
                     }
                     if (isFile)
                     {
-                        loadFile(message);
+                        loadFileServer(message);
                     }
                     else
                     {
@@ -179,11 +180,18 @@ namespace ChatClient
         {
             if (currRoomName != null)
             {
-                string message = username + ": " + msgtxtbox.Text;
-                msgtxtbox.Clear();
-                foob.addMessages(message, currRoomName, false);
-                msgdisplaybox.AppendText(message);
-                msgdisplaybox.AppendText(Environment.NewLine);
+                if (msgtxtbox.Text.Equals(""))
+                {
+                    MessageBox.Show("Please enter a message.");
+                }
+                else
+                {
+                    string message = username + ": " + msgtxtbox.Text;
+                    msgtxtbox.Clear();
+                    foob.addMessages(message, currRoomName, false);
+                    msgdisplaybox.AppendText(message);
+                    msgdisplaybox.AppendText(Environment.NewLine);
+                }
             }
             else
             {
@@ -202,8 +210,10 @@ namespace ChatClient
                 {
                     filepath = openFileDialog.FileName;
                     msgtxtbox.Clear();
+                    foob.addMessages(username + ": ", currRoomName, false);
                     foob.addMessages(filepath, currRoomName, true);
-                    loadFile(filepath);
+                    msgdisplaybox.AppendText(username + ": ");
+                    loadFileServer(filepath);
                 }
                 else
                 {
@@ -216,34 +226,26 @@ namespace ChatClient
             }
         }
 
-        private void loadFile (string filepath)
+        private void loadFileServer (string filepath)
         {
-            //try
-            //{
-                string filename = System.IO.Path.GetFileName(filepath); // Get only the file name
-                                                                        // Create a new Hyperlink
-                Hyperlink hyperlink = new Hyperlink(new Run(filename));
-                hyperlink.IsEnabled = true;
-                hyperlink.NavigateUri = new Uri(filepath); // Set the URI to the file path
+            string filename = System.IO.Path.GetFileName(filepath); // Get only the file name
+                                                                    // Create a new Hyperlink
+            Hyperlink hyperlink = new Hyperlink(new Run(filename));
+            hyperlink.IsEnabled = true;
+            hyperlink.NavigateUri = new Uri(filepath); // Set the URI to the file path
 
-                // Handle the click event to open the file when the hyperlink is clicked
-                hyperlink.RequestNavigate += Hyperlink_RequestNavigate;
+            // Handle the click event to open the file when the hyperlink is clicked
+            hyperlink.RequestNavigate += Hyperlink_RequestNavigate;
 
-                // Create a Paragraph and add the Hyperlink to it
-                Paragraph paragraph = new Paragraph(hyperlink);
-                paragraph.IsEnabled = true;
+            // Create a Paragraph and add the Hyperlink to it
+            Paragraph paragraph = new Paragraph(hyperlink);
+            paragraph.IsEnabled = true;
 
-                // Add the Paragraph to the RichTextBox
-                msgdisplaybox.AppendText(username + ": ");
-                msgdisplaybox.Document.Blocks.Add(paragraph);
-                msgdisplaybox.IsDocumentEnabled = true;
-                msgdisplaybox.IsReadOnly = true;
-                msgdisplaybox.AppendText("\n");
-            //}
-            //catch (UriFormatException ex)
-            //{
-            //    MessageBox.Show("No file selected.");
-            //}
+            // Add the Paragraph to the RichTextBox
+            msgdisplaybox.Document.Blocks.Add(paragraph);
+            msgdisplaybox.IsDocumentEnabled = true;
+            msgdisplaybox.IsReadOnly = true;
+            msgdisplaybox.AppendText("\n");
         }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
@@ -285,12 +287,124 @@ namespace ChatClient
 
         private void allserverlist_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
         }
 
         private void refreshbtn_Click(object sender, RoutedEventArgs e)
         {
             refreshAvailableServer();
+        }
+
+        private void participantlist_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (participantlist.SelectedItem != null)
+            {
+                currPmName = participantlist.SelectedItem.ToString();
+                sendtolabel.Content = currPmName;
+                refreshPMBox();
+            }
+        }
+
+        private void refreshPMBox ()
+        {
+            privatemsgdisplaybox.Document.Blocks.Clear();
+            List<string> messages = foob.getPrivateMessages(username, currPmName);
+            int i = 0;
+            bool isFile = false;
+            List<int> fileLoc = foob.getPMFileLoc(username, currPmName);
+            foreach (string message in messages)
+            {
+                Console.WriteLine(message);
+                foreach (int loc in fileLoc)
+                {
+                    if (loc == i)
+                    {
+                        isFile = true;
+                    }
+                }
+                if (isFile)
+                {
+                    loadFilePM(message);
+                }
+                else
+                {
+                    privatemsgdisplaybox.AppendText(message);
+                }
+                i++;
+                isFile = false;
+            }
+        }
+
+        private void privatesendmsgbtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (currPmName != null)
+            {
+                refreshPMBox();
+                if (privatemsgtxtbox.Text.Equals(""))
+                {
+                    MessageBox.Show("Please enter a message.");
+                }
+                else
+                {
+                    string message = username + ": " + privatemsgtxtbox.Text;
+                    privatemsgtxtbox.Clear();
+                    foob.addPrivateMessage(username, currPmName, message, false);
+                    privatemsgdisplaybox.AppendText(message + "\n");
+                }   
+            }
+            else
+            {
+                MessageBox.Show("Please select a contact.");
+            }
+        }
+
+        private void privateuploadfilebtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (currPmName != null)
+            {
+                refreshPMBox();
+                Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+                bool? response = openFileDialog.ShowDialog();
+                string filepath = "";
+                if (response == true)
+                {
+                    filepath = openFileDialog.FileName;
+                    privatemsgtxtbox.Clear();
+                    foob.addPrivateMessage(username, currPmName, username + ": ", false);
+                    foob.addPrivateMessage(username, currPmName, filepath, true);
+                    privatemsgdisplaybox.AppendText(username + ": ");
+                    loadFilePM(filepath);
+                }
+                else
+                {
+                    MessageBox.Show("No file selected.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a contact.");
+            }
+        }
+
+        private void loadFilePM(string filepath)
+        {
+            string filename = System.IO.Path.GetFileName(filepath); // Get only the file name
+                                                                    // Create a new Hyperlink
+            Hyperlink hyperlink = new Hyperlink(new Run(filename));
+            hyperlink.IsEnabled = true;
+            hyperlink.NavigateUri = new Uri(filepath); // Set the URI to the file path
+
+            // Handle the click event to open the file when the hyperlink is clicked
+            hyperlink.RequestNavigate += Hyperlink_RequestNavigate;
+
+            // Create a Paragraph and add the Hyperlink to it
+            Paragraph paragraph = new Paragraph(hyperlink);
+            paragraph.IsEnabled = true;
+
+            // Add the Paragraph to the RichTextBox
+            privatemsgdisplaybox.Document.Blocks.Add(paragraph);
+            privatemsgdisplaybox.IsDocumentEnabled = true;
+            privatemsgdisplaybox.IsReadOnly = true;
+            privatemsgdisplaybox.AppendText("\n");
         }
     }
 }

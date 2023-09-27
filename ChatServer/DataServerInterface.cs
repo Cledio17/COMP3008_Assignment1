@@ -59,5 +59,14 @@ namespace ChatServer
 
         [OperationContract]
         void leaveRoom(string username, string roomName);
+
+        [OperationContract]
+        void addPrivateMessage(string username, string contactName, string message, bool isFile);
+
+        [OperationContract]
+        List<string> getPrivateMessages(string username, string contactName);
+
+        [OperationContract]
+        List<int> getPMFileLoc(String username, string contactName);
     }
 }
