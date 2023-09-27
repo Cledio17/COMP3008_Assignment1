@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatClient", "ChatClient\Ch
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatDataServer", "ChatServer\ChatDataServer.csproj", "{699D1A39-2608-4B40-B5B2-792D268A0C7D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessDataServer", "BusinessDataServer\BusinessDataServer.csproj", "{DDCD9C4D-68FE-41FC-A742-53D98D79EDB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatServerDLL", "ChatServerDLL\ChatServerDLL.csproj", "{826514D1-36C6-4A4B-AC43-20EEB6EA7B23}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{699D1A39-2608-4B40-B5B2-792D268A0C7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{699D1A39-2608-4B40-B5B2-792D268A0C7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{699D1A39-2608-4B40-B5B2-792D268A0C7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDCD9C4D-68FE-41FC-A742-53D98D79EDB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDCD9C4D-68FE-41FC-A742-53D98D79EDB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDCD9C4D-68FE-41FC-A742-53D98D79EDB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDCD9C4D-68FE-41FC-A742-53D98D79EDB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{826514D1-36C6-4A4B-AC43-20EEB6EA7B23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{826514D1-36C6-4A4B-AC43-20EEB6EA7B23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{826514D1-36C6-4A4B-AC43-20EEB6EA7B23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{826514D1-36C6-4A4B-AC43-20EEB6EA7B23}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

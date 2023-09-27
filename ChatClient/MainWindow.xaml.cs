@@ -1,4 +1,5 @@
-﻿using ChatServer;
+﻿using BusinessDataServer;
+using ChatServer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,15 +29,15 @@ namespace ChatClient
     public partial class MainWindow : Window
     {
         string username = "";
-        private DataServerInterface foob;
+        private BusinessServerInterface foob;
         public MainWindow()
         {
             InitializeComponent();
 
-            ChannelFactory<DataServerInterface> foobFactory;
+            ChannelFactory<BusinessServerInterface> foobFactory;
             NetTcpBinding tcp = new NetTcpBinding();
-            string URL = "net.tcp://localhost:8100/DataService";
-            foobFactory = new ChannelFactory<DataServerInterface>(tcp, URL);
+            string URL = "net.tcp://localhost:8200/BusinessService";
+            foobFactory = new ChannelFactory<BusinessServerInterface>(tcp, URL);
             foob = foobFactory.CreateChannel();
         }
 

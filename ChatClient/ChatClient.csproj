@@ -117,6 +117,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BusinessDataServer\BusinessDataServer.csproj">
+      <Project>{DDCD9C4D-68FE-41FC-A742-53D98D79EDB7}</Project>
+      <Name>BusinessDataServer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ChatServerDLL\ChatServerDLL.csproj">
+      <Project>{826514D1-36C6-4A4B-AC43-20EEB6EA7B23}</Project>
+      <Name>ChatServerDLL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ChatServer\ChatDataServer.csproj">
       <Project>{699D1A39-2608-4B40-B5B2-792D268A0C7D}</Project>
       <Name>ChatDataServer</Name>

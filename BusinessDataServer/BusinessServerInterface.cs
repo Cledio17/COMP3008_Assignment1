@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 
-namespace ChatServer
+namespace BusinessDataServer
 {
     [ServiceContract]
-    public interface DataServerInterface
+    public interface BusinessServerInterface
     {
         //Users
         [OperationContract]
@@ -32,7 +32,7 @@ namespace ChatServer
         void addServer(string username, string roomName);
 
         [OperationContract]
-        int getServerID (string roomName);
+        int getServerID(string roomName);
 
         [OperationContract]
         ChatRoom getServerInfo(string roomName);

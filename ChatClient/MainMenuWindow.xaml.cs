@@ -1,4 +1,5 @@
-﻿using ChatServer;
+﻿using BusinessDataServer;
+using ChatServer;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -41,7 +42,7 @@ namespace ChatClient
         string currRoomName; //current selected room
         string currPmName; //current private message name
         MainWindow loginMenu;
-        private DataServerInterface foob;
+        private BusinessServerInterface foob;
         private Thread serverListenerThread;
         private UpdateChatRoomDelegate updateChatRoomDelegate;
         private UpdateChatMessageDelegate updateChatMessageDelegate;
@@ -49,7 +50,7 @@ namespace ChatClient
         private UpdatePrivateMessageDelegate updatePrivateMessage;
         private bool newChatMessage = true;
         private bool newParticipant = true;
-        public MainMenuWindow (DataServerInterface inFoob, string inUsername, MainWindow inLoginMenu)
+        public MainMenuWindow (BusinessServerInterface inFoob, string inUsername, MainWindow inLoginMenu)
         {
             InitializeComponent();
             this.foob = inFoob;

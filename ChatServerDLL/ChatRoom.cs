@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
-namespace ChatServer
+namespace ChatServerDLL
 {
     [DataContract]
     public class ChatRoom
@@ -53,15 +46,5 @@ namespace ChatServer
             get { return fileLoc; }
             set { fileLoc = value; }
         }
-
-        /*public void sendPrivateMessage(User sender, User recipient, string message)
-        {
-            recipient.addPrivateMessage(sender, message);
-        }
-
-        public void sendFiles(User sender, string files)
-        {
-            throw new NotImplementedException();
-        }*/
     }
 }
