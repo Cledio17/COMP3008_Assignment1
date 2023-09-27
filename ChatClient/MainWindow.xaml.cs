@@ -66,7 +66,7 @@ namespace ChatClient
 
         private void btnExit_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Application.Current.Shutdown();
+            this.Close();
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -75,7 +75,7 @@ namespace ChatClient
             {
                 DragMove();
             }
-            catch (Exception ex) { }
+            catch (Exception) { }
         }
     }
 }

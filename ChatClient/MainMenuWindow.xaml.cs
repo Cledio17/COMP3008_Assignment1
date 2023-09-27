@@ -371,7 +371,7 @@ namespace ChatClient
                     process.Start();
                 }
             }
-            catch (Exception ex) { throw; }
+            catch (Exception) { throw; }
         }
 
         //Log out
@@ -384,7 +384,7 @@ namespace ChatClient
         //Exit program
         private void mainbtnexit_Click(object sender, RoutedEventArgs e)
         {
-            System.Windows.Application.Current.Shutdown();
+            this.Close();
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -393,7 +393,7 @@ namespace ChatClient
             {
                 DragMove();
             }
-            catch (Exception ex) { }
+            catch (Exception) { }
         }
 
         private void allserverlist_SelectionChanged(object sender, SelectionChangedEventArgs e)
