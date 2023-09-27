@@ -33,6 +33,7 @@ namespace ChatClient
     public delegate void UpdateChatRoomDelegate();
     public delegate void UpdateChatMessageDelegate();
     public delegate void UpdateRoomParticipants();
+    public delegate void UpdatePrivateMessageDelegate();
     public partial class MainMenuWindow : Window
     {
         int ID = 0;
@@ -45,6 +46,7 @@ namespace ChatClient
         private UpdateChatRoomDelegate updateChatRoomDelegate;
         private UpdateChatMessageDelegate updateChatMessageDelegate;
         private UpdateRoomParticipants updateRoomParticipants;
+        private UpdatePrivateMessageDelegate updatePrivateMessage;
         private bool newChatMessage = true;
         private bool newParticipant = true;
         public MainMenuWindow (DataServerInterface inFoob, string inUsername, MainWindow inLoginMenu)
@@ -66,6 +68,7 @@ namespace ChatClient
             updateChatRoomDelegate += UpdateChatRoom;
             updateChatMessageDelegate += UpdateChatMessage;
             updateRoomParticipants += UpdateRoomParticpants;
+            updatePrivateMessage += UpdatePrivateMessage;
 
             serverListenerThread = new Thread(ListenToServer);
             serverListenerThread.Start();
@@ -100,7 +103,7 @@ namespace ChatClient
                         }
                         if (isFile)
                         {
-                            loadFile(message);
+                            loadFileServer(message);
                         }
                         else
                         {
@@ -130,6 +133,15 @@ namespace ChatClient
             });
         }
 
+        private void UpdatePrivateMessage()
+        {
+            Dispatcher.Invoke(() =>
+            {
+                privatemsgdisplaybox.Document.Blocks.Clear();
+                refreshPMBox();
+            });
+        }
+
         private void ListenToServer()
         {
             while (true)
@@ -147,6 +159,8 @@ namespace ChatClient
                 {
                     updateRoomParticipants?.Invoke();
                 }
+
+                updatePrivateMessage?.Invoke();
             }
         }
 
@@ -341,7 +355,7 @@ namespace ChatClient
             msgdisplaybox.Document.Blocks.Add(paragraph);
             msgdisplaybox.IsDocumentEnabled = true;
             msgdisplaybox.IsReadOnly = true;
-            msgdisplaybox.AppendText("\n");
+            msgdisplaybox.AppendText(Environment.NewLine);
         }
 
         private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
@@ -424,6 +438,7 @@ namespace ChatClient
                 else
                 {
                     privatemsgdisplaybox.AppendText(message);
+                    privatemsgdisplaybox.AppendText(Environment.NewLine);
                 }
                 i++;
                 isFile = false;
@@ -444,7 +459,8 @@ namespace ChatClient
                     string message = username + ": " + privatemsgtxtbox.Text;
                     privatemsgtxtbox.Clear();
                     foob.addPrivateMessage(username, currPmName, message, false);
-                    privatemsgdisplaybox.AppendText(message + "\n");
+                    privatemsgdisplaybox.AppendText(message);
+                    privatemsgdisplaybox.AppendText(Environment.NewLine);
                 }   
             }
             else
@@ -500,7 +516,7 @@ namespace ChatClient
             privatemsgdisplaybox.Document.Blocks.Add(paragraph);
             privatemsgdisplaybox.IsDocumentEnabled = true;
             privatemsgdisplaybox.IsReadOnly = true;
-            privatemsgdisplaybox.AppendText("\n");
+            privatemsgdisplaybox.AppendText(Environment.NewLine);
         }
     }
 }
